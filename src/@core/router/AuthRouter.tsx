@@ -1,9 +1,10 @@
+import AuthPage from '../../pages/auth-page';
 import ErrorPage from '../../pages/error-page';
 
 const authRouter = [
   {
     path: '/auth',
-    element: <>not done</>,
+    element: <AuthPage />,
     errorElement: <ErrorPage />,
   },
 ];
