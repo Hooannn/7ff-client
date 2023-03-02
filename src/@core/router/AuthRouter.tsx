@@ -1,8 +1,10 @@
-import ErrorPage from "../../error-page";
+import AuthPage from '../../pages/auth-page';
+import ErrorPage from '../../pages/error-page';
+
 const authRouter = [
   {
-    path: "/auth",
-    element: <>Unimplement</>,
+    path: '/auth',
+    element: <AuthPage />,
     errorElement: <ErrorPage />,
   },
 ];

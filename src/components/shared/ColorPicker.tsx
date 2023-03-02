@@ -1,7 +1,8 @@
-import { Popover, Button } from "antd";
-import { useState, useEffect } from "react";
-import { TwitterPicker } from "react-color";
-import { IResponseData } from "../../hooks/useFetch";
+import { Popover, Button } from 'antd';
+import { useState, useEffect } from 'react';
+import { TwitterPicker } from 'react-color';
+import { IResponseData } from '../../hooks/useFetch';
+
 export default function ColorPicker({
   initColor,
   onUpdateColor,
@@ -19,24 +20,21 @@ export default function ColorPicker({
     <Popover
       trigger="click"
       className="color_picker"
-      onOpenChange={(value) => {
+      onOpenChange={value => {
         if (!value && color !== initColor) onUpdateColor(color);
       }}
       content={
         <div>
-          <TwitterPicker
-            color={color}
-            onChangeComplete={(color) => setColor(color.hex)}
-          />
+          <TwitterPicker color={color} onChangeComplete={color => setColor(color.hex)} />
         </div>
       }
     >
       <div
         style={{
-          height: "30px",
-          width: "30px",
-          cursor: "pointer",
-          borderRadius: "4px",
+          height: '30px',
+          width: '30px',
+          cursor: 'pointer',
+          borderRadius: '4px',
           background: color,
         }}
       />

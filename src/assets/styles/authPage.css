@@ -1,0 +1,52 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('auth-background.jpg');
+  background-size: cover;
+}
+
+.auth-page .auth-form {
+  width: 350px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.43);
+  box-shadow: 0px 8px 32px rgba(0, 0, 255, 0.33);
+  backdrop-filter: blur(1px);
+}
+
+.auth-form .text-center {
+  text-align: center;
+}
+
+.auth-form .submit-btn {
+  margin-top: 8px;
+}
+
+.auth-form strong {
+  cursor: pointer;
+}
+
+.auth-form .forgot-password {
+  color: '#3a5873';
+  font-size: 12px;
+  font-style: italic;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.social-auth-options {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.social-auth-options > img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+}
