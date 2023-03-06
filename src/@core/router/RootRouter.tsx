@@ -1,4 +1,4 @@
-import ErrorPage from '../../pages/error-page';
+import ErrorPage from '../../pages/ErrorPage';
 import RootRoute from '../../RootRoute';
 const rootRouter = [
   {
