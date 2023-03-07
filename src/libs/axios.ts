@@ -18,7 +18,6 @@ const refreshToken = async () =>
       method: 'POST',
       validateStatus: null,
       data: {
-        accessToken: getAccessToken(),
         refreshToken: cookies.get('refresh_token') || localStorage.getItem('refresh_token'),
       },
     })
