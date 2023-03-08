@@ -1,10 +1,10 @@
-import Dev from '../../pages/dev-page';
-import ErrorPage from '../../pages/error-page';
+import DevPage from '../../pages/DevPage';
+import ErrorPage from '../../pages/ErrorPage';
 
 const devRouter = [
   {
     path: '/dev',
-    element: <Dev />,
+    element: <DevPage />,
     errorElement: <ErrorPage />,
   },
 ];

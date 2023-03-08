@@ -1,5 +1,5 @@
-import AuthPage from '../../pages/auth-page';
-import ErrorPage from '../../pages/error-page';
+import AuthPage from '../../pages/AuthPage';
+import ErrorPage from '../../pages/ErrorPage';
 
 const authRouter = [
   {
