@@ -119,5 +119,22 @@
   "confirm privacy": "<small>By clicking <strong>'Submit'</strong> you confirm you have read and accept our <a>terms of use</a> and <a>privacy policy</a></small>",
   "you have signed up successfully": "You have signed up successfully",
   "signed in successfully": "Signed in successfully",
-  "we have sent you forgot password email, please check it out": "We have sent you forgot password email, please check it out"
+  "we have sent you forgot password email, please check it out": "We have sent you forgot password email, please check it out",
+  "please enter your email": "Please enter your email",
+  "invalid email address": "invalid email address",
+  "please enter your password": "please enter your password",
+  "sign in": "Sign in",
+  "sign up": "Sign up",
+  "required": "Required field",
+  "first name...": "First name...",
+  "last name...": "Last name...",
+  "password do not match": "Password do not match",
+  "confirm password...": "Confirm password...",
+  "or sign in using": "Or sign in using",
+  "or sign up using": "Or sign up using",
+  "don't have an account?": "Don't have an account?",
+  "already have an account?": "Already have an account?",
+  "forgot password": "Forgot password",
+  "account": "Account",
+  "reset password": "Reset password"
 }
