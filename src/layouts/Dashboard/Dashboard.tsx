@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
-import 'antd/dist/antd.css';
 import { layoutStyle } from '../../assets/styles/globalStyle';
 import DashboardSidebar from './DashboardSidebar';
 

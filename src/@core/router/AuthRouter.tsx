@@ -1,10 +1,14 @@
 import AuthPage from '../../pages/AuthPage';
 import ErrorPage from '../../pages/ErrorPage';
-
+import { Suspense } from 'react';
 const authRouter = [
   {
     path: '/auth',
-    element: <AuthPage />,
+    element: (
+      <Suspense>
+        <AuthPage />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
   },
 ];

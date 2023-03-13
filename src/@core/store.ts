@@ -1,9 +1,25 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../slices/auth.slice";
+import { configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import authReducer from '../slices/auth.slice';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth: persistReducer(
+      {
+        key: 'auth',
+        version: 1,
+        storage,
+      },
+      authReducer,
+    ),
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
