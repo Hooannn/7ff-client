@@ -1,15 +1,8 @@
 import { Popover, Button } from 'antd';
 import { useState, useEffect } from 'react';
 import { TwitterPicker } from 'react-color';
-import { IResponseData } from '../../hooks/useFetch';
 
-export default function ColorPicker({
-  initColor,
-  onUpdateColor,
-}: {
-  initColor: string;
-  onUpdateColor: (value: string) => Promise<IResponseData<unknown>>;
-}) {
+export default function ColorPicker({ initColor, onUpdateColor }: { initColor: string; onUpdateColor: (value: string) => void }) {
   const [color, setColor] = useState(initColor);
 
   useEffect(() => {

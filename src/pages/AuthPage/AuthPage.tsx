@@ -1,6 +1,6 @@
-import { FC, useState, Suspense, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Form, Input, Button, Typography, Divider, Space } from 'antd';
-import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { inputStyle, buttonStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/AuthPage.css';
 import { useTranslation } from 'react-i18next';
