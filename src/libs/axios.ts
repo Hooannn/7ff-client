@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getI18n } from 'react-i18next';
 import cookies from './cookies';
+
 export const axiosIns = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT || 'https://sevenfastfood-be.onrender.com',
   headers: {
@@ -22,10 +23,10 @@ const refreshToken = async () =>
       },
     })
       .then(res => {
-        const token = res.data?.data;
-        if (token) {
-          cookies.set('access_token', token);
-          resolve(token);
+        const { accessToken } = res.data?.data;
+        if (accessToken) {
+          cookies.set('access_token', accessToken);
+          resolve(accessToken);
         } else {
           window.location.href = '/auth';
           resolve(null);

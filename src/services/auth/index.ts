@@ -1,13 +1,13 @@
 import axios from '../../libs/axios';
 import toastConfig from '../../configs/toast';
 import { toast } from 'react-toastify';
-import { useMutation, useQueryClient } from 'react-query';
-import { useTranslation } from 'react-i18next';
-import { AxiosError } from 'axios';
+import { useMutation } from 'react-query';
 import cookies from '../../libs/cookies';
 import { onError } from '../../utils/error-handlers';
 import { IResponseData, IUser } from '../../types';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser, setLogged } from '../../slices/auth.slice';
 interface SignInResponse {
   accessToken: string;
   refreshToken: string;
@@ -18,6 +18,7 @@ interface SignUpResponse {
   password: string;
 }
 export default () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const signInMutation = useMutation({
     mutationFn: (account: { email: string; password: string }) => axios.post<IResponseData<SignInResponse>>(`/auth/sign-in/email`, account),
@@ -25,9 +26,11 @@ export default () => {
     onSuccess: res => {
       const redirectPath = cookies.get('redirect_path') || '/';
       toast(res.data.message, toastConfig('success'));
-      const { accessToken, refreshToken } = res.data.data;
+      const { accessToken, refreshToken, user } = res.data.data;
       cookies.set('access_token', accessToken);
       cookies.set('refresh_token', refreshToken);
+      dispatch(setLogged(true));
+      dispatch(setUser(user));
       navigate(redirectPath);
     },
   });
