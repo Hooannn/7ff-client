@@ -2,13 +2,13 @@ import { Suspense } from 'react';
 import DashboardLayout from '../../layouts/Dashboard';
 import DashboardPage from '../../pages/DashboardPage';
 import ErrorPage from '../../pages/ErrorPage';
-import AuthProtected from '../../components/AuthProtected';
+import AuthProtector from '../../components/AuthProtector';
 const dashboardRouter = [
   {
     path: '/dashboard',
     element: (
       <Suspense>
-        <AuthProtected children={<DashboardLayout />} redirect="/auth" adminOnly />
+        <AuthProtector children={<DashboardLayout />} redirect="/auth" adminOnly />
       </Suspense>
     ),
     errorElement: <ErrorPage />,

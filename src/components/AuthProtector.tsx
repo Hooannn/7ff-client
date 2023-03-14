@@ -9,12 +9,12 @@ import { RootState } from '../@core/store';
 import Loading from './shared/Loading';
 import cookies from '../libs/cookies';
 
-interface AuthProtectedProps extends PropsWithChildren {
+interface AuthProtectorProps extends PropsWithChildren {
   redirect: string;
   adminOnly?: boolean;
 }
 
-export default function AuthProtected({ children, redirect, adminOnly }: AuthProtectedProps) {
+export default function AuthProtector({ children, redirect, adminOnly }: AuthProtectorProps) {
   const accessToken = cookies.get('access_token') || localStorage.getItem('access_token');
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth as AuthState);
