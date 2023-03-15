@@ -31,7 +31,7 @@ export default () => {
       cookies.set('refresh_token', refreshToken);
       dispatch(setLogged(true));
       dispatch(setUser(user));
-      navigate(redirectPath);
+      navigate(redirectPath as string);
     },
   });
 

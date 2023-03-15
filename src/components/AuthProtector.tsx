@@ -22,9 +22,6 @@ export default function AuthProtector({ children, redirect, adminOnly }: AuthPro
 
   useEffect(() => {
     cookies.set('redirect_path', location.pathname);
-    return () => {
-      cookies.remove('redirect_path');
-    };
   }, [location]);
 
   const redirectFn = () => {
@@ -46,11 +43,11 @@ export default function AuthProtector({ children, redirect, adminOnly }: AuthPro
     enabled: false,
   });
 
-  if (accessToken && !auth.isLogged) {
-    getAuthUser();
-  }
-
-  if (auth.isLogged) {
+  if (!auth.isLogged) {
+    if (accessToken) {
+      getAuthUser();
+    } else return redirectFn();
+  } else {
     if (adminOnly) {
       const isAdmin = auth.user.role === 'Admin' || auth.user.role === 'SuperAdmin';
       if (isAdmin) return <>{children}</>;

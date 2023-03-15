@@ -236,17 +236,11 @@ const AuthPage: FC = () => {
   const onFinish = (values: any) => {
     formEventHandlers[formType](values);
   };
-
   useEffect(() => {
     if (query.get('type')) {
       setFormType(query.get('type') as FormType);
     }
-    return () => {
-      query.delete('type');
-      setQuery(query);
-    };
   }, [query]);
-
   return (
     <div className="auth-page">
       <Form layout="vertical" className="auth-form" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
