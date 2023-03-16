@@ -28,7 +28,7 @@
 }
 
 .auth-form .forgot-password {
-  color: '#3a5873';
+  color: #3a5873;
   font-size: 12px;
   cursor: pointer;
   display: inline-block;
@@ -48,7 +48,7 @@
   cursor: pointer;
 }
 
-.social-auth-options>img {
+.social-auth-options > img {
   width: 24px;
   height: 24px;
   object-fit: cover;
