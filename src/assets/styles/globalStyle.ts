@@ -14,3 +14,9 @@ export const inputStyle: CSSProperties = {
 export const layoutStyle: CSSProperties = {
   minHeight: '100vh',
 };
+
+export const secondaryButtonStyle: CSSProperties = {
+  ...buttonStyle,
+  background: '#f0c417',
+  color: '#1a1a1a',
+};
