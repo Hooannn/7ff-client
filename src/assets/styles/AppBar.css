@@ -1,0 +1,64 @@
+.app-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12);
+  display: grid;
+  grid-template-columns: 22rem auto 22rem;
+  gap: 40px;
+  z-index: 1;
+}
+
+.logo-search {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo .logo-img {
+  height: 60px;
+  object-fit: cover;
+}
+
+.app-bar .search-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box .search-input {
+  padding: 8px 20px;
+}
+
+.nav-btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-btns .nav-btn {
+  height: 40px;
+}
+
+.nav-btns .nav-icon {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.nav-btns .user-avatar {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 30px;
+  cursor: pointer;
+}
