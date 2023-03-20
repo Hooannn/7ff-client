@@ -13,7 +13,7 @@ const DashboardLayout: FC = () => {
       <Layout>
         <DashboardSidebar />
 
-        <Layout.Content>
+        <Layout.Content style={{ padding: '16px' }}>
           <Outlet />
         </Layout.Content>
       </Layout>

@@ -12,6 +12,7 @@ import {
   RiseOutlined,
   SafetyCertificateOutlined,
   AreaChartOutlined,
+  UsergroupAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -91,9 +92,9 @@ const DashboardSidebar: FC = () => {
             icon: <SafetyCertificateOutlined />,
             children: [
               {
-                label: t('admin'),
-                key: 'admin',
-                icon: <SafetyCertificateOutlined />,
+                label: t('users'),
+                key: 'admin/users',
+                icon: <UsergroupAddOutlined />,
               },
               {
                 label: t('performance'),
