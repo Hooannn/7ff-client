@@ -1,26 +1,26 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layout, Input, Drawer, Button, Badge, Dropdown, Tooltip, Menu, Switch } from 'antd';
+import { Layout, Input, Drawer, Button, Badge, Dropdown, Tooltip, Menu, Switch, Avatar } from 'antd';
 import '../../assets/styles/AppBar.css';
 import { inputStyle } from '../../assets/styles/globalStyle';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation, getI18n } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../@core/store';
+import { signOut } from '../../slices/auth.slice';
 interface IProps {
   isDashboard?: boolean;
 }
 
 const AppBar: FC<IProps> = ({ isDashboard }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const i18n = getI18n();
 
+  const navigate = useNavigate();
   // Fake data
-  const user = {
-    _id: '123456',
-    avatar: 'https://avatars.githubusercontent.com/u/90592072?s=400&u=f3480c9e8af8c60c20e03a62c6a4f2925ff0e453&v=4',
-    role: 'admin',
-  };
+  const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useDispatch();
   const cartItems = [1, 2, 3];
   const [theme, setTheme] = useState('light');
 
@@ -36,10 +36,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       onClick: () => navigate(`/profile/${user._id}`),
     },
     {
-      label: t('change language'),
-      key: 'language',
-    },
-    {
       label: t('my orders'),
       key: 'orders',
       onClick: () => navigate(`/orders/${user._id}`),
@@ -51,6 +47,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       label: t('sign out'),
       key: 'signOut',
       danger: true,
+      onClick: () => dispatch(signOut()),
     },
   ];
 
@@ -93,6 +90,11 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       </div>
 
       <div className="nav-btns">
+        <Tooltip title={t('change language')}>
+          {i18n.resolvedLanguage === 'en' && <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>}
+          {i18n.resolvedLanguage === 'vi' && <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>}
+        </Tooltip>
+
         <Tooltip title={t('toggle theme')}>
           <Switch
             checked={theme === 'dark'}

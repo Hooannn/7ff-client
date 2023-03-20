@@ -1,4 +1,4 @@
 import DashboardPage from './DashboardPage';
-import UsersDashboardPage from './Admin/UsersDashboardPage';
-
-export { DashboardPage, UsersDashboardPage };
+import UsersDashboardPage from './UsersDashboardPage';
+import AdminPage from './Admin/AdminPage';
+export { DashboardPage, UsersDashboardPage, AdminPage };
