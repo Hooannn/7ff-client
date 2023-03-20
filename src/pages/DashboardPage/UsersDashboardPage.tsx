@@ -2,13 +2,13 @@ import { Col, Row, Button } from 'antd';
 import { useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { buttonStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
-import AddUserModal from '../../../components/dashboard/users/AddUserModal';
-import UsersTable from '../../../components/dashboard/users/UsersTable';
-import { IUser } from '../../../types';
-import useUsers from '../../../services/users';
-import { exportToCSV } from '../../../utils/export-csv';
-import UpdateUserModal from '../../../components/dashboard/users/UpdateUserModal';
+import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
+import AddUserModal from '../../components/dashboard/users/AddUserModal';
+import UsersTable from '../../components/dashboard/users/UsersTable';
+import { IUser } from '../../types';
+import useUsers from '../../services/users';
+import { exportToCSV } from '../../utils/export-csv';
+import UpdateUserModal from '../../components/dashboard/users/UpdateUserModal';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
   const { fetchUsersQuery, users, addUserMutation, deleteUserMutation, updateUserMutation } = useUsers();

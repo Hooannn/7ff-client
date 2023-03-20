@@ -92,8 +92,8 @@ const DashboardSidebar: FC = () => {
             icon: <SafetyCertificateOutlined />,
             children: [
               {
-                label: t('users'),
-                key: 'admin/users',
+                label: t('user'),
+                key: 'users',
                 icon: <UsergroupAddOutlined />,
               },
               {

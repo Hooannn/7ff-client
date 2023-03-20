@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { IUser } from '../types';
-
+import cookies from '../libs/cookies';
 export interface AuthState {
   isLogged: boolean;
   user: IUser;
@@ -17,9 +17,14 @@ export const authSlice = createSlice({
     setLogged: (state, { payload }: { payload: boolean }) => {
       state.isLogged = payload;
     },
+    signOut: () => {
+      cookies.remove('access_token');
+      cookies.remove('refresh_token');
+      return initialState;
+    },
   },
 });
 
-export const { setUser, setLogged } = authSlice.actions;
+export const { setUser, setLogged, signOut } = authSlice.actions;
 
 export default authSlice.reducer;
