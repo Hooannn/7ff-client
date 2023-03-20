@@ -28,5 +28,6 @@
 
 .error-page .back-btn:hover {
   border-color: #dc2743;
+  background: transparent;
   color: #dc2743;
 }
