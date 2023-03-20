@@ -15,79 +15,7 @@ import {
   UsergroupAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-<<<<<<< HEAD
-
-const DASHBOARD_MENU_ITEMS = [
-  {
-    label: 'Dashboard',
-    key: '',
-    icon: <HomeOutlined />,
-  },
-  {
-    label: 'ClientFacing',
-    key: 'client_facing',
-    icon: <UserOutlined />,
-    children: [
-      {
-        label: 'Products',
-        key: 'products',
-        icon: <ShoppingCartOutlined />,
-      },
-      {
-        label: 'Customers',
-        key: 'customers',
-        icon: <UserOutlined />,
-      },
-      {
-        label: 'Orders',
-        key: 'orders',
-        icon: <FileTextOutlined />,
-      },
-    ],
-  },
-  {
-    label: 'Sales',
-    key: 'sales',
-    icon: <AreaChartOutlined />,
-    children: [
-      {
-        label: 'Overall',
-        key: 'overall',
-        icon: <LineChartOutlined />,
-      },
-      {
-        label: 'MonthlyData',
-        key: 'monthly-data',
-        icon: <BarChartOutlined />,
-      },
-      {
-        label: 'Breakdown',
-        key: 'breakdown',
-        icon: <PieChartOutlined />,
-      },
-    ],
-  },
-  {
-    label: 'Management',
-    key: 'management',
-    icon: <SafetyCertificateOutlined />,
-    children: [
-      {
-        label: 'Users',
-        key: 'admin/users',
-        icon: <UsergroupAddOutlined />,
-      },
-      {
-        label: 'Performance',
-        key: 'performance',
-        icon: <RiseOutlined />,
-      },
-    ],
-  },
-];
-=======
 import { useTranslation } from 'react-i18next';
->>>>>>> c56e31f9b90af60d3b2242146237af46255576e3
 
 const DashboardSidebar: FC = () => {
   const { t } = useTranslation();
@@ -164,9 +92,9 @@ const DashboardSidebar: FC = () => {
             icon: <SafetyCertificateOutlined />,
             children: [
               {
-                label: t('admin'),
-                key: 'admin',
-                icon: <SafetyCertificateOutlined />,
+                label: t('users'),
+                key: 'admin/users',
+                icon: <UsergroupAddOutlined />,
               },
               {
                 label: t('performance'),
