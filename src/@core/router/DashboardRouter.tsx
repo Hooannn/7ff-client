@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import DashboardLayout from '../../layouts/Dashboard';
-import DashboardPage from '../../pages/DashboardPage';
+import { DashboardPage, UsersDashboardPage } from '../../pages/DashboardPage';
 import ErrorPage from '../../pages/ErrorPage';
 import AuthProtector from '../../components/AuthProtector';
+import AdminPage from '../../pages/DashboardPage/Admin/AdminPage';
 const dashboardRouter = [
   {
     path: '/dashboard',
@@ -16,6 +17,20 @@ const dashboardRouter = [
       {
         path: '',
         element: <DashboardPage />,
+      },
+      {
+        path: 'admin',
+        element: (
+          <AuthProtector redirect="/auth" adminOnly>
+            <AdminPage />
+          </AuthProtector>
+        ),
+        children: [
+          {
+            path: 'users',
+            element: <UsersDashboardPage />,
+          },
+        ],
       },
     ],
   },

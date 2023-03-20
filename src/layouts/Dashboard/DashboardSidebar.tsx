@@ -12,6 +12,7 @@ import {
   RiseOutlined,
   SafetyCertificateOutlined,
   AreaChartOutlined,
+  UsergroupAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
@@ -71,9 +72,9 @@ const DASHBOARD_MENU_ITEMS = [
     icon: <SafetyCertificateOutlined />,
     children: [
       {
-        label: 'Admin',
-        key: 'admin',
-        icon: <SafetyCertificateOutlined />,
+        label: 'Users',
+        key: 'admin/users',
+        icon: <UsergroupAddOutlined />,
       },
       {
         label: 'Performance',

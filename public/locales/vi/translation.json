@@ -128,6 +128,10 @@
   "required": "Vui lòng không bỏ trống",
   "first name...": "Tên...",
   "last name...": "Họ...",
+  "first name": "Tên",
+  "last name": "Họ",
+  "address": "Địa chỉ",
+  "phone number": "Số điện thoại",
   "password do not match": "Mật khẩu không khớp",
   "confirm password...": "Nhập lại mật khẩu...",
   "or sign in using": "Hoặc đăng nhập bằng",
@@ -136,5 +140,12 @@
   "already have an account?": "Đã có tài khoản?",
   "forgot password": "Quên mật khẩu",
   "account": "Tài khoản",
-  "reset password": "Cài lại mật khẩu"
+  "reset password": "Cài lại mật khẩu",
+  "id": "Mã",
+  "avatar": "Ảnh đại diện",
+  "role": "Vai trò",
+  "new user": "Người dùng mới",
+  "are you sure that you want to delete user with id": "Bạn có chắc bạn muốn xóa người dùng với mã là",
+  "update user": "Cập nhật người dùng",
+  "export csv": "Xuất CSV"
 }

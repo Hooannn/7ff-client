@@ -128,6 +128,10 @@
   "required": "Required field",
   "first name...": "First name...",
   "last name...": "Last name...",
+  "first name": "First name",
+  "last name": "Last name",
+  "address": "Address",
+  "phone number": "Phone number",
   "password do not match": "Password do not match",
   "confirm password...": "Confirm password...",
   "or sign in using": "Or sign in using",
@@ -136,5 +140,12 @@
   "already have an account?": "Already have an account?",
   "forgot password": "Forgot password",
   "account": "Account",
-  "reset password": "Reset password"
+  "reset password": "Reset password",
+  "id": "Id",
+  "avatar": "Avatar",
+  "role": "Role",
+  "new user": "New user",
+  "are you sure that you want to delete user with id": "are you sure that you want to delete user with id",
+  "update user": "Update user",
+  "export csv": "Export CSV"
 }
