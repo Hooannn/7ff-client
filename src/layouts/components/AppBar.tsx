@@ -1,9 +1,8 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layout, Input, Drawer, Button, Badge, Dropdown, Tooltip, Menu, Switch, Avatar } from 'antd';
+import { Layout, Drawer, Button, Badge, Dropdown, Tooltip, Switch, Avatar } from 'antd';
 import '../../assets/styles/AppBar.css';
-import { inputStyle } from '../../assets/styles/globalStyle';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation, getI18n } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,17 +17,16 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const i18n = getI18n();
 
   const navigate = useNavigate();
-  // Fake data
-  const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
   const cartItems = [1, 2, 3];
-  const [theme, setTheme] = useState('light');
-
-  const [loading, setLoading] = useState(false);
+  const [theme, setTheme] = useState('dark');
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [activeKey, setActiveKey] = useState('home');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const onSearch = (value: string) => console.log(value);
+  const TABS = ['home', 'menu', 'sale off', 'contact us'];
+  const [activeTab, setActiveTab] = useState('home');
+
   const items: MenuProps['items'] = [
     {
       label: t('profile'),
@@ -55,39 +53,28 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
     <Layout.Header className="app-bar">
       <div className="logo-search">
         <div className="logo" onClick={() => navigate('/')}>
-          <img src="../../../appbar-logo.png" className="logo-img" />
+          <img src="/appbar-logo.png" className="logo-img" />
         </div>
         <div className="search-box">
-          <Input.Search placeholder={t('search...').toString()} allowClear style={inputStyle} size="large" loading={loading} onSearch={onSearch} />
+          <input
+            type="text"
+            placeholder={t('search...').toString()}
+            className="search-input"
+            spellCheck="false"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+          <SearchOutlined className="search-icon" />
         </div>
       </div>
 
-      <div className="tabs">
-        <Menu
-          mode="horizontal"
-          selectedKeys={[activeKey]}
-          onClick={e => setActiveKey(e.key)}
-          items={[
-            {
-              label: t('home'),
-              key: 'home',
-            },
-            {
-              label: t('menu'),
-              key: 'menu',
-            },
-            {
-              label: t('sale off'),
-              key: 'sale_off',
-            },
-            {
-              label: t('contact us'),
-              key: 'contact_us',
-            },
-          ]}
-          style={{ flex: 'auto', minWidth: 0, display: 'flex', justifyContent: 'center' }}
-        />
-      </div>
+      <ul className="tabs">
+        {TABS.map(tab => (
+          <li className={`tab-item ${activeTab === tab ? 'active' : ''}`} key={tab} onClick={() => setActiveTab(tab)}>
+            {t(tab).toUpperCase()}
+          </li>
+        ))}
+      </ul>
 
       <div className="nav-btns">
         <Tooltip title={t('change language')}>
@@ -99,13 +86,14 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
           <Switch
             checked={theme === 'dark'}
             onChange={() => setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))}
+            // onChange={() =>dispatch(toggleTheme())}
             checkedChildren="Dark"
             unCheckedChildren="Light"
           />
         </Tooltip>
 
         {!user && (
-          <Button size="large" type="primary" className="nav-btn" onClick={() => navigate('/auth')}>
+          <Button size="large" type="primary" shape="round" className="nav-btn" onClick={() => navigate('/auth')}>
             {t('sign in')}
           </Button>
         )}

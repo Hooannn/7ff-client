@@ -1,15 +1,22 @@
 import { Suspense } from 'react';
+import MainLayout from '../../layouts/Main/Main';
 import ErrorPage from '../../pages/ErrorPage';
-import RootRoute from '../../RootRoute';
+import RootRoute from '../../pages/HomePage';
 const rootRouter = [
   {
     path: '/',
     element: (
       <Suspense>
-        <RootRoute />
+        <MainLayout />
       </Suspense>
     ),
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '',
+        element: <RootRoute />,
+      },
+    ],
   },
 ];
 

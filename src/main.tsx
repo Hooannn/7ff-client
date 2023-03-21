@@ -15,9 +15,10 @@ import './libs/i18n';
 const isDev = import.meta.env.VITE_NODE_ENV === 'dev';
 const persistor = persistStore(store);
 const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ConfigProvider
-    theme={{ token: { colorPrimary: '#2D2727' } }}
+    theme={{ token: { colorPrimary: '#FFBE33', colorPrimaryHover: '#E69C00' } }}
     children={
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
