@@ -30,9 +30,17 @@ const DashboardSidebar: FC = () => {
   };
 
   return (
-    <Layout.Sider theme="light" width={250} collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+    <Layout.Sider
+      theme="dark"
+      width={250}
+      collapsible
+      collapsed={collapsed}
+      onCollapse={value => setCollapsed(value)}
+      style={{ boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.12)' }}
+    >
       <Menu
         mode="inline"
+        theme="dark"
         openKeys={openKeys}
         onOpenChange={onOpenChange}
         onClick={e => navigate(`/dashboard/${e.key}`)}
