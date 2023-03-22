@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.home-page section {
+  min-height: 100vh;
+}
+
+.home-page .banner {
+  position: relative;
+  padding: 45px 0 75px;
+  display: flex;
+  justify-content: center;
+}
+
+.banner .container {
+  padding: 0 15px;
+}
+
+.banner .banner-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel .slick-dots {
+  inset-inline-end: unset;
+}
+
+.carousel .slick-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+}
+
+.carousel .slick-dots li.slick-active {
+  width: 16px;
+}
+
+.carousel .slick-dots li.slick-active button {
+  transform: scale(1.5);
+  background-color: #ffbe33;
+}
+
+.banner .carousel-item {
+  height: max(calc(100vh - 190px), 300px);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.carousel-item .header {
+  margin: 0 0 15px 0;
+  font-family: 'Dancing Script', cursive;
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.carousel-item .description {
+  width: 50%;
+  margin-bottom: 16px;
+}
+
+.banner .order-btn {
+  padding: 12px 45px;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #ffbe33;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.banner .order-btn:hover {
+  background-color: #e69c00;
+}
