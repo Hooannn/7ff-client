@@ -152,6 +152,8 @@
   "menu": "Menu",
   "toggle theme": "Toggle theme",
   "sale off": "Sale off",
+  "about us": "About us",
+  "booking table": "booking table",
   "cart": "Cart",
   "change language": "Change language",
   "my orders": "My orders",
@@ -165,5 +167,10 @@
   "monthly data": "Monthly data",
   "breakdown": "Breakdown",
   "management": "Management",
-  "performance": "Performance"
+  "performance": "Performance",
+  "order now": "Order now",
+  "our menu": "Our menu",
+  "add to cart": "Add to cart",
+  "view more": "View more",
+  "read more": "Read more"
 }

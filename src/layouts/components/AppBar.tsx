@@ -25,7 +25,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const TABS = ['home', 'menu', 'sale off', 'contact us'];
+  const TABS = ['home', 'menu', 'about us', 'booking table'];
   const [activeTab, setActiveTab] = useState('home');
 
   const items: MenuProps['items'] = [
@@ -73,7 +73,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
         <ul className="tabs">
           {TABS.map(tab => (
             <li className={`tab-item ${activeTab === tab ? 'active' : ''}`} key={tab} onClick={() => setActiveTab(tab)}>
-              {t(tab).toUpperCase()}
+              {t(tab)}
             </li>
           ))}
         </ul>

@@ -1,18 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
-
 .home-page section {
-  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
 }
 
+/* Banner */
 .home-page .banner {
   position: relative;
   padding: 45px 0 75px;
-  display: flex;
-  justify-content: center;
-}
-
-.banner .container {
-  padding: 0 15px;
 }
 
 .banner .banner-img {
@@ -64,21 +59,121 @@
 }
 
 .banner .order-btn {
-  padding: 12px 45px;
+  height: unset !important;
+  padding: 9px 45px !important;
   margin-top: 10px;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #ffbe33;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+  text-transform: capitalize;
   transition: all 0.3s;
 }
 
-.banner .order-btn:hover {
-  background-color: #e69c00;
+/* Sale off */
+.home-page .sale-off {
+  padding: 90px 0;
+}
+
+.sale-off .daily-promotions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.daily-promotions .promotion-card {
+  flex: 1;
+  max-width: 60%;
+  padding: 20px 15px;
+  border-radius: 5px;
+  background-color: #222831;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.promotion-card .image {
+  width: 175px;
+  height: 175px;
+  border: 5px solid #ffbe33;
+  border-radius: 100%;
+  overflow: hidden;
+  transition: all 0.1 0.5s;
+}
+
+.promotion-card .description {
+  font-family: 'Dancing Script', cursive;
+  color: #fff;
+}
+
+.promotion-card .description .title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.promotion-card .description .sale-off-tag {
+  margin: 10px 0 0;
+  font-size: 1rem;
+}
+
+.promotion-card .description .sale-off-tag span {
+  font-size: 2.5rem;
+}
+
+.promotion-card .order-btn {
+  height: unset !important;
+  padding: 9px 30px !important;
+  margin-top: 10px;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+/* About us */
+.home-page .about-us {
+  padding: 90px 0;
+  background: #222831;
+}
+
+.about-us .container {
+  display: flex;
+  align-items: center;
+}
+
+.about-us .image-wrapper {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding: 0 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-us .image-wrapper img {
+  width: 100%;
+  max-width: 445px;
+}
+
+.about-us .story-wrapper {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding: 0 15px;
+  color: #fff;
+}
+
+.story-wrapper .heading {
+  margin: 0;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+
+.story-wrapper .story {
+  margin: 15px 0;
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+.story-wrapper .read-more-btn {
+  height: unset !important;
+  padding: 9px 45px !important;
+  margin-top: 15px;
+  text-transform: capitalize;
+  transition: all 0.3s;
 }
