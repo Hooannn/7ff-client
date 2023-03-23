@@ -3,8 +3,8 @@ import useTitle from '../../hooks/useTitle';
 import '../../assets/styles/HomePage.css';
 import Banner from './Banner';
 import SaleOff from './SaleOff';
-import Menu from '../../components/Menu';
 import AboutUs from './AboutUs';
+import Menu from '../../components/Menu';
 
 export default function RootRoute() {
   const { t } = useTranslation();
@@ -16,6 +16,8 @@ export default function RootRoute() {
       <SaleOff />
       <Menu noPaddingTop />
       <AboutUs />
+      {/* <BookingTable /> */}
+      {/* <CustomerFeedback /> */}x x x x x
     </div>
   );
 }
