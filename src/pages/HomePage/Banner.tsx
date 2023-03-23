@@ -1,8 +1,11 @@
 import { FC } from 'react';
-import { Carousel } from 'antd';
+import { Button, Carousel } from 'antd';
 import { containerStyle } from '../../assets/styles/globalStyle';
+import { useTranslation } from 'react-i18next';
 
 const Banner: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="banner">
       <img src="/hero-banner.jpg" className="banner-img" />
@@ -15,7 +18,9 @@ const Banner: FC = () => {
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, sint placeat. Iusto nihil eaque molestiae unde, iste ipsam illum
                 minus, quidem eveniet temporibus porro mollitia laborum. Necessitatibus voluptate libero itaque?
               </span>
-              <button className="order-btn">Order now</button>
+              <Button type="primary" shape="round" size="large" className="order-btn">
+                {t('order now')}
+              </Button>
             </div>
           </div>
           <div className="carousel-item-wrapper">
@@ -25,7 +30,9 @@ const Banner: FC = () => {
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. In consectetur ab veniam. Architecto impedit eligendi eius sit nam
                 necessitatibus placeat eum soluta distinctio tempore laborum neque amet maxime, autem nemo!
               </span>
-              <button className="order-btn">Order now</button>
+              <Button type="primary" shape="round" size="large" className="order-btn">
+                {t('order now')}
+              </Button>
             </div>
           </div>
           <div className="carousel-item-wrapper">
@@ -35,7 +42,9 @@ const Banner: FC = () => {
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. In consectetur ab veniam. Architecto impedit eligendi eius sit nam
                 necessitatibus placeat eum soluta distinctio tempore laborum neque amet maxime, autem nemo!
               </span>
-              <button className="order-btn">Order now</button>
+              <Button type="primary" shape="round" size="large" className="order-btn">
+                {t('order now')}
+              </Button>
             </div>
           </div>
         </Carousel>

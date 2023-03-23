@@ -152,6 +152,8 @@
   "menu": "Menu",
   "toggle theme": "Thay đổi chủ đề",
   "sale off": "Giảm giá",
+  "about us": "Giới thiệu",
+  "booking table": "Đặt bàn",
   "cart": "Giỏ hàng",
   "change language": "Thay đổi ngôn ngữ",
   "my orders": "Đơn hàng của tôi",
@@ -165,5 +167,10 @@
   "monthly data": "Dữ liệu theo tháng",
   "breakdown": "Chi tiết",
   "management": "Quản lý",
-  "performance": "Năng suất"
+  "performance": "Năng suất",
+  "order now": "Đăt hàng",
+  "our menu": "Thực đơn",
+  "add to cart": "Thêm vào giỏ hàng",
+  "view more": "Xem thêm",
+  "read more": "Đọc thêm"
 }

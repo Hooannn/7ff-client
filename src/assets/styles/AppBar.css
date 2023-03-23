@@ -13,7 +13,7 @@
 
 .app-bar .container {
   display: grid;
-  grid-template-columns: 22rem auto 22rem;
+  grid-template-columns: 22rem auto 20rem;
   gap: 40px;
 }
 
@@ -79,6 +79,7 @@
   position: relative;
   height: 100%;
   padding: 0 20px;
+  text-transform: uppercase;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,6 +115,7 @@
 .nav-btns .nav-btn {
   min-width: 120px;
   height: 40px;
+  text-transform: capitalize;
 }
 
 .nav-btns .nav-icon {

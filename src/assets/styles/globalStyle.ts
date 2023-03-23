@@ -25,4 +25,5 @@ export const containerStyle: CSSProperties = {
   width: '100%',
   maxWidth: '1360px',
   height: '100%',
+  padding: '0 15px',
 };
