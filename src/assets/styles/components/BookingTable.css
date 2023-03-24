@@ -1,0 +1,45 @@
+.booking-table {
+  padding: 90px 0;
+}
+
+.booking-table .heading {
+  margin: 0 0 25px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+
+.booking-table .select-wrapper {
+  padding: 4px 0;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.booking-table .select-wrapper:hover {
+  border-color: #e69c00;
+}
+
+.booking-table .date-picker {
+  width: 100%;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.booking-table .date-picker .ant-picker-suffix {
+  cursor: pointer;
+  pointer-events: initial;
+}
+
+.booking-table .book-now-btn {
+  height: unset !important;
+  padding: 9px 55px !important;
+  margin-top: 15px;
+  text-transform: capitalize;
+  transition: all 0.3s;
+}
+
+.booking-table .map-container {
+  height: 345px;
+  border-radius: 10px;
+  overflow: hidden;
+}

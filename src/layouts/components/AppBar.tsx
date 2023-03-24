@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Drawer, Button, Badge, Dropdown, Tooltip, Switch, Avatar } from 'antd';
-import '../../assets/styles/AppBar.css';
+import '../../assets/styles/components/AppBar.css';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation, getI18n } from 'react-i18next';
@@ -25,7 +25,12 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const TABS = ['home', 'menu', 'about us', 'booking table'];
+  const TABS = [
+    { label: 'home', to: '' },
+    { label: 'menu', to: '/menu' },
+    { label: 'about us', to: '/about' },
+    { label: 'booking table', to: '/booking' },
+  ];
   const [activeTab, setActiveTab] = useState('home');
 
   const items: MenuProps['items'] = [
@@ -71,9 +76,9 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
         </div>
 
         <ul className="tabs">
-          {TABS.map(tab => (
-            <li className={`tab-item ${activeTab === tab ? 'active' : ''}`} key={tab} onClick={() => setActiveTab(tab)}>
-              {t(tab)}
+          {TABS.map(({ label, to }) => (
+            <li className={`tab-item ${activeTab === label ? 'active' : ''}`} key={label} onClick={() => navigate(to)}>
+              {t(label)}
             </li>
           ))}
         </ul>

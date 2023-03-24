@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { FC } from 'react';
 import { useRouteError, useNavigate } from 'react-router-dom';
 import { layoutStyle } from '../../assets/styles/globalStyle';
-import '../../assets/styles/ErrorPage.css';
+import '../../assets/styles/pages/ErrorPage.css';
 
 const ErrorPage: FC = () => {
   const error: any = useRouteError();

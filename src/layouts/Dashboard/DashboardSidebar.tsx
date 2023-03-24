@@ -43,7 +43,7 @@ const DashboardSidebar: FC = () => {
         theme="dark"
         openKeys={openKeys}
         onOpenChange={onOpenChange}
-        onClick={e => navigate(`/dashboard/${e.key}`)}
+        onClick={e => navigate(`/dashboard${e.key}`)}
         items={[
           {
             label: t('dashboard'),
@@ -52,61 +52,61 @@ const DashboardSidebar: FC = () => {
           },
           {
             label: t('client facing'),
-            key: 'client_facing',
+            key: '/client_facing',
             icon: <UserOutlined />,
             children: [
               {
                 label: t('products'),
-                key: 'products',
+                key: '/products',
                 icon: <ShoppingCartOutlined />,
               },
               {
                 label: t('customers'),
-                key: 'customers',
+                key: '/customers',
                 icon: <UserOutlined />,
               },
               {
                 label: t('orders'),
-                key: 'orders',
+                key: '/orders',
                 icon: <FileTextOutlined />,
               },
             ],
           },
           {
             label: t('sales'),
-            key: 'sales',
+            key: '/sales',
             icon: <AreaChartOutlined />,
             children: [
               {
                 label: t('overall'),
-                key: 'overall',
+                key: '/overall',
                 icon: <LineChartOutlined />,
               },
               {
                 label: t('monthly data'),
-                key: 'monthly-data',
+                key: '/monthly-data',
                 icon: <BarChartOutlined />,
               },
               {
                 label: t('breakdown'),
-                key: 'breakdown',
+                key: '/breakdown',
                 icon: <PieChartOutlined />,
               },
             ],
           },
           {
             label: t('management'),
-            key: 'management',
+            key: '/management',
             icon: <SafetyCertificateOutlined />,
             children: [
               {
                 label: t('user'),
-                key: 'users',
+                key: '/users',
                 icon: <UsergroupAddOutlined />,
               },
               {
                 label: t('performance'),
-                key: 'performance',
+                key: '/performance',
                 icon: <RiseOutlined />,
               },
             ],

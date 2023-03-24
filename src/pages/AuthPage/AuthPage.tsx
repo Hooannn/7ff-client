@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import { Form, Input, Button, Typography, Divider, Space } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { inputStyle, buttonStyle } from '../../assets/styles/globalStyle';
-import '../../assets/styles/AuthPage.css';
+import '../../assets/styles/pages/AuthPage.css';
 import { useTranslation } from 'react-i18next';
 import useTitle from '../../hooks/useTitle';
 import useAuth from '../../services/auth';

@@ -172,9 +172,21 @@
   "our menu": "Thực đơn",
   "add to cart": "Thêm vào giỏ hàng",
   "view more": "Xem thêm",
+  "we are 7ff": "Chúng tôi là 7ff",
   "read more": "Đọc thêm",
   "opening hours": "Giờ mở cửa",
   "recruitment": "Tuyển dụng",
   "everyday": "Tất cả các ngày trong tuần",
-  "all rights reserved by 7FF": "Bản quyền thuộc về 7FF"
+  "all rights reserved by 7FF": "Bản quyền thuộc về 7FF",
+  "booking a table": "Đặt bàn",
+  "your name...": "Tên của bạn...",
+  "phone number...": "Số điện thoại...",
+  "number of guests...": "Số lượng khách hàng...",
+  "please choose number of guests": "Vui lòng chọn số lượng khách hàng",
+  "please choose the booking date": "Vui lòng chọn ngày đặt bàn",
+  "date/month/year hour:minute": "Ngày/Tháng/Năm Giờ:Phút",
+  "book now": "Đặt bàn",
+  "what our customers say": "Phản hồi của khách hàng",
+  "prev feedback": "Phản hồi trước",
+  "next feedback": "Phản hồi kế"
 }
