@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { Button } from 'antd';
-import { containerStyle } from '../../assets/styles/globalStyle';
+import { containerStyle } from '../assets/styles/globalStyle';
 import { useTranslation } from 'react-i18next';
+import '../assets/styles/components/AboutUs.css';
 
 const AboutUs: FC = () => {
   const { t } = useTranslation();
@@ -13,7 +14,7 @@ const AboutUs: FC = () => {
           <img src="/about-img.png" />
         </div>
         <div className="story-wrapper">
-          <h2 className="heading">We are 7ff</h2>
+          <h2 className="heading">{t('we are 7ff')}</h2>
           <p className="story">
             There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
             humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be

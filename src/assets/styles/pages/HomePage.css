@@ -19,21 +19,21 @@
   object-fit: cover;
 }
 
-.carousel .slick-dots {
+.banner .carousel .slick-dots {
   inset-inline-end: unset;
 }
 
-.carousel .slick-dots li button {
+.banner .carousel .slick-dots li button {
   width: 12px;
   height: 12px;
   border-radius: 100%;
 }
 
-.carousel .slick-dots li.slick-active {
+.banner .carousel .slick-dots li.slick-active {
   width: 16px;
 }
 
-.carousel .slick-dots li.slick-active button {
+.banner .carousel .slick-dots li.slick-active button {
   transform: scale(1.5);
   background-color: #ffbe33;
 }
@@ -46,14 +46,14 @@
   align-items: flex-start;
 }
 
-.carousel-item .header {
+.banner .carousel-item .header {
   margin: 0 0 15px 0;
   font-family: 'Dancing Script', cursive;
   font-size: 56px;
   font-weight: 700;
 }
 
-.carousel-item .description {
+.banner .carousel-item .description {
   width: 50%;
   margin-bottom: 16px;
 }
@@ -126,54 +126,30 @@
   transition: all 0.3s;
 }
 
-/* About us */
-.home-page .about-us {
-  padding: 90px 0;
-  background: #222831;
+/* Menu */
+.home-page .menu {
+  padding-top: 0;
 }
 
-.about-us .container {
-  display: flex;
-  align-items: center;
+/* Feedback */
+.home-page .feedback {
+  padding-bottom: 90px;
 }
 
-.about-us .image-wrapper {
-  flex: 0 0 50%;
-  max-width: 50%;
-  padding: 0 15px;
-  display: flex;
-  justify-content: center;
-}
-
-.about-us .image-wrapper img {
-  width: 100%;
-  max-width: 445px;
-}
-
-.about-us .story-wrapper {
-  flex: 0 0 50%;
-  max-width: 50%;
-  padding: 0 15px;
-  color: #fff;
-}
-
-.story-wrapper .heading {
-  margin: 0;
+.feedback .heading {
+  margin: 0 0 25px;
   font-family: 'Dancing Script', cursive;
   font-size: 2.5rem;
   text-transform: capitalize;
+  text-align: center;
 }
 
-.story-wrapper .story {
-  margin: 15px 0;
-  font-size: 1rem;
-  line-height: 24px;
+.feedback .carousel-item-wrapper {
+  width: 50% !important;
 }
 
-.story-wrapper .read-more-btn {
-  height: unset !important;
-  padding: 9px 45px !important;
-  margin-top: 15px;
-  text-transform: capitalize;
-  transition: all 0.3s;
+.feedback .btns {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

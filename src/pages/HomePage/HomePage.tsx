@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import useTitle from '../../hooks/useTitle';
-import '../../assets/styles/HomePage.css';
+import '../../assets/styles/pages/HomePage.css';
 import Banner from './Banner';
 import SaleOff from './SaleOff';
-import AboutUs from './AboutUs';
+import Feedback from './Feedback';
 import Menu from '../../components/Menu';
+import AboutUs from '../../components/AboutUs';
+import BookingTable from '../../components/BookingTable';
 
 export default function RootRoute() {
   const { t } = useTranslation();
@@ -14,10 +16,10 @@ export default function RootRoute() {
     <div className="home-page">
       <Banner />
       <SaleOff />
-      <Menu noPaddingTop />
+      <Menu />
       <AboutUs />
-      {/* <BookingTable /> */}
-      {/* <CustomerFeedback /> */}x x x x x
+      <BookingTable />
+      <Feedback />
     </div>
   );
 }

@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { containerStyle } from '../assets/styles/globalStyle';
-import '../assets/styles/Menu.css';
+import '../assets/styles/components/Menu.css';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 
 interface IProps {
-  noPaddingTop?: boolean;
+  isMenuPage?: boolean;
 }
 
-const Menu: FC<IProps> = ({ noPaddingTop }) => {
+const Menu: FC<IProps> = ({ isMenuPage }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -18,9 +18,9 @@ const Menu: FC<IProps> = ({ noPaddingTop }) => {
   const [activeTab, setActiveTab] = useState('all');
 
   return (
-    <section className="menu" style={{ paddingTop: noPaddingTop ? 0 : '' }}>
+    <section className="menu">
       <div className="container" style={containerStyle}>
-        <h2 className="header">{t('our menu')}</h2>
+        <h2 className="heading">{t('our menu')}</h2>
         <ul className="filters-menu">
           {TABS.map(tab => (
             <li className={`filters-item ${activeTab === tab ? 'active' : ''}`} key={tab} onClick={() => setActiveTab(tab)}>
@@ -109,11 +109,14 @@ const Menu: FC<IProps> = ({ noPaddingTop }) => {
             </div>
           </div>
         </div>
-        <div style={{ marginTop: 45, display: 'flex', justifyContent: 'center' }}>
-          <Button type="primary" shape="round" size="large" className="view-more-btn" onClick={() => navigate('/menu')}>
-            {t('view more')}
-          </Button>
-        </div>
+
+        {!isMenuPage && (
+          <div style={{ marginTop: 45, display: 'flex', justifyContent: 'center' }}>
+            <Button type="primary" shape="round" size="large" className="view-more-btn" onClick={() => navigate('/menu')}>
+              {t('view more')}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

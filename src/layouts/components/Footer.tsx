@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Layout } from 'antd';
-import '../../assets/styles/Footer.css';
+import '../../assets/styles/components/Footer.css';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import { useTranslation } from 'react-i18next';
 import { FacebookOutlined, InstagramOutlined, MailOutlined, PhoneOutlined, UsergroupAddOutlined, YoutubeOutlined } from '@ant-design/icons';

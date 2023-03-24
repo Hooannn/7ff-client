@@ -1,8 +1,8 @@
 .menu {
-  padding-bottom: 90px;
+  padding: 90px 0;
 }
 
-.menu .header {
+.menu .heading {
   margin: 0;
   text-align: center;
   font-family: 'Dancing Script', cursive;
