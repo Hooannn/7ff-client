@@ -50,6 +50,16 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
     },
   ];
 
+  const getMenuItems = () => {
+    if (user.role === 'Admin' || user.role === 'SuperAdmin')
+      items.unshift({
+        label: t('Dashboard'),
+        key: 'dashboard',
+        onClick: () => navigate('/dashboard'),
+      });
+    return items;
+  };
+
   return (
     <Layout.Header className="app-bar">
       <div style={containerStyle} className="container">
@@ -127,7 +137,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
               >
                 Display cart items && Checkout btn
               </Drawer>
-              <Dropdown menu={{ items }}>
+              <Dropdown menu={{ items: getMenuItems() }}>
                 <img src={user.avatar} className="user-avatar" />
               </Dropdown>
             </>

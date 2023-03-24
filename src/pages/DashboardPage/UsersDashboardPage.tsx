@@ -1,8 +1,8 @@
-import { Col, Row, Button } from 'antd';
+import { Col, Row, Button, DatePicker, Input } from 'antd';
 import { useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
+import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
 import AddUserModal from '../../components/dashboard/users/AddUserModal';
 import UsersTable from '../../components/dashboard/users/UsersTable';
 import { IUser } from '../../types';
@@ -11,7 +11,7 @@ import { exportToCSV } from '../../utils/export-csv';
 import UpdateUserModal from '../../components/dashboard/users/UpdateUserModal';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
-  const { fetchUsersQuery, users, addUserMutation, deleteUserMutation, updateUserMutation } = useUsers();
+  const { fetchUsersQuery, users, total, addUserMutation, deleteUserMutation, updateUserMutation, current, setCurrent } = useUsers();
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
@@ -64,7 +64,17 @@ export default function UsersDashboardPage() {
             </Button>
           </Col>
         </Row>
+        {/*<Row>
+          <Col>
+            <Input.Search style={inputStyle} allowClear placeholder={t('search').toString()} />
+          </Col>
+          <Col>
+            <DatePicker.RangePicker style={inputStyle} />
+          </Col>
+          <Col></Col>
+  </Row>*/}
         <UsersTable
+          total={total as number}
           onDelete={onDeleteUser}
           onSelectUser={user => {
             setSelectedUser(user);
@@ -72,6 +82,8 @@ export default function UsersDashboardPage() {
           }}
           isLoading={fetchUsersQuery.isLoading || deleteUserMutation.isLoading || addUserMutation.isLoading || updateUserMutation.isLoading}
           users={users}
+          current={current}
+          setCurrent={setCurrent}
         />
       </Col>
     </Row>
