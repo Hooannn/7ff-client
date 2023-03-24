@@ -5,14 +5,17 @@ import { IUser } from '../../../types';
 import { useTranslation } from 'react-i18next';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
-
+import dayjs from '../../../libs/dayjs';
 interface UsersTableProps {
   isLoading: boolean;
+  total: number;
   users: IUser[];
+  current: number;
+  setCurrent: (value: number) => void;
   onDelete: (userId: string) => void;
   onSelectUser: (user: IUser) => void;
 }
-const UsersTable: React.FC<UsersTableProps> = ({ isLoading, users, onDelete, onSelectUser }) => {
+const UsersTable: React.FC<UsersTableProps> = ({ current, setCurrent, isLoading, users, onDelete, onSelectUser, total }) => {
   const { t } = useTranslation();
   const onDeleteBtnClick = (userId: string) => {
     Modal.confirm({
@@ -36,6 +39,10 @@ const UsersTable: React.FC<UsersTableProps> = ({ isLoading, users, onDelete, onS
     });
   };
   const onUpdateBtnClick = (user: IUser) => onSelectUser(user);
+  const onChange = (values: any) => {
+    const { current } = values;
+    setCurrent(current);
+  };
   const columns: ColumnsType<IUser> = [
     {
       title: t('id'),
@@ -44,6 +51,20 @@ const UsersTable: React.FC<UsersTableProps> = ({ isLoading, users, onDelete, onS
       render: text => (
         <span>
           {text || (
+            <small>
+              <em>{t('not updated yet')}</em>
+            </small>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: t('created at'),
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: text => (
+        <span>
+          {dayjs(text).format('DD/MM/YYYY') || (
             <small>
               <em>{t('not updated yet')}</em>
             </small>
@@ -163,7 +184,14 @@ const UsersTable: React.FC<UsersTableProps> = ({ isLoading, users, onDelete, onS
   ];
   return (
     <>
-      <Table style={{ width: '100%' }} loading={isLoading} columns={columns} dataSource={users} />
+      <Table
+        style={{ width: '100%' }}
+        onChange={onChange}
+        loading={isLoading}
+        columns={columns}
+        dataSource={users}
+        pagination={{ pageSize: 8, total, current }}
+      />
     </>
   );
 };
