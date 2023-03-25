@@ -3,7 +3,7 @@ import { getI18n } from 'react-i18next';
 import cookies from './cookies';
 
 export const axiosIns = axios.create({
-  baseURL: /*import.meta.env.VITE_API_ENDPOINT || */ 'https://sevenfastfood-be.onrender.com'
+  baseURL: /*import.meta.env.VITE_API_ENDPOINT || */ 'https://sevenfastfood-be.onrender.com',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
