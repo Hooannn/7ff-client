@@ -188,5 +188,11 @@
   "book now": "Đặt bàn",
   "what our customers say": "Phản hồi của khách hàng",
   "prev feedback": "Phản hồi trước",
-  "next feedback": "Phản hồi kế"
+  "next feedback": "Phản hồi kế",
+  "all": "Tất cả",
+  "sort by order": "Sắp xếp theo",
+  "search by role": "Theo vai trò",
+  "search by creation date": "Theo ngày tạo",
+  "search by email": "Tìm kiếm theo email",
+  "reset": "Đặt lại"
 }

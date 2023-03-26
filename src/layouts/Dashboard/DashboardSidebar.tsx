@@ -9,10 +9,7 @@ import {
   PieChartOutlined,
   LineChartOutlined,
   BarChartOutlined,
-  RiseOutlined,
-  SafetyCertificateOutlined,
   AreaChartOutlined,
-  UsergroupAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -62,7 +59,7 @@ const DashboardSidebar: FC = () => {
               },
               {
                 label: t('customers'),
-                key: '/customers',
+                key: '/users',
                 icon: <UserOutlined />,
               },
               {
@@ -91,23 +88,6 @@ const DashboardSidebar: FC = () => {
                 label: t('breakdown'),
                 key: '/breakdown',
                 icon: <PieChartOutlined />,
-              },
-            ],
-          },
-          {
-            label: t('management'),
-            key: '/management',
-            icon: <SafetyCertificateOutlined />,
-            children: [
-              {
-                label: t('user'),
-                key: '/users',
-                icon: <UsergroupAddOutlined />,
-              },
-              {
-                label: t('performance'),
-                key: '/performance',
-                icon: <RiseOutlined />,
               },
             ],
           },

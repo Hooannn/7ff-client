@@ -188,5 +188,11 @@
   "book now": "Book now",
   "what our customers say": "What our customers say",
   "prev feedback": "Prev feedback",
-  "next feedback": "Next feedback"
+  "next feedback": "Next feedback",
+  "all": "All",
+  "sort by order": "Sort by order",
+  "search by role": "Search by role",
+  "search by creation date": "Search by creation date",
+  "search by email": "Search by email",
+  "reset": "Reset"
 }
