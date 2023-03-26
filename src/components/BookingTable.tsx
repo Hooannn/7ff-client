@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Button, DatePicker, Form, Input, Select } from 'antd';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import { containerStyle, inputStyle } from '../assets/styles/globalStyle';
 import dayjs from 'dayjs';
 import '../assets/styles/components/BookingTable.css';
@@ -9,7 +9,7 @@ import localeVN from 'antd/es/date-picker/locale/vi_VN';
 
 const BookingTable: FC = () => {
   const { t } = useTranslation();
-  const language = 'vi'; //Get current language from i18
+  const language = getI18n().resolvedLanguage;
 
   return (
     <section className="booking-table">

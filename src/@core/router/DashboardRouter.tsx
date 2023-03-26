@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import DashboardLayout from '../../layouts/Dashboard';
-import { DashboardPage, UsersDashboardPage, AdminPage } from '../../pages/DashboardPage';
+import { DashboardPage, UsersDashboardPage } from '../../pages/DashboardPage';
 import ErrorPage from '../../pages/ErrorPage';
 import AuthProtector from '../../components/AuthProtector';
 const dashboardRouter = [
@@ -20,10 +20,6 @@ const dashboardRouter = [
       {
         path: 'users',
         element: <UsersDashboardPage />,
-      },
-      {
-        path: 'admin',
-        element: <AdminPage />,
       },
     ],
   },

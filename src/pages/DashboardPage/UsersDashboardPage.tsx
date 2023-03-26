@@ -2,20 +2,35 @@ import { Col, Row, Button, DatePicker, Input } from 'antd';
 import { useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
+import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
 import AddUserModal from '../../components/dashboard/users/AddUserModal';
 import UsersTable from '../../components/dashboard/users/UsersTable';
 import { IUser } from '../../types';
 import useUsers from '../../services/users';
 import { exportToCSV } from '../../utils/export-csv';
 import UpdateUserModal from '../../components/dashboard/users/UpdateUserModal';
+import SortAndFilter from '../../components/dashboard/users/SortAndFilter';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
-  const { fetchUsersQuery, users, total, addUserMutation, deleteUserMutation, updateUserMutation, current, setCurrent } = useUsers();
+  const {
+    fetchUsersQuery,
+    users,
+    total,
+    addUserMutation,
+    deleteUserMutation,
+    updateUserMutation,
+    current,
+    setCurrent,
+    buildQuery,
+    onFilterSearch,
+    searchUsersQuery,
+    onResetFilterSearch,
+  } = useUsers();
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const { t } = useTranslation();
+
   const onAddUser = (values: IUser) => {
     addUserMutation.mutateAsync(values).finally(() => setAddModelOpen(false));
   };
@@ -64,15 +79,7 @@ export default function UsersDashboardPage() {
             </Button>
           </Col>
         </Row>
-        {/*<Row>
-          <Col>
-            <Input.Search style={inputStyle} allowClear placeholder={t('search').toString()} />
-          </Col>
-          <Col>
-            <DatePicker.RangePicker style={inputStyle} />
-          </Col>
-          <Col></Col>
-  </Row>*/}
+        <SortAndFilter onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
         <UsersTable
           total={total as number}
           onDelete={onDeleteUser}
@@ -80,7 +87,13 @@ export default function UsersDashboardPage() {
             setSelectedUser(user);
             setUpdateModalOpen(true);
           }}
-          isLoading={fetchUsersQuery.isLoading || deleteUserMutation.isLoading || addUserMutation.isLoading || updateUserMutation.isLoading}
+          isLoading={
+            searchUsersQuery.isLoading ||
+            fetchUsersQuery.isLoading ||
+            deleteUserMutation.isLoading ||
+            addUserMutation.isLoading ||
+            updateUserMutation.isLoading
+          }
           users={users}
           current={current}
           setCurrent={setCurrent}
