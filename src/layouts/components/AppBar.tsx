@@ -2,13 +2,15 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Drawer, Button, Badge, Dropdown, Tooltip, Switch, Avatar } from 'antd';
 import '../../assets/styles/components/AppBar.css';
-import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { DashboardOutlined, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation, getI18n } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
 import { containerStyle } from '../../assets/styles/globalStyle';
+import { setTheme } from '../../slices/app.slice';
+
 interface IProps {
   isDashboard?: boolean;
 }
@@ -21,7 +23,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
   const cartItems = [1, 2, 3];
-  const [theme, setTheme] = useState('dark');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -31,8 +32,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
     { label: 'about us', to: '/about' },
     { label: 'booking table', to: '/booking' },
   ];
-  const [activeTab, setActiveTab] = useState('home');
-
+  const { theme, activeTab } = useSelector((state: RootState) => state.app);
   const items: MenuProps['items'] = [
     {
       label: t('profile'),
@@ -94,13 +94,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
           </Tooltip>
 
           <Tooltip title={t('toggle theme')}>
-            <Switch
-              checked={theme === 'dark'}
-              onChange={() => setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))}
-              // onChange={() =>dispatch(toggleTheme())}
-              checkedChildren="Dark"
-              unCheckedChildren="Light"
-            />
+            <Switch checked={theme === 'dark'} onChange={() => dispatch(setTheme())} checkedChildren="Dark" unCheckedChildren="Light" />
           </Tooltip>
 
           {!user && (
@@ -110,9 +104,9 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
           )}
 
           {!isDashboard && user?.role === 'Admin' && (
-            <Button type="dashed" style={{ marginRight: '20px' }} onClick={() => navigate('/dashboard')}>
-              Go to dashboard
-            </Button>
+            <Tooltip title={t('go to dashboard')}>
+              <DashboardOutlined onClick={() => navigate('/dashboard')} className="nav-icon" style={{ color: 'white' }} />
+            </Tooltip>
           )}
 
           {user && (

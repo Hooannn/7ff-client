@@ -9,10 +9,10 @@
   text-transform: capitalize;
 }
 
-.booking-table .select-wrapper {
-  padding: 4px 0;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
+.booking-table .ant-select-selector {
+  height: unset !important;
+  padding: 4px 11px !important;
+  border-radius: 4px !important;
 }
 
 .booking-table .select-wrapper:hover {
@@ -39,7 +39,7 @@
 }
 
 .booking-table .map-container {
-  height: 345px;
+  height: 339px;
   border-radius: 10px;
   overflow: hidden;
 }

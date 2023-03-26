@@ -14,7 +14,7 @@ export const store = configureStore({
       },
       authReducer,
     ),
-    appReducer: persistReducer(
+    app: persistReducer(
       {
         key: 'app',
         version: 1,

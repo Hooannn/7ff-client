@@ -11,6 +11,14 @@ const BookingTable: FC = () => {
   const { t } = useTranslation();
   const language = getI18n().resolvedLanguage;
 
+  const numberOfGuestOptions = (min: number, max: number) => {
+    const options = [];
+    for (let i = min; i <= max; i++) {
+      options.push({ value: i, label: i });
+    }
+    return options;
+  };
+
   return (
     <section className="booking-table">
       <div className="container" style={containerStyle}>
@@ -31,7 +39,10 @@ const BookingTable: FC = () => {
                 name="phoneNumber"
                 rules={[
                   { required: true, message: t('required').toString() },
-                  //   Validate sdt
+                  {
+                    pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+                    message: t('invalid phone number').toString(),
+                  },
                 ]}
               >
                 <Input size="large" placeholder={t('phone number...').toString()} style={inputStyle} />
@@ -47,9 +58,13 @@ const BookingTable: FC = () => {
                 <Input size="large" spellCheck={false} placeholder="Email..." style={inputStyle} />
               </Form.Item>
               <Form.Item name="noOfGuests" rules={[{ required: true, message: t('please choose number of guests').toString() }]}>
-                <div className="select-wrapper">
-                  <Select size="large" placeholder={t('number of guests...')} bordered={false}></Select>
-                </div>
+                <Select
+                  size="large"
+                  placeholder={t('number of guests...')}
+                  bordered={true}
+                  options={numberOfGuestOptions(1, 10)}
+                  className="number-of-guests"
+                />
               </Form.Item>
               <Form.Item name="bookingDate" rules={[{ required: true, message: t('please choose the booking date').toString() }]}>
                 <DatePicker
