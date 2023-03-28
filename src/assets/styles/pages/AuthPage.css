@@ -1,9 +1,20 @@
 .auth-page {
+  position: relative;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-size: cover;
+}
+
+.auth-page .abs-btns {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .auth-page .auth-form {

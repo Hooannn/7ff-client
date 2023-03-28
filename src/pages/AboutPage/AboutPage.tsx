@@ -18,7 +18,7 @@ const AboutPage: FC = () => {
 
   return (
     <div className="about-page">
-      <AboutUs />
+      <AboutUs isAboutPage />
     </div>
   );
 };
