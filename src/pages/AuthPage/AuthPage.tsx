@@ -1,12 +1,15 @@
 import { FC, useState, useEffect } from 'react';
-import { Form, Input, Button, Typography, Divider, Space } from 'antd';
+import { Form, Input, Button, Typography, Divider, Space, Tooltip, Switch, Avatar } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { inputStyle, buttonStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/AuthPage.css';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import useTitle from '../../hooks/useTitle';
 import useAuth from '../../services/auth';
 import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../@core/store';
+import { setTheme } from '../../slices/app.slice';
 type FormType = 'signIn' | 'signUp' | 'forgot' | 'reset';
 interface FormProps {
   isLoading?: boolean;
@@ -200,8 +203,11 @@ const AuthPage: FC = () => {
   const [formType, setFormType] = useState<FormType>('signIn');
   const { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation } = useAuth();
   const [query, setQuery] = useSearchParams();
+  const theme = useSelector((state: RootState) => state.app.theme);
+  const dispatch = useDispatch();
 
   const { t } = useTranslation();
+  const i18n = getI18n();
   useTitle(`${t('account').toString()} - 7FF`);
 
   const onSignIn = async (values: any) => {
@@ -243,6 +249,16 @@ const AuthPage: FC = () => {
   }, [query]);
   return (
     <div className="auth-page">
+      <div className="abs-btns">
+        <Tooltip title={t('toggle theme')}>
+          <Switch checked={theme === 'dark'} onChange={() => dispatch(setTheme())} checkedChildren="Dark" unCheckedChildren="Light" />
+        </Tooltip>
+        <Tooltip title={t('change language')}>
+          {i18n.resolvedLanguage === 'en' && <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>}
+          {i18n.resolvedLanguage === 'vi' && <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>}
+        </Tooltip>
+      </div>
+
       <Form layout="vertical" className="auth-form" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
         {formType === 'signIn' && <SignInInputs setFormType={setFormType} isLoading={signInMutation.isLoading} />}
         {formType === 'signUp' && <SignUpInputs isLoading={signUpMutation.isLoading} />}

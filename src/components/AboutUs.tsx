@@ -3,9 +3,15 @@ import { Button } from 'antd';
 import { containerStyle } from '../assets/styles/globalStyle';
 import { useTranslation } from 'react-i18next';
 import '../assets/styles/components/AboutUs.css';
+import { useNavigate } from 'react-router-dom';
 
-const AboutUs: FC = () => {
+interface IProps {
+  isAboutPage?: boolean;
+}
+
+const AboutUs: FC<IProps> = ({ isAboutPage }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <section className="about-us">
@@ -20,9 +26,11 @@ const AboutUs: FC = () => {
             humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be
             sure there isn't anything embarrassing hidden in the middle of text. All
           </p>
-          <Button type="primary" shape="round" size="large" className="read-more-btn">
-            {t('read more')}
-          </Button>
+          {!isAboutPage && (
+            <Button type="primary" shape="round" size="large" className="read-more-btn" onClick={() => navigate('/about')}>
+              {t('read more')}
+            </Button>
+          )}
         </div>
       </div>
     </section>
