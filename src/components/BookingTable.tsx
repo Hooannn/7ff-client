@@ -73,7 +73,7 @@ const BookingTable: FC = () => {
                   placeholder={t('date/month/year hour:minute').toString()}
                   className="date-picker"
                   showTime={{ format: 'HH:mm' }}
-                  format="date/month/year hour:minute"
+                  format="DD/MM/YYYY HH:mm"
                   disabledDate={current => current && current < dayjs().endOf('day')}
                   disabledTime={() => ({
                     disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 23],

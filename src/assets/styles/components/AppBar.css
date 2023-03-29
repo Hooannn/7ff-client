@@ -149,10 +149,17 @@
   gap: 24px;
 }
 
+.cart-content .cart-progress {
+  font-size: 1rem;
+}
+
+.cart-content .cart-progress .ant-progress-bg {
+  height: 4px !important;
+}
+
 .cart-items .cart-item {
   width: 100%;
   display: flex;
-  align-items: center;
   gap: 20px;
 }
 
@@ -166,7 +173,7 @@
 }
 
 .cart-item .item-name {
-  margin: 0;
+  margin: 0 0 8px;
   font-size: 1rem;
   font-weight: 700;
   display: -webkit-box;
