@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layout, Drawer, Button, Badge, Dropdown, Tooltip, Switch, Avatar, Divider, Image, Space } from 'antd';
+import { Layout, Drawer, Button, Badge, Dropdown, Tooltip, Switch, Avatar, Divider, Image, Space, Progress } from 'antd';
 import '../../assets/styles/components/AppBar.css';
 import { DashboardOutlined, DeleteOutlined, LockOutlined, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -10,17 +10,10 @@ import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import { addToCart, decreaseCartItem, removeCartItem, resetCart, setTheme } from '../../slices/app.slice';
+import { IDetailedItem } from '../../types';
 
 interface IProps {
   isDashboard?: boolean;
-}
-
-interface IDetailedItem {
-  productId: string;
-  quantity: number;
-  name: string;
-  price: number;
-  image: string;
 }
 
 const TABS = [
@@ -195,6 +188,26 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                     </div>
                   ) : (
                     <>
+                      <div className="cart-progress">
+                        {totalPrice < 300000 ? (
+                          <>
+                            <span>{t('buy')} </span>
+                            <strong>{`₫${(300000 - totalPrice).toLocaleString('en-US')}`}</strong>
+                            <span> {t('more to get free shipping')}</span>
+                          </>
+                        ) : (
+                          <span>{t('your order is free shipping now')}</span>
+                        )}
+                        <Progress
+                          percent={(totalPrice / 300000) * 100}
+                          size="small"
+                          showInfo={false}
+                          strokeColor="#1a1a1a"
+                          trailColor="rgba(26, 26, 26, 0.3)"
+                          style={{ marginBottom: 0 }}
+                        />
+                      </div>
+                      <Divider style={{ margin: '12px 0', borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                       <div className="cart-items">
                         {DETAILED_CART_ITEMS.map((item: IDetailedItem) => (
                           <div key={item.productId} className="cart-item">
@@ -203,7 +216,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                             </div>
                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
                               <h4 className="item-name">{item.name}</h4>
-                              <p className="item-price">{item.price * item.quantity}</p>
+                              <p className="item-price">{(item.price * item.quantity).toLocaleString('en-US')}</p>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                               <Space.Compact className="item-quantity">
@@ -231,7 +244,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                       <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                       <div className="cart-footer">
                         <h5 className="total-price">
-                          <span>{t('total')}:</span>
+                          <span>{t('subtotal')}:</span>
                           <span>{`${totalPrice.toLocaleString('en-US')} VND`}</span>
                         </h5>
                         <p>{t('VAT included, shipping fee not covered')}.</p>
@@ -239,7 +252,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                           <Button type="primary" shape="round" className="see-cart-btn" onClick={() => navigate('/cart')}>
                             {t('view my cart')}
                           </Button>
-                          <Button shape="round" className="checkout-btn" onClick={() => navigate('/checkout')}>
+                          <Button shape="round" className="checkout-btn" onClick={() => navigate('/sales/checkout')}>
                             <LockOutlined />
                             {t('checkout')}
                           </Button>
