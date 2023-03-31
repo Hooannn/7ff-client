@@ -13,6 +13,7 @@ Cart: https://hyperwork.vn/
 ## Stacks:
 
 - React(core): https://vi.reactjs.org/ (Tiếng Việt)
+- Typescript(core): https://www.typescriptlang.org/docs/handbook/utility-types.html
 - Antd(React UI library): https://ant.design/components/overview/
 - React-toolkit(React global state management): https://redux-toolkit.js.org/tutorials/overview
 - React-query(Implement API call faster): https://tanstack.com/query/v3/docs/react/overview
