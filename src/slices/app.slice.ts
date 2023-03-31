@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 type ITheme = 'light' | 'dark';
-type IActiveTab = 'home' | 'menu' | 'about us' | 'booking table';
+type IActiveTab = 'home' | 'menu' | 'about us' | 'booking table' | null;
 interface IProductItem {
   productId: string;
   quantity: number;

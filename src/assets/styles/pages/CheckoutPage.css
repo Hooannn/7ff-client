@@ -51,9 +51,7 @@
   padding: 18px 30px;
   border: none;
   border-radius: 5px;
-  color: #fff !important;
   font-weight: 500;
-  background-color: #1a1a1a;
   text-transform: capitalize;
 }
 
@@ -132,8 +130,6 @@
   padding: 12px 20px;
   border: none;
   text-transform: capitalize;
-  color: #fff !important;
-  background-color: #1a1a1a;
   border-radius: 5px;
 }
 
