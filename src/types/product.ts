@@ -20,3 +20,11 @@ export interface IProduct {
   viewsCount?: number;
   featuredImages?: string[];
 }
+
+export interface IDetailedItem {
+  productId: string;
+  quantity: number;
+  name: string;
+  price: number;
+  image: string;
+}
