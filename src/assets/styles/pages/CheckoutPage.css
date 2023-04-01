@@ -136,3 +136,9 @@
 .checkout-page .cart-items .submit-coupon-btn:hover {
   background-color: #3c3c3c;
 }
+
+.checkout-page .ant-input:hover,
+.checkout-page .ant-input:focus {
+  box-shadow: none;
+  border-color: #1a1a1a;
+}
