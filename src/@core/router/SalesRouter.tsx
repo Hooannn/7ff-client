@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import FragmentLayout from '../../layouts/Fragment';
 import CheckoutPage from '../../pages/CheckoutPage';
 import ErrorPage from '../../pages/ErrorPage';
+import AuthProtector from '../../components/AuthProtector';
 
 const salesRouter = [
   {
@@ -15,7 +16,7 @@ const salesRouter = [
     children: [
       {
         path: 'checkout',
-        element: <CheckoutPage />,
+        element: <AuthProtector children={<CheckoutPage />} redirect="/auth" />,
       },
     ],
   },
