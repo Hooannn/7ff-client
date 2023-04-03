@@ -4,6 +4,17 @@
   justify-content: center;
 }
 
+.cart-page .continue-btn {
+  height: unset !important;
+  padding: 9px 40px !important;
+  text-transform: capitalize;
+  transition: all 0.3s;
+}
+
+.cart-page .continue-btn:hover {
+  background-color: #3c3c3c;
+}
+
 .cart-page .heading-and-progress {
   display: flex;
   flex-direction: column;
