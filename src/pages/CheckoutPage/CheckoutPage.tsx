@@ -1,16 +1,18 @@
 import { FC, useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Avatar, Button, Divider, Form, Input, Radio, Space, Switch, Tooltip, Image, Badge, ConfigProvider } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { FormInstance } from 'antd/es/form';
 import useTitle from '../../hooks/useTitle';
+import toastConfig from '../../configs/toast';
 import { containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../@core/store';
 import { IDetailedItem } from '../../types';
 import { setTheme } from '../../slices/app.slice';
 import '../../assets/styles/pages/CheckoutPage.css';
+import { toast } from 'react-toastify';
 
 interface IPrice {
   totalPrice: number;
@@ -85,6 +87,11 @@ const CheckoutPage: FC = () => {
   const onFinish = (value: any) => {
     console.log(value);
   };
+
+  if (cartItems.length <= 0) {
+    toast(t('your cart is currently empty, you cannot access checkout page'), toastConfig('error'));
+    return <Navigate to="/cart" />;
+  }
 
   return (
     <ConfigProvider

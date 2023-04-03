@@ -222,5 +222,17 @@
   "more to get free shipping": "more to get free shipping",
   "your order is free shipping now": "Your order is free shipping now",
   "my cart": "My cart",
-  "order notes...": "Order notes..."
+  "order notes...": "Order notes...",
+  "your cart is currently empty, you cannot access checkout page": "Your cart is currently empty, you cannot access checkout page",
+  "feature image": "Feature image",
+  "product's name": "Product's name",
+  "unit price": "Unit price",
+  "quantity": "Quantity",
+  "edit account": "Edit account",
+  "welcome": "Welcome",
+  "account details": "Account details",
+  "change password": "Change password",
+  "change avatar": "Change avatar",
+  "delete account": "Delete account",
+  "update account": "Update account"
 }

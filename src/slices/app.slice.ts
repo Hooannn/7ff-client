@@ -7,13 +7,11 @@ interface IProductItem {
 }
 export interface AppState {
   theme: ITheme;
-  activeTab: IActiveTab;
   cartItems: IProductItem[];
 }
 
 const initialState: AppState = {
   theme: 'dark',
-  activeTab: 'home',
   cartItems: [],
 };
 
@@ -23,9 +21,6 @@ export const appSlice = createSlice({
   reducers: {
     setTheme: state => {
       state.theme = state.theme === 'light' ? 'dark' : 'light';
-    },
-    setActiveTab: (state, { payload }: { payload: IActiveTab }) => {
-      state.activeTab = payload;
     },
     addToCart: (state, { payload }: { payload: string }) => {
       const foundItem = state.cartItems.find(item => item.productId === payload);
@@ -55,6 +50,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setTheme, setActiveTab, addToCart, decreaseCartItem, removeCartItem, resetCart } = appSlice.actions;
+export const { setTheme, addToCart, decreaseCartItem, removeCartItem, resetCart } = appSlice.actions;
 
 export default appSlice.reducer;
