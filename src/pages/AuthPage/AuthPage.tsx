@@ -1,15 +1,17 @@
 import { FC, useState, useEffect } from 'react';
+import { Navigate, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getI18n, useTranslation } from 'react-i18next';
 import { Form, Input, Button, Typography, Divider, Space, Tooltip, Switch, Avatar } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { inputStyle, buttonStyle } from '../../assets/styles/globalStyle';
-import '../../assets/styles/pages/AuthPage.css';
-import { getI18n, useTranslation } from 'react-i18next';
-import useTitle from '../../hooks/useTitle';
 import useAuth from '../../services/auth';
-import { useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import useTitle from '../../hooks/useTitle';
+import toastConfig from '../../configs/toast';
 import { RootState } from '../../@core/store';
 import { setTheme } from '../../slices/app.slice';
+import { inputStyle, buttonStyle } from '../../assets/styles/globalStyle';
+import '../../assets/styles/pages/AuthPage.css';
 type FormType = 'signIn' | 'signUp' | 'forgot' | 'reset';
 interface FormProps {
   isLoading?: boolean;
@@ -204,6 +206,7 @@ const AuthPage: FC = () => {
   const { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation } = useAuth();
   const [query, setQuery] = useSearchParams();
   const theme = useSelector((state: RootState) => state.app.theme);
+  const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -247,6 +250,12 @@ const AuthPage: FC = () => {
       setFormType(query.get('type') as FormType);
     }
   }, [query]);
+
+  if (user) {
+    toast(t('you have already logged in'), toastConfig('error'));
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="auth-page">
       <div className="abs-btns">

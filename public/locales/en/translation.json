@@ -234,5 +234,6 @@
   "change password": "Change password",
   "change avatar": "Change avatar",
   "delete account": "Delete account",
-  "update account": "Update account"
+  "update account": "Update account",
+  "you have already logged in": "You have already logged in"
 }

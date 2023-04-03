@@ -234,5 +234,6 @@
   "change password": "Đổi mật khẩu",
   "change avatar": "Đổi ảnh đại diện",
   "delete account": "Xóa tài khoản",
-  "update account": "Cập nhật tài khoản"
+  "update account": "Cập nhật tài khoản",
+  "you have already logged in": "Bạn đã đăng nhập rồi"
 }
