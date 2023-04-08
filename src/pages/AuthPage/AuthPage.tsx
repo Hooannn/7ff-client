@@ -206,7 +206,7 @@ const AuthPage: FC = () => {
   const { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation } = useAuth();
   const [query, setQuery] = useSearchParams();
   const theme = useSelector((state: RootState) => state.app.theme);
-  const user = useSelector((state: RootState) => state.auth.user);
+  const isLogged = useSelector((state: RootState) => state.auth.isLogged);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -251,7 +251,7 @@ const AuthPage: FC = () => {
     }
   }, [query]);
 
-  if (user) {
+  if (isLogged) {
     toast(t('you have already logged in'), toastConfig('error'));
     return <Navigate to="/" />;
   }

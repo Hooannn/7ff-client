@@ -186,6 +186,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ current, setCurrent, isLoading,
     <>
       <Table
         style={{ width: '100%' }}
+        rowKey={(record: IUser) => record._id}
         onChange={onChange}
         loading={isLoading}
         columns={columns}

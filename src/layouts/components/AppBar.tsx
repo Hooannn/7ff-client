@@ -1,16 +1,16 @@
 import { FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation, getI18n } from 'react-i18next';
 import { Layout, Button, Badge, Dropdown, Tooltip, Switch, Avatar } from 'antd';
-import '../../assets/styles/components/AppBar.css';
 import { DashboardOutlined, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { useTranslation, getI18n } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import CartDrawer from './CartDrawer';
 import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
-import { containerStyle } from '../../assets/styles/globalStyle';
 import { setTheme } from '../../slices/app.slice';
-import CartDrawer from './CartDrawer';
+import { containerStyle } from '../../assets/styles/globalStyle';
+import '../../assets/styles/components/AppBar.css';
 
 interface IProps {
   isDashboard?: boolean;

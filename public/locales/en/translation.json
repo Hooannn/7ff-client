@@ -235,5 +235,6 @@
   "change avatar": "Change avatar",
   "delete account": "Delete account",
   "update account": "Update account",
-  "you have already logged in": "You have already logged in"
+  "you have already logged in": "You have already logged in",
+  "login session expired, please login again": "Login session expired, please login again"
 }
