@@ -3,10 +3,13 @@ import type { IUser } from '../types';
 import cookies from '../libs/cookies';
 export interface AuthState {
   isLogged: boolean;
-  user: IUser;
+  user: IUser | null;
 }
 
-const initialState: Partial<AuthState> = {};
+const initialState: Partial<AuthState> = {
+  isLogged: false,
+  user: null,
+};
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -18,8 +21,8 @@ export const authSlice = createSlice({
       state.isLogged = payload;
     },
     signOut: () => {
-      cookies.remove('access_token');
-      cookies.remove('refresh_token');
+      cookies.remove('access_token', { path: '/' });
+      cookies.remove('refresh_token', { path: '/' });
       return initialState;
     },
   },
