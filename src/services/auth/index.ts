@@ -3,6 +3,7 @@ import toastConfig from '../../configs/toast';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import cookies from '../../libs/cookies';
+import dayjs from '../../libs/dayjs';
 import { onError } from '../../utils/error-handlers';
 import { IResponseData, IUser } from '../../types';
 import { useNavigate } from 'react-router-dom';
@@ -27,8 +28,8 @@ export default () => {
       const redirectPath = cookies.get('redirect_path') || '/';
       toast(res.data.message, toastConfig('success'));
       const { accessToken, refreshToken, user } = res.data.data;
-      cookies.set('access_token', accessToken);
-      cookies.set('refresh_token', refreshToken);
+      cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs().add(30, 'day').toISOString()) });
+      cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs().add(30, 'day').toISOString()) });
       dispatch(setLogged(true));
       dispatch(setUser(user));
       navigate(redirectPath as string);

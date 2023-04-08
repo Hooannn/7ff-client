@@ -49,7 +49,7 @@ export default function AuthProtector({ children, redirect, adminOnly }: AuthPro
     } else return redirectFn();
   } else {
     if (adminOnly) {
-      const isAdmin = auth.user.role === 'Admin' || auth.user.role === 'SuperAdmin';
+      const isAdmin = auth.user?.role === 'Admin' || auth.user?.role === 'SuperAdmin';
       if (isAdmin) return <>{children}</>;
       else return redirectFn();
     } else return <>{children}</>;
