@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { onError } from '../../utils/error-handlers';
 import { IResponseData, IUser } from '../../types';
 import { useEffect, useState } from 'react';
+import useAxiosIns from '../../hooks/useAxiosIns';
 const SORT_MAPPING = {
   '-createdAt': { createdAt: -1 },
   createdAt: { createdAt: 1 },
@@ -20,6 +21,7 @@ export default () => {
   const [query, setQuery] = useState<string>('');
   const [sort, setSort] = useState<string>('');
   const queryClient = useQueryClient();
+  const axios2 = useAxiosIns();
 
   const buildQuery = (values: { searchString: string; sort: string; role: string; range: string[] | any[] | undefined }) => {
     const { searchString, sort, role, range } = values;
@@ -69,7 +71,7 @@ export default () => {
 
   const fetchUsersQuery = useQuery(['users', current], {
     queryFn: () => {
-      if (!isSearching) return axios.get<IResponseData<IUser[]>>(`/users?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
+      if (!isSearching) return axios2.get<IResponseData<IUser[]>>(`/users?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
     },
     keepPreviousData: true,
     onError: onError,

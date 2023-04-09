@@ -58,7 +58,7 @@ const DashboardSidebar: FC = () => {
                 icon: <ShoppingCartOutlined />,
               },
               {
-                label: t('customers'),
+                label: t('users'),
                 key: '/users',
                 icon: <UserOutlined />,
               },

@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/Main/Main';
 import ErrorPage from '../../pages/ErrorPage';
 import AuthProtector from '../../components/AuthProtector';
 import { Navigate } from 'react-router-dom';
-import ProfilePage from '../../pages/ProfilePage';
+import { AccountEditPage, ChangeAvatarPage } from '../../pages/ProfilePage';
 
 const profileRouter = [
   {
@@ -21,7 +21,11 @@ const profileRouter = [
       },
       {
         path: 'edit',
-        element: <ProfilePage />,
+        element: <AccountEditPage />,
+      },
+      {
+        path: 'change-avatar',
+        element: <ChangeAvatarPage />,
       },
     ],
   },

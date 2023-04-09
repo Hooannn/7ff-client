@@ -14,15 +14,24 @@
   gap: 48px;
 }
 
-.update-account-form .form-heading {
+.update-avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.update-account-form .form-heading,
+.update-avatar-wrapper .heading {
   margin: 0 0 24px;
   font-family: 'Oswald', sans-serif;
   font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
+  align-self: flex-start;
 }
 
-.update-account-form .update-account-btn {
+.update-account-form .update-account-btn,
+.update-avatar-wrapper .change-avatar-btn {
   height: unset !important;
   padding: 12px 0 !important;
   margin-top: 15px;
@@ -30,4 +39,21 @@
   font-weight: 500;
   text-transform: capitalize;
   transition: all 0.3s;
+}
+
+.update-avatar-wrapper .avatar-uploader {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.update-avatar-wrapper .ant-upload-select {
+  width: 202px !important;
+  height: 202px !important;
+  margin: 0 !important;
+}
+
+.update-avatar-wrapper .ant-avatar-image {
+  width: 190px !important;
+  height: 190px !important;
 }
