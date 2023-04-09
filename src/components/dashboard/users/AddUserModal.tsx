@@ -85,7 +85,7 @@ export const AddUserForm = ({ form, onSubmit }: { form: FormInstance; onSubmit: 
           </div>
         )}
       </Upload>
-      <Form autoComplete="off" layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+      <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
         <Form.Item
           name="firstName"
           rules={[
@@ -145,6 +145,7 @@ export const AddUserForm = ({ form, onSubmit }: { form: FormInstance; onSubmit: 
             prefix={<LockOutlined className="site-form-item-icon" />}
             placeholder={t('password...').toString()}
             style={inputStyle}
+            autoComplete="new-password"
           />
         </Form.Item>
         <Form.Item name="role" label={t('role')} initialValue={'User'}>
