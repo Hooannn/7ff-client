@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { getI18n } from 'react-i18next';
 import cookies from './cookies';
+import dayjs from 'dayjs';
 
 export const axiosIns = axios.create({
-  baseURL: /*import.meta.env.VITE_API_ENDPOINT || */ 'http://localhost:5000',
+  baseURL: /*import.meta.env.VITE_API_ENDPOINT || */ 'https://sevenfastfood-be.onrender.com',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -25,7 +26,7 @@ const refreshToken = async () =>
       .then(res => {
         const { accessToken } = res.data?.data;
         if (accessToken) {
-          cookies.set('access_token', accessToken);
+          cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs().add(30, 'day').toISOString()) });
           resolve(accessToken);
         } else {
           window.location.href = '/auth';

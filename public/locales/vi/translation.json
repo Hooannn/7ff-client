@@ -236,5 +236,6 @@
   "delete account": "Xóa tài khoản",
   "update account": "Cập nhật tài khoản",
   "you have already logged in": "Bạn đã đăng nhập rồi",
-  "login session expired, please login again": "Phiên đăng nhập hết hạn, vui lòng đăng nhập lại"
+  "login session expired, please login again": "Phiên đăng nhập hết hạn, vui lòng đăng nhập lại",
+  "users": "Người dùng"
 }
