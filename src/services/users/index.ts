@@ -12,7 +12,7 @@ const SORT_MAPPING = {
   '-updatedAt': { updatedAt: -1 },
   updatedAt: { updatedAt: 1 },
 };
-export default () => {
+export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
   const ITEM_PER_PAGE = 8; // default
   const [users, setUsers] = useState<IUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -75,6 +75,7 @@ export default () => {
     },
     keepPreviousData: true,
     onError: onError,
+    enabled: enabledFetchUsers,
     onSuccess: res => {
       if (!res) return;
       const users = res.data.data;
@@ -102,6 +103,14 @@ export default () => {
     onError: onError,
   });
 
+  const updateProfileMutation = useMutation({
+    mutationFn: ({ data }: { data: IUser }) => axios.patch<IResponseData<IUser>>(`/users/profile`, data),
+    onSuccess: res => {
+      toast(res.data.message, toastConfig('success'));
+    },
+    onError: onError,
+  });
+
   const deleteUserMutation = useMutation({
     mutationFn: (userId: string) => axios.delete<IResponseData<unknown>>(`/users?id=${userId}`),
     onSuccess: res => {
@@ -123,6 +132,7 @@ export default () => {
     buildQuery,
     onFilterSearch,
     onResetFilterSearch,
+    updateProfileMutation,
     searchUsersQuery,
   };
 };

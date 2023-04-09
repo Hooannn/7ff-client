@@ -25,7 +25,7 @@ export default function UsersDashboardPage() {
     onFilterSearch,
     searchUsersQuery,
     onResetFilterSearch,
-  } = useUsers();
+  } = useUsers({ enabledFetchUsers: true });
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);

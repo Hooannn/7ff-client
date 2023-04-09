@@ -15,7 +15,7 @@ import { setUser } from '../../slices/auth.slice';
 const ChangeAvatarPage: FC = () => {
   const { t } = useTranslation();
   const { uploadMutation } = useFiles();
-  const { updateUserMutation } = useUsers();
+  const { updateProfileMutation } = useUsers({ enabledFetchUsers: false });
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.auth.user);
@@ -34,7 +34,7 @@ const ChangeAvatarPage: FC = () => {
   };
 
   const updateAvatar = () => {
-    updateUserMutation.mutate({ userId: user._id, data: { ...user, avatar } });
+    updateProfileMutation.mutate({ data: { ...user, avatar } });
     dispatch(setUser({ ...user, avatar }));
   };
 

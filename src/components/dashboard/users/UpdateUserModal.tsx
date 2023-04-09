@@ -90,7 +90,7 @@ export const UpdateUserForm = ({ form, onSubmit, user }: { form: FormInstance; o
           </div>
         )}
       </Upload>
-      <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+      <Form autoComplete="off" layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
         <Form.Item
           name="firstName"
           rules={[
