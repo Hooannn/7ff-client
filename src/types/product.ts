@@ -28,3 +28,11 @@ export interface IDetailedItem {
   price: number;
   image: string;
 }
+
+export interface IVoucher {
+  _id: string;
+  code: string;
+  discountType: 'percent' | 'amount';
+  discountAmount: number;
+  expiredDate?: string;
+}

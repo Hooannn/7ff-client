@@ -237,5 +237,18 @@
   "update account": "Update account",
   "you have already logged in": "You have already logged in",
   "login session expired, please login again": "Login session expired, please login again",
-  "users": "Users"
+  "users": "Users",
+  "vouchers": "Vouchers",
+  "filter": "Filter",
+  "finish": "Finish",
+  "code": "Code",
+  "discount type": "Discount type",
+  "discount amount": "Discount amount",
+  "expired date": "Expired date",
+  "percent": "Percent",
+  "amount": "Amount",
+  "update voucher": "Update voucher",
+  "new voucher": "New voucher",
+  "search by code": "Search by code",
+  "search by discount type": "Search by discount type"
 }

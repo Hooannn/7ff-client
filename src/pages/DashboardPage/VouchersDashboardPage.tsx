@@ -3,58 +3,58 @@ import { useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
-import AddUserModal from '../../components/dashboard/users/AddUserModal';
-import UsersTable from '../../components/dashboard/users/UsersTable';
-import { IUser } from '../../types';
-import useUsers from '../../services/users';
+import AddVoucherModal from '../../components/dashboard/vouchers/AddVoucherModal';
+import VouchersTable from '../../components/dashboard/vouchers/VouchersTable';
+import { IVoucher } from '../../types';
+import useVouchers from '../../services/vouchers';
 import { exportToCSV } from '../../utils/export-csv';
-import UpdateUserModal from '../../components/dashboard/users/UpdateUserModal';
-import SortAndFilter from '../../components/dashboard/users/SortAndFilter';
+import UpdateVoucherModal from '../../components/dashboard/vouchers/UpdateVoucherModal';
+import SortAndFilter from '../../components/dashboard/vouchers/SortAndFilter';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
   const {
-    fetchUsersQuery,
-    users,
+    fetchVouchersQuery,
+    vouchers,
     total,
-    addUserMutation,
-    deleteUserMutation,
-    updateUserMutation,
+    addVoucherMutation,
+    deleteVoucherMutation,
+    updateVoucherMutation,
     current,
     setCurrent,
     buildQuery,
     onFilterSearch,
-    searchUsersQuery,
+    searchVouchersQuery,
     onResetFilterSearch,
-  } = useUsers({ enabledFetchUsers: true });
+  } = useVouchers({ enabledFetchVouchers: true });
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const [selectedVoucher, setSelectedVoucher] = useState<IVoucher | null>(null);
   const { t } = useTranslation();
 
-  const onAddUser = (values: IUser) => {
-    addUserMutation.mutateAsync(values).finally(() => setAddModelOpen(false));
+  const onAddVoucher = (values: IVoucher) => {
+    addVoucherMutation.mutateAsync(values).finally(() => setAddModelOpen(false));
   };
-  const onUpdateUser = (values: IUser) => {
-    updateUserMutation.mutateAsync({ userId: selectedUser?._id as string, data: values }).finally(() => setUpdateModalOpen(false));
+  const onUpdateVoucher = (values: IVoucher) => {
+    updateVoucherMutation.mutateAsync({ voucherId: selectedVoucher?._id as string, data: values }).finally(() => setUpdateModalOpen(false));
   };
-  const onDeleteUser = (userId: string) => {
-    deleteUserMutation.mutate(userId);
+  const onDeleteVoucher = (userId: string) => {
+    deleteVoucherMutation.mutate(userId);
   };
 
-  const onExportToCSV = () => exportToCSV(users, `7FF_Users_${Date.now()}`);
+  const onExportToCSV = () => exportToCSV(vouchers, `7FF_Vouchers_${Date.now()}`);
 
   return (
     <Row>
-      <UpdateUserModal
-        isLoading={updateUserMutation.isLoading}
-        onSubmit={onUpdateUser}
-        user={selectedUser}
+      <UpdateVoucherModal
+        isLoading={updateVoucherMutation.isLoading}
+        onSubmit={onUpdateVoucher}
+        voucher={selectedVoucher}
         shouldOpen={shouldUpdateModalOpen}
         onCancel={() => setUpdateModalOpen(false)}
       />
-      <AddUserModal
-        onSubmit={onAddUser}
-        isLoading={addUserMutation.isLoading}
+      <AddVoucherModal
+        onSubmit={onAddVoucher}
+        isLoading={addVoucherMutation.isLoading}
         shouldOpen={shouldAddModalOpen}
         onCancel={() => setAddModelOpen(false)}
       />
@@ -62,7 +62,7 @@ export default function UsersDashboardPage() {
       <Col span={24}>
         <Row align="middle">
           <Col span={12}>
-            <h2>{t('user')}</h2>
+            <h2>{t('vouchers')}</h2>
           </Col>
           <Col span={12}>
             <Row align="middle" justify="end" gutter={8}>
@@ -90,21 +90,21 @@ export default function UsersDashboardPage() {
           </Col>
         </Row>
 
-        <UsersTable
+        <VouchersTable
           total={total as number}
-          onDelete={onDeleteUser}
-          onSelectUser={user => {
-            setSelectedUser(user);
+          onDelete={onDeleteVoucher}
+          onSelectVoucher={voucher => {
+            setSelectedVoucher(voucher);
             setUpdateModalOpen(true);
           }}
           isLoading={
-            searchUsersQuery.isLoading ||
-            fetchUsersQuery.isLoading ||
-            deleteUserMutation.isLoading ||
-            addUserMutation.isLoading ||
-            updateUserMutation.isLoading
+            searchVouchersQuery.isLoading ||
+            fetchVouchersQuery.isLoading ||
+            deleteVoucherMutation.isLoading ||
+            addVoucherMutation.isLoading ||
+            updateVoucherMutation.isLoading
           }
-          users={users}
+          vouchers={vouchers}
           current={current}
           setCurrent={setCurrent}
         />

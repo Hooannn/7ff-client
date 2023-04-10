@@ -10,6 +10,7 @@ import {
   LineChartOutlined,
   BarChartOutlined,
   AreaChartOutlined,
+  TagsOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -66,6 +67,11 @@ const DashboardSidebar: FC = () => {
                 label: t('orders'),
                 key: '/orders',
                 icon: <FileTextOutlined />,
+              },
+              {
+                label: t('vouchers'),
+                key: '/vouchers',
+                icon: <TagsOutlined />,
               },
             ],
           },
