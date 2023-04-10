@@ -158,6 +158,7 @@
   "cart": "Cart",
   "your cart is empty": "Your cart is empty",
   "reset cart": "Reset cart",
+  "are you sure that you want to remove all items from cart ?": "Are you sure that you want to remove all items from cart ?",
   "delete item": "Delete item",
   "total": "Total",
   "VAT included, shipping fee not covered": "VAT included, shipping fee not covered",
@@ -250,5 +251,9 @@
   "update voucher": "Update voucher",
   "new voucher": "New voucher",
   "search by code": "Search by code",
-  "search by discount type": "Search by discount type"
+  "search by discount type": "Search by discount type",
+  "current password...": "Current password...",
+  "new password...": "New password...",
+  "please enter your current password": "Please enter your current password",
+  "please enter your new password": "Please enter your new password"
 }

@@ -121,8 +121,8 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                 </Badge>
               </Tooltip>
               <CartDrawer isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
-              <Dropdown menu={{ items }}>
-                <img src={user.avatar} className="user-avatar" />
+              <Dropdown menu={{ items }} placement="bottom" arrow>
+                <img src={user.avatar} className="user-avatar" onClick={() => navigate('/profile/edit')} />
               </Dropdown>
             </>
           )}

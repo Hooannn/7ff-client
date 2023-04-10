@@ -1,16 +1,20 @@
 import { FC, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, Input } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import useTitle from '../../hooks/useTitle';
+import useUsers from '../../services/users';
+import ProfileSidebar from '../../components/ProfileSidebar';
 import { RootState } from '../../@core/store';
+import { setUser } from '../../slices/auth.slice';
 import { containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/ProfilePage.css';
-import ProfileSidebar from '../../components/ProfileSidebar';
 
 const ProfilePage: FC = () => {
   const { t } = useTranslation();
+  const { updateProfileMutation } = useUsers({ enabledFetchUsers: false });
+  const dispatch = useDispatch();
 
   useTitle(`${t('edit account')} - 7FF`);
   useEffect(() => {
@@ -28,8 +32,9 @@ const ProfilePage: FC = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
   const formRef = useRef<FormInstance>(null);
-  const onFinish = (value: any) => {
-    console.log(value);
+  const onFinish = (values: any) => {
+    updateProfileMutation.mutate({ data: { ...user, ...values } });
+    dispatch(setUser({ ...user, ...values }));
   };
 
   return (

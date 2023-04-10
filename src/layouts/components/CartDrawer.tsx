@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Drawer, Progress, Image, Space, Tooltip } from 'antd';
+import { Avatar, Button, Divider, Drawer, Progress, Image, Space, Tooltip, Modal } from 'antd';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,8 @@ import { RootState } from '../../@core/store';
 import { addToCart, decreaseCartItem, removeCartItem, resetCart } from '../../slices/app.slice';
 import { useNavigate } from 'react-router-dom';
 import { IDetailedItem } from '../../types';
-import { DeleteOutlined, LockOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
+import { buttonStyle } from '../../assets/styles/globalStyle';
 
 interface IProps {
   isCartOpen: boolean;
@@ -60,6 +61,28 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
     }, 0);
   }, [DETAILED_CART_ITEMS]);
 
+  const handleResetCartBtnClick = () => {
+    Modal.confirm({
+      icon: <ExclamationCircleFilled />,
+      title: t('are you sure that you want to remove all items from cart ?'),
+      okText: t('delete'),
+      cancelText: t('cancel'),
+      onOk: () => {
+        dispatch(resetCart());
+      },
+      okButtonProps: {
+        danger: true,
+        shape: 'round',
+        style: { ...buttonStyle, width: '100px', marginLeft: '12px' },
+      },
+      cancelButtonProps: {
+        type: 'text',
+        shape: 'round',
+        style: { ...buttonStyle, width: '100px' },
+      },
+    });
+  };
+
   return (
     <Drawer
       open={isCartOpen}
@@ -68,7 +91,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
       }}
       title={t('cart')}
       contentWrapperStyle={{ width: 600 }}
-      extra={cartItems.length !== 0 && <Button onClick={() => dispatch(resetCart())}>{t('reset cart')}</Button>}
+      extra={cartItems.length !== 0 && <Button onClick={handleResetCartBtnClick}>{t('reset cart')}</Button>}
     >
       <div className={`cart-content ${cartItems.length === 0 ? 'no-items' : ''}`}>
         {cartItems.length === 0 ? (
