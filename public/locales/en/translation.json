@@ -158,6 +158,7 @@
   "cart": "Cart",
   "your cart is empty": "Your cart is empty",
   "reset cart": "Reset cart",
+  "are you sure that you want to remove all items from cart ?": "Are you sure that you want to remove all items from cart ?",
   "delete item": "Delete item",
   "total": "Total",
   "VAT included, shipping fee not covered": "VAT included, shipping fee not covered",
@@ -237,5 +238,9 @@
   "update account": "Update account",
   "you have already logged in": "You have already logged in",
   "login session expired, please login again": "Login session expired, please login again",
-  "users": "Users"
+  "users": "Users",
+  "current password...": "Current password...",
+  "new password...": "New password...",
+  "please enter your current password": "Please enter your current password",
+  "please enter your new password": "Please enter your new password"
 }

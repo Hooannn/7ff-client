@@ -111,6 +111,15 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     onError: onError,
   });
 
+  const updatePasswordMutation = useMutation({
+    mutationFn: ({ currentPassword, newPassword }: { currentPassword: string; newPassword: string }) =>
+      axios.patch<IResponseData<IUser>>(`/users/change-password`, { currentPassword, newPassword }),
+    onSuccess: res => {
+      toast(res.data.message, toastConfig('success'));
+    },
+    onError: onError,
+  });
+
   const deleteUserMutation = useMutation({
     mutationFn: (userId: string) => axios.delete<IResponseData<unknown>>(`/users?id=${userId}`),
     onSuccess: res => {
@@ -133,6 +142,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     onFilterSearch,
     onResetFilterSearch,
     updateProfileMutation,
+    updatePasswordMutation,
     searchUsersQuery,
   };
 };
