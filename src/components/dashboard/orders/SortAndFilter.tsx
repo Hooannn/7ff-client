@@ -7,6 +7,7 @@ import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import localeUS from 'antd/es/date-picker/locale/en_US';
 import localeVN from 'antd/es/date-picker/locale/vi_VN';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
+import { IOrder } from '../../../types';
 interface SortAndFilterProps {
   onChange: (params: SortAndFilterChangeParams) => void;
   onSearch: () => void;
@@ -14,18 +15,18 @@ interface SortAndFilterProps {
 }
 
 interface SortAndFilterChangeParams {
-  searchString: string;
+  customerId: string;
+  status: IOrder['status'] | string;
   sort: string;
-  role: string;
   range: string[] | any[] | undefined;
 }
 
 export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFilterProps) {
   const { t } = useTranslation();
-  const [searchString, setSearchString] = useState<string>('');
+  const [customerId, setCustomerId] = useState<string>('');
   const [filterCount, setFilterCount] = useState<number>(0);
   const [sort, setSort] = useState<string>('-createdAt');
-  const [role, setRole] = useState<string>('All');
+  const [status, setStatus] = useState<IOrder['status'] | string>('All');
   const [rangePickerDate, setRangePickerDate] = useState<any[]>([]);
   const [range, setRange] = useState<string[] | any[]>();
   const i18n = getI18n();
@@ -36,9 +37,9 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
   };
 
   const onInternalReset = () => {
-    setSearchString('');
+    setCustomerId('');
     setSort('-createdAt');
-    setRole('All');
+    setStatus('All');
     setRangePickerDate([]);
     setFilterCount(0);
     onReset();
@@ -46,13 +47,13 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
 
   const onInternalSearch = () => {
     onSearch();
-    if (!searchString && sort === '-createdAt' && role === 'All' && !range?.length) return setFilterCount(0);
+    if (!customerId && sort === '-createdAt' && status === 'All' && !range?.length) return setFilterCount(0);
     setFilterCount(1);
   };
 
   useEffect(() => {
-    onChange({ searchString, sort, role, range });
-  }, [searchString, sort, role, range]);
+    onChange({ customerId, sort, status, range });
+  }, [customerId, sort, status, range]);
 
   const content = () => {
     return (
@@ -60,14 +61,8 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
         <Col span={24}>
           <Space direction="vertical">
             <div>
-              <div>{t('search by email')}</div>
-              <Input
-                value={searchString}
-                size="large"
-                allowClear
-                placeholder={t('search').toString()}
-                onChange={e => setSearchString(e.target.value)}
-              />
+              <div>{t('search by customer id')}</div>
+              <Input value={customerId} size="large" allowClear placeholder={t('search').toString()} onChange={e => setCustomerId(e.target.value)} />
             </div>
             <div>
               <div>{t('search by creation date')}</div>
@@ -80,11 +75,13 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
               />
             </div>
             <div>
-              <div>{t('search by role')}</div>
-              <Select value={role} size="large" defaultValue="All" style={{ width: '100%' }} onChange={value => setRole(value)}>
+              <div>{t('search by order status')}</div>
+              <Select value={status} size="large" defaultValue="All" style={{ width: '100%' }} onChange={value => setStatus(value)}>
                 <Select.Option value="All">{t('all')}</Select.Option>
-                <Select.Option value="Admin">Admin</Select.Option>
-                <Select.Option value="User">User</Select.Option>
+                <Select.Option value="Processing">{t('processing')}</Select.Option>
+                <Select.Option value="Delivering">{t('delivering')}</Select.Option>
+                <Select.Option value="Done">{t('done')}</Select.Option>
+                <Select.Option value="Cancelled">{t('cancelled')}</Select.Option>
               </Select>
             </div>
             <div>

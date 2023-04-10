@@ -16,7 +16,7 @@ interface SortAndFilterProps {
 interface SortAndFilterChangeParams {
   searchString: string;
   sort: string;
-  role: string;
+  discountType: string;
   range: string[] | any[] | undefined;
 }
 
@@ -25,7 +25,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
   const [searchString, setSearchString] = useState<string>('');
   const [filterCount, setFilterCount] = useState<number>(0);
   const [sort, setSort] = useState<string>('-createdAt');
-  const [role, setRole] = useState<string>('All');
+  const [discountType, setDiscountType] = useState<string>('All');
   const [rangePickerDate, setRangePickerDate] = useState<any[]>([]);
   const [range, setRange] = useState<string[] | any[]>();
   const i18n = getI18n();
@@ -38,7 +38,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
   const onInternalReset = () => {
     setSearchString('');
     setSort('-createdAt');
-    setRole('All');
+    setDiscountType('All');
     setRangePickerDate([]);
     setFilterCount(0);
     onReset();
@@ -46,13 +46,13 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
 
   const onInternalSearch = () => {
     onSearch();
-    if (!searchString && sort === '-createdAt' && role === 'All' && !range?.length) return setFilterCount(0);
+    if (!searchString && sort === '-createdAt' && discountType === 'All' && !range?.length) return setFilterCount(0);
     setFilterCount(1);
   };
 
   useEffect(() => {
-    onChange({ searchString, sort, role, range });
-  }, [searchString, sort, role, range]);
+    onChange({ searchString, sort, discountType, range });
+  }, [searchString, sort, discountType, range]);
 
   const content = () => {
     return (
@@ -60,12 +60,12 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
         <Col span={24}>
           <Space direction="vertical">
             <div>
-              <div>{t('search by email')}</div>
+              <div>{t('search by code')}</div>
               <Input
                 value={searchString}
                 size="large"
                 allowClear
-                placeholder={t('search').toString()}
+                placeholder={t('code').toString()}
                 onChange={e => setSearchString(e.target.value)}
               />
             </div>
@@ -80,11 +80,11 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
               />
             </div>
             <div>
-              <div>{t('search by role')}</div>
-              <Select value={role} size="large" defaultValue="All" style={{ width: '100%' }} onChange={value => setRole(value)}>
+              <div>{t('search by discount type')}</div>
+              <Select value={discountType} size="large" defaultValue="All" style={{ width: '100%' }} onChange={value => setDiscountType(value)}>
                 <Select.Option value="All">{t('all')}</Select.Option>
-                <Select.Option value="Admin">Admin</Select.Option>
-                <Select.Option value="User">User</Select.Option>
+                <Select.Option value="amount">{t('amount')}</Select.Option>
+                <Select.Option value="percent">{t('percent')}</Select.Option>
               </Select>
             </div>
             <div>
