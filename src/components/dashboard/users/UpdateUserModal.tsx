@@ -118,10 +118,17 @@ export const UpdateUserForm = ({ form, onSubmit, user }: { form: FormInstance; o
             style={inputStyle}
           />
         </Form.Item>
-        <Form.Item name="phoneNumber">
+        <Form.Item
+          name="phoneNumber"
+          rules={[
+            {
+              pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+              message: t('invalid phone number').toString(),
+            },
+          ]}
+        >
           <Input
             size="large"
-            type="number"
             prefix={<PhoneOutlined className="site-form-item-icon" />}
             spellCheck={false}
             placeholder={t('phone number') + '...'}
