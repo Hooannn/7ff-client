@@ -12,7 +12,7 @@ const ChangePasswordPage: FC = () => {
   const { updatePasswordMutation } = useUsers({ enabledFetchUsers: false });
   const [form] = Form.useForm();
 
-  useTitle(`${t('edit account')} - 7FF`);
+  useTitle(`${t('change password')} - 7FF`);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

@@ -21,7 +21,8 @@
 }
 
 .update-account-form .form-heading,
-.update-avatar-wrapper .heading {
+.update-avatar-wrapper .heading,
+.my-orders .heading {
   margin: 0 0 24px;
   font-family: 'Oswald', sans-serif;
   font-size: 2rem;
@@ -56,4 +57,44 @@
 .update-avatar-wrapper .ant-avatar-image {
   width: 190px !important;
   height: 190px !important;
+}
+
+.empty-order {
+  height: 450px;
+  padding: 45px 30px;
+  border-radius: 6px;
+  background: url('/empty-order-bg.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.empty-order .empty-order-discover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.empty-order .empty-order-discover h2,
+.empty-order .empty-order-discover h3 {
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+}
+
+.empty-order .empty-order-discover .start-order-btn {
+  height: unset !important;
+  padding: 10px 32px;
+  margin-top: 16px;
+  border-width: 2px;
+  color: #475c01;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.empty-order-discover .start-order-btn:hover {
+  border-color: #475c01;
 }
