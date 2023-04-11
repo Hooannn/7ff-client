@@ -5,6 +5,7 @@ import AuthProtector from '../../components/AuthProtector';
 import { Navigate } from 'react-router-dom';
 import { AccountEditPage, ChangeAvatarPage } from '../../pages/ProfilePage';
 import ChangePasswordPage from '../../pages/ProfilePage/ChangePasswordPage';
+import MyOrdersPage from '../../pages/ProfilePage/MyOrdersPage';
 
 const profileRouter = [
   {
@@ -31,6 +32,10 @@ const profileRouter = [
       {
         path: 'change-password',
         element: <ChangePasswordPage />,
+      },
+      {
+        path: 'orders',
+        element: <MyOrdersPage />,
       },
     ],
   },

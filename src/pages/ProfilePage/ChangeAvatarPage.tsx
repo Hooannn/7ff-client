@@ -21,7 +21,7 @@ const ChangeAvatarPage: FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [avatar, setAvatar] = useState(user?.avatar);
 
-  useTitle(`${t('edit account')} - 7FF`);
+  useTitle(`${t('change avatar')} - 7FF`);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
