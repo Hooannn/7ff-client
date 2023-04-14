@@ -1,6 +1,13 @@
 import { Suspense } from 'react';
 import DashboardLayout from '../../layouts/Dashboard';
-import { DashboardPage, UsersDashboardPage, ProductsDashboardPage, OrdersDashboardPage, VouchersDashboardPage } from '../../pages/DashboardPage';
+import {
+  DashboardPage,
+  UsersDashboardPage,
+  ProductsDashboardPage,
+  OrdersDashboardPage,
+  VouchersDashboardPage,
+  CategoriesDashboardPage,
+} from '../../pages/DashboardPage';
 import ErrorPage from '../../pages/ErrorPage';
 import AuthProtector from '../../components/AuthProtector';
 const dashboardRouter = [
@@ -32,6 +39,10 @@ const dashboardRouter = [
       {
         path: 'orders',
         element: <OrdersDashboardPage />,
+      },
+      {
+        path: 'categories',
+        element: <CategoriesDashboardPage />,
       },
     ],
   },
