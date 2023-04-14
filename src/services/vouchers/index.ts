@@ -1,4 +1,3 @@
-import axios from '../../libs/axios';
 import toastConfig from '../../configs/toast';
 import { toast } from 'react-toastify';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
@@ -21,7 +20,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
   const [query, setQuery] = useState<string>('');
   const [sort, setSort] = useState<string>('');
   const queryClient = useQueryClient();
-  const axios2 = useAxiosIns();
+  const axios = useAxiosIns();
 
   const buildQuery = (values: { searchString: string; sort: string; discountType: string; range: string[] | any[] | undefined }) => {
     const { searchString, sort, discountType, range } = values;
@@ -73,7 +72,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
 
   const fetchVouchersQuery = useQuery(['vouchers', current], {
     queryFn: () => {
-      if (!isSearching) return axios2.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
+      if (!isSearching) return axios.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
     },
     keepPreviousData: true,
     onError: onError,

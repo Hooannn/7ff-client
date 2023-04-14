@@ -1,4 +1,3 @@
-import axios from '../../libs/axios';
 import toastConfig from '../../configs/toast';
 import { toast } from 'react-toastify';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
@@ -21,7 +20,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
   const [query, setQuery] = useState<string>('');
   const [sort, setSort] = useState<string>('');
   const queryClient = useQueryClient();
-  const axios2 = useAxiosIns();
+  const axios = useAxiosIns();
 
   const buildQuery = (values: { customerId: string; status: IOrder['status'] | string; sort: string; range: string[] | any[] | undefined }) => {
     const { customerId, sort, range, status } = values;
@@ -71,7 +70,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
 
   const fetchOrdersQuery = useQuery(['orders', current], {
     queryFn: () => {
-      if (!isSearching) return axios2.get<IResponseData<IOrder[]>>(`/orders?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
+      if (!isSearching) return axios.get<IResponseData<IOrder[]>>(`/orders?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
     },
     keepPreviousData: true,
     onError: onError,

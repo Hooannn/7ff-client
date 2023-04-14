@@ -1,4 +1,3 @@
-import axios from '../../libs/axios';
 import toastConfig from '../../configs/toast';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
@@ -9,6 +8,7 @@ import { IResponseData, IUser } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setLogged } from '../../slices/auth.slice';
+import useAxiosIns from '../../hooks/useAxiosIns';
 interface SignInResponse {
   accessToken: string;
   refreshToken: string;
@@ -19,6 +19,7 @@ interface SignUpResponse {
   password: string;
 }
 export default () => {
+  const axios = useAxiosIns();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const signInMutation = useMutation({
