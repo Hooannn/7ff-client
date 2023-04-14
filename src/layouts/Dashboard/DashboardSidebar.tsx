@@ -11,6 +11,7 @@ import {
   BarChartOutlined,
   AreaChartOutlined,
   TagsOutlined,
+  ClusterOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -57,6 +58,11 @@ const DashboardSidebar: FC = () => {
                 label: t('products'),
                 key: '/products',
                 icon: <ShoppingCartOutlined />,
+              },
+              {
+                label: t('categories'),
+                key: '/categories',
+                icon: <ClusterOutlined />,
               },
               {
                 label: t('users'),
