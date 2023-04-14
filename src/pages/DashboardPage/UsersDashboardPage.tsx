@@ -98,8 +98,8 @@ export default function UsersDashboardPage() {
             setUpdateModalOpen(true);
           }}
           isLoading={
-            searchUsersQuery.isLoading ||
-            fetchUsersQuery.isLoading ||
+            searchUsersQuery.isFetching ||
+            fetchUsersQuery.isFetching ||
             deleteUserMutation.isLoading ||
             addUserMutation.isLoading ||
             updateUserMutation.isLoading

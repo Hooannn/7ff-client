@@ -98,8 +98,8 @@ export default function UsersDashboardPage() {
             setUpdateModalOpen(true);
           }}
           isLoading={
-            searchVouchersQuery.isLoading ||
-            fetchVouchersQuery.isLoading ||
+            searchVouchersQuery.isFetching ||
+            fetchVouchersQuery.isFetching ||
             deleteVoucherMutation.isLoading ||
             addVoucherMutation.isLoading ||
             updateVoucherMutation.isLoading

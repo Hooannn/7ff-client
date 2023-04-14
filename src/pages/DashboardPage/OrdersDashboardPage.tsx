@@ -92,7 +92,7 @@ export default function UsersDashboardPage() {
             setSelectedOrder(order);
             setUpdateModalOpen(true);
           }}
-          isLoading={searchOrdersQuery.isLoading || fetchOrdersQuery.isLoading || deleteOrderMutation.isLoading || updateOrderMutation.isLoading}
+          isLoading={searchOrdersQuery.isFetching || fetchOrdersQuery.isFetching || deleteOrderMutation.isLoading || updateOrderMutation.isLoading}
           orders={orders}
           current={current}
           setCurrent={setCurrent}
