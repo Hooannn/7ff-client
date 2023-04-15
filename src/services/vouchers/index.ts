@@ -12,7 +12,7 @@ const SORT_MAPPING = {
   updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) => {
-  const ITEM_PER_PAGE = 8; // default
+  const [itemPerPage, setItemPerPage] = useState<number>(8);
   const [vouchers, setVouchers] = useState<IVoucher[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [total, setTotal] = useState<number>();
@@ -40,7 +40,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
 
   const searchVouchersQuery = useQuery(['search-vouchers', query, sort], {
     queryFn: () =>
-      axios.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}&filter=${query}&sort=${sort}`),
+      axios.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}&filter=${query}&sort=${sort}`),
     keepPreviousData: true,
     onError: onError,
     enabled: false,
@@ -72,7 +72,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
 
   const fetchVouchersQuery = useQuery(['vouchers', current], {
     queryFn: () => {
-      if (!isSearching) return axios.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
+      if (!isSearching) return axios.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}`);
     },
     keepPreviousData: true,
     onError: onError,
@@ -89,7 +89,10 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
   const addVoucherMutation = useMutation({
     mutationFn: (data: IVoucher) => axios.post<IResponseData<IVoucher>>('/vouchers', data),
     onSuccess: res => {
-      queryClient.invalidateQueries('vouchers');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-vouchers');
+        searchVouchersQuery.refetch();
+      } else queryClient.invalidateQueries('vouchers');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -99,7 +102,10 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
     mutationFn: ({ voucherId, data }: { voucherId: string; data: IVoucher }) =>
       axios.patch<IResponseData<IVoucher>>(`/vouchers?id=${voucherId}`, data),
     onSuccess: res => {
-      queryClient.invalidateQueries('vouchers');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-vouchers');
+        searchVouchersQuery.refetch();
+      } else queryClient.invalidateQueries('vouchers');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -116,7 +122,10 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
   const deleteVoucherMutation = useMutation({
     mutationFn: (voucherId: string) => axios.delete<IResponseData<unknown>>(`/vouchers?id=${voucherId}`),
     onSuccess: res => {
-      queryClient.invalidateQueries('vouchers');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-vouchers');
+        searchVouchersQuery.refetch();
+      } else queryClient.invalidateQueries('vouchers');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -136,5 +145,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
     onResetFilterSearch,
     verifyVoucherMutation,
     searchVouchersQuery,
+    itemPerPage,
+    setItemPerPage,
   };
 };

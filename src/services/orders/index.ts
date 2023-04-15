@@ -12,7 +12,7 @@ const SORT_MAPPING = {
   updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
-  const ITEM_PER_PAGE = 8; // default
+  const [itemPerPage, setItemPerPage] = useState<number>(8);
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [total, setTotal] = useState<number>();
@@ -38,7 +38,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
 
   const searchOrdersQuery = useQuery(['search-orders', query, sort], {
     queryFn: () =>
-      axios.get<IResponseData<IOrder[]>>(`/orders?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}&filter=${query}&sort=${sort}`),
+      axios.get<IResponseData<IOrder[]>>(`/orders?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}&filter=${query}&sort=${sort}`),
     keepPreviousData: true,
     onError: onError,
     enabled: false,
@@ -70,7 +70,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
 
   const fetchOrdersQuery = useQuery(['orders', current], {
     queryFn: () => {
-      if (!isSearching) return axios.get<IResponseData<IOrder[]>>(`/orders?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
+      if (!isSearching) return axios.get<IResponseData<IOrder[]>>(`/orders?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}`);
     },
     keepPreviousData: true,
     onError: onError,
@@ -87,7 +87,10 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
   const updateOrderMutation = useMutation({
     mutationFn: ({ orderId, data }: { orderId: string; data: IOrder }) => axios.patch<IResponseData<IOrder>>(`/orders?id=${orderId}`, data),
     onSuccess: res => {
-      queryClient.invalidateQueries('orders');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-orders');
+        searchOrdersQuery.refetch();
+      } else queryClient.invalidateQueries('orders');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -96,7 +99,10 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
   const deleteOrderMutation = useMutation({
     mutationFn: (orderId: string) => axios.delete<IResponseData<unknown>>(`/orders?id=${orderId}`),
     onSuccess: res => {
-      queryClient.invalidateQueries('orders');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-orders');
+        searchOrdersQuery.refetch();
+      } else queryClient.invalidateQueries('orders');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -114,5 +120,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
     onFilterSearch,
     onResetFilterSearch,
     searchOrdersQuery,
+    itemPerPage,
+    setItemPerPage,
   };
 };

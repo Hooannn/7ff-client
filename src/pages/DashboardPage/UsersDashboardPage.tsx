@@ -26,6 +26,8 @@ export default function UsersDashboardPage() {
     onFilterSearch,
     searchUsersQuery,
     onResetFilterSearch,
+    itemPerPage,
+    setItemPerPage,
   } = useUsers({ enabledFetchUsers: true });
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -109,6 +111,8 @@ export default function UsersDashboardPage() {
           users={users}
           current={current}
           setCurrent={setCurrent}
+          itemPerPage={itemPerPage}
+          setItemPerPage={newItemPerPage => setItemPerPage(newItemPerPage)}
         />
       </Col>
     </Row>

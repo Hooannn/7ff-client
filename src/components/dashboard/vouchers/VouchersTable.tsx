@@ -11,11 +11,23 @@ interface VouchersTableProps {
   total: number;
   vouchers: IVoucher[];
   current: number;
+  itemPerPage: number;
+  setItemPerPage: (newItemPerPage: number) => void;
   setCurrent: (value: number) => void;
   onDelete: (voucherId: string) => void;
   onSelectVoucher: (voucher: IVoucher) => void;
 }
-const VouchersTable: React.FC<VouchersTableProps> = ({ current, setCurrent, isLoading, vouchers, onDelete, onSelectVoucher, total }) => {
+const VouchersTable: React.FC<VouchersTableProps> = ({
+  current,
+  setCurrent,
+  isLoading,
+  vouchers,
+  onDelete,
+  onSelectVoucher,
+  total,
+  itemPerPage,
+  setItemPerPage,
+}) => {
   const { t } = useTranslation();
   const onDeleteBtnClick = (voucherId: string) => {
     Modal.confirm({
@@ -156,7 +168,14 @@ const VouchersTable: React.FC<VouchersTableProps> = ({ current, setCurrent, isLo
         loading={isLoading}
         columns={columns}
         dataSource={vouchers}
-        pagination={{ pageSize: 8, total, current }}
+        pagination={{
+          pageSize: itemPerPage,
+          total,
+          current,
+          onShowSizeChange: (_, size) => {
+            setItemPerPage(size);
+          },
+        }}
       />
     </>
   );

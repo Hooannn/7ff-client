@@ -24,6 +24,8 @@ export default function UsersDashboardPage() {
     onFilterSearch,
     searchOrdersQuery,
     onResetFilterSearch,
+    itemPerPage,
+    setItemPerPage,
   } = useOrders({ enabledFetchOrders: true });
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -97,6 +99,8 @@ export default function UsersDashboardPage() {
           orders={orders}
           current={current}
           setCurrent={setCurrent}
+          itemPerPage={itemPerPage}
+          setItemPerPage={newItemPerPage => setItemPerPage(newItemPerPage)}
         />
       </Col>
     </Row>
