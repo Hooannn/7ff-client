@@ -11,11 +11,23 @@ interface UsersTableProps {
   total: number;
   users: IUser[];
   current: number;
+  itemPerPage: number;
+  setItemPerPage: (newItemPerPage: number) => void;
   setCurrent: (value: number) => void;
   onDelete: (userId: string) => void;
   onSelectUser: (user: IUser) => void;
 }
-const UsersTable: React.FC<UsersTableProps> = ({ current, setCurrent, isLoading, users, onDelete, onSelectUser, total }) => {
+const UsersTable: React.FC<UsersTableProps> = ({
+  current,
+  setCurrent,
+  isLoading,
+  users,
+  onDelete,
+  onSelectUser,
+  total,
+  setItemPerPage,
+  itemPerPage,
+}) => {
   const { t } = useTranslation();
   const onDeleteBtnClick = (userId: string) => {
     Modal.confirm({
@@ -191,7 +203,14 @@ const UsersTable: React.FC<UsersTableProps> = ({ current, setCurrent, isLoading,
         loading={isLoading}
         columns={columns}
         dataSource={users}
-        pagination={{ pageSize: 8, total, current }}
+        pagination={{
+          pageSize: itemPerPage,
+          total,
+          current,
+          onShowSizeChange: (_, size) => {
+            setItemPerPage(size);
+          },
+        }}
       />
     </>
   );

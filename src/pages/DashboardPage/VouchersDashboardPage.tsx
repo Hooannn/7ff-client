@@ -25,6 +25,8 @@ export default function UsersDashboardPage() {
     onFilterSearch,
     searchVouchersQuery,
     onResetFilterSearch,
+    itemPerPage,
+    setItemPerPage,
   } = useVouchers({ enabledFetchVouchers: true });
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -108,6 +110,8 @@ export default function UsersDashboardPage() {
           vouchers={vouchers}
           current={current}
           setCurrent={setCurrent}
+          itemPerPage={itemPerPage}
+          setItemPerPage={newItemPerPage => setItemPerPage(newItemPerPage)}
         />
       </Col>
     </Row>

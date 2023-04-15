@@ -11,11 +11,23 @@ interface OrdersTableProps {
   total: number;
   orders: IOrder[];
   current: number;
+  itemPerPage: number;
+  setItemPerPage: (newItemPerPage: number) => void;
   setCurrent: (value: number) => void;
   onDelete: (orderId: string) => void;
   onSelectOrder: (order: IOrder) => void;
 }
-const OrdersTable: React.FC<OrdersTableProps> = ({ current, setCurrent, isLoading, orders, onDelete, onSelectOrder, total }) => {
+const OrdersTable: React.FC<OrdersTableProps> = ({
+  current,
+  setCurrent,
+  isLoading,
+  orders,
+  onDelete,
+  onSelectOrder,
+  total,
+  itemPerPage,
+  setItemPerPage,
+}) => {
   const { t } = useTranslation();
   const onDeleteBtnClick = (orderId: string) => {
     Modal.confirm({
@@ -191,7 +203,14 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ current, setCurrent, isLoadin
         loading={isLoading}
         columns={columns}
         dataSource={orders}
-        pagination={{ pageSize: 8, total, current }}
+        pagination={{
+          pageSize: itemPerPage,
+          total,
+          current,
+          onShowSizeChange: (_, size) => {
+            setItemPerPage(size);
+          },
+        }}
       />
     </>
   );

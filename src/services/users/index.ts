@@ -12,7 +12,7 @@ const SORT_MAPPING = {
   updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
-  const ITEM_PER_PAGE = 8; // default
+  const [itemPerPage, setItemPerPage] = useState<number>(8);
   const [users, setUsers] = useState<IUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [total, setTotal] = useState<number>();
@@ -38,9 +38,8 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     if (sort) setSort(JSON.stringify((SORT_MAPPING as any)[sort]));
   };
 
-  const searchUsersQuery = useQuery(['search-users', query, sort], {
-    queryFn: () =>
-      axios.get<IResponseData<IUser[]>>(`/users?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}&filter=${query}&sort=${sort}`),
+  const searchUsersQuery = useQuery(['search-users', query, sort, itemPerPage], {
+    queryFn: () => axios.get<IResponseData<IUser[]>>(`/users?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}&filter=${query}&sort=${sort}`),
     keepPreviousData: true,
     onError: onError,
     enabled: false,
@@ -68,11 +67,11 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     if (isSearching) {
       searchUsersQuery.refetch();
     }
-  }, [current]);
+  }, [current, itemPerPage]);
 
-  const fetchUsersQuery = useQuery(['users', current], {
+  const fetchUsersQuery = useQuery(['users', current, itemPerPage], {
     queryFn: () => {
-      if (!isSearching) return axios.get<IResponseData<IUser[]>>(`/users?skip=${ITEM_PER_PAGE * (current - 1)}&limit=${ITEM_PER_PAGE}`);
+      if (!isSearching) return axios.get<IResponseData<IUser[]>>(`/users?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}`);
     },
     keepPreviousData: true,
     onError: onError,
@@ -89,7 +88,10 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
   const addUserMutation = useMutation({
     mutationFn: (data: IUser) => axios.post<IResponseData<IUser>>('/users', data),
     onSuccess: res => {
-      queryClient.invalidateQueries('users');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-users');
+        searchUsersQuery.refetch();
+      } else queryClient.invalidateQueries('users');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -98,7 +100,10 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
   const updateUserMutation = useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: IUser }) => axios.patch<IResponseData<IUser>>(`/users?id=${userId}`, data),
     onSuccess: res => {
-      queryClient.invalidateQueries('users');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-users');
+        searchUsersQuery.refetch();
+      } else queryClient.invalidateQueries('users');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -124,7 +129,10 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
   const deleteUserMutation = useMutation({
     mutationFn: (userId: string) => axios.delete<IResponseData<unknown>>(`/users?id=${userId}`),
     onSuccess: res => {
-      queryClient.invalidateQueries('users');
+      if (isSearching) {
+        queryClient.invalidateQueries('search-users');
+        searchUsersQuery.refetch();
+      } else queryClient.invalidateQueries('users');
       toast(res.data.message, toastConfig('success'));
     },
     onError: onError,
@@ -145,5 +153,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     updateProfileMutation,
     updatePasswordMutation,
     searchUsersQuery,
+    itemPerPage,
+    setItemPerPage,
   };
 };
