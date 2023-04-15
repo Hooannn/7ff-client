@@ -1,5 +1,5 @@
-import StatisticCard from '../../shared/StatisticCard';
+import StatisticCard, { StatisticCardProps } from '../../shared/StatisticCard';
 
-export default function UsersSummary() {
-  return <StatisticCard value={100} previousValue={80} label="Total users" />;
+export default function UsersSummary({ value, previousValue }: Partial<StatisticCardProps>) {
+  return <StatisticCard value={value as number} previousValue={previousValue as number} label="Total users" />;
 }
