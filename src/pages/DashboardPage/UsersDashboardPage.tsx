@@ -10,6 +10,7 @@ import useUsers from '../../services/users';
 import { exportToCSV } from '../../utils/export-csv';
 import UpdateUserModal from '../../components/dashboard/users/UpdateUserModal';
 import SortAndFilter from '../../components/dashboard/users/SortAndFilter';
+import useTitle from '../../hooks/useTitle';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
   const {
@@ -30,6 +31,7 @@ export default function UsersDashboardPage() {
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const { t } = useTranslation();
+  useTitle(`${t('user')} - 7FF`);
 
   const onAddUser = (values: IUser) => {
     addUserMutation.mutateAsync(values).finally(() => setAddModelOpen(false));

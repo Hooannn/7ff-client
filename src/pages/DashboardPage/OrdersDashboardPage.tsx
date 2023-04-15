@@ -9,6 +9,7 @@ import useOrders from '../../services/orders';
 import { exportToCSV } from '../../utils/export-csv';
 import UpdateOrderModal from '../../components/dashboard/orders/UpdateOrderModal';
 import SortAndFilter from '../../components/dashboard/orders/SortAndFilter';
+import useTitle from '../../hooks/useTitle';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
   const {
@@ -28,7 +29,7 @@ export default function UsersDashboardPage() {
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
   const { t } = useTranslation();
-
+  useTitle(`${t('orders')} - 7FF`);
   const onUpdateOrder = (values: IOrder) => {
     updateOrderMutation.mutateAsync({ orderId: selectedOrder?._id as string, data: values }).finally(() => setUpdateModalOpen(false));
   };

@@ -10,8 +10,8 @@ import useVouchers from '../../services/vouchers';
 import { exportToCSV } from '../../utils/export-csv';
 import UpdateVoucherModal from '../../components/dashboard/vouchers/UpdateVoucherModal';
 import SortAndFilter from '../../components/dashboard/vouchers/SortAndFilter';
+import useTitle from '../../hooks/useTitle';
 export default function UsersDashboardPage() {
-  // TODO: Search, filter, pagination
   const {
     fetchVouchersQuery,
     vouchers,
@@ -30,6 +30,7 @@ export default function UsersDashboardPage() {
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState<IVoucher | null>(null);
   const { t } = useTranslation();
+  useTitle(`${t('vouchers')} - 7FF`);
 
   const onAddVoucher = (values: IVoucher) => {
     addVoucherMutation.mutateAsync(values).finally(() => setAddModelOpen(false));
