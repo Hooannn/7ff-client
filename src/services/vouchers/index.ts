@@ -68,9 +68,9 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
     if (isSearching) {
       searchVouchersQuery.refetch();
     }
-  }, [current]);
+  }, [current, itemPerPage]);
 
-  const fetchVouchersQuery = useQuery(['vouchers', current], {
+  const fetchVouchersQuery = useQuery(['vouchers', current, itemPerPage], {
     queryFn: () => {
       if (!isSearching) return axios.get<IResponseData<IVoucher[]>>(`/vouchers?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}`);
     },

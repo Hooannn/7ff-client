@@ -2,7 +2,7 @@ import { Card, Row, Col, Typography } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { PropsWithChildren, useMemo } from 'react';
 
-interface StatisticCardProps extends PropsWithChildren {
+export interface StatisticCardProps extends PropsWithChildren {
   value: number;
   previousValue: number;
   label?: string;

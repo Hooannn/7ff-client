@@ -66,9 +66,9 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
     if (isSearching) {
       searchOrdersQuery.refetch();
     }
-  }, [current]);
+  }, [current, itemPerPage]);
 
-  const fetchOrdersQuery = useQuery(['orders', current], {
+  const fetchOrdersQuery = useQuery(['orders', current, itemPerPage], {
     queryFn: () => {
       if (!isSearching) return axios.get<IResponseData<IOrder[]>>(`/orders?skip=${itemPerPage * (current - 1)}&limit=${itemPerPage}`);
     },
