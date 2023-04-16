@@ -59,7 +59,7 @@ const DashboardPage: FC = () => {
       <Col span={24}>
         <Row align="middle">
           <Col span={12}>
-            <h2>{t('summary')}</h2>
+            <h2>Dashboard</h2>
           </Col>
           <Col span={12}>
             <Row align="middle" justify="end" gutter={8}>
@@ -98,19 +98,19 @@ const DashboardPage: FC = () => {
       <Col span={24}>
         <Row align="middle" justify="space-between" gutter={12}>
           <Col md={8}>
-            <RevenuesSummary value={revenues?.currentCount} previousValue={revenues?.previousCount} />
+            <RevenuesSummary loading={getStatisticsQuery.isLoading} value={revenues?.currentCount} previousValue={revenues?.previousCount} />
           </Col>
           <Col md={8}>
-            <OrdersSummary value={orders?.currentCount} previousValue={orders?.previousCount} />
+            <OrdersSummary loading={getStatisticsQuery.isLoading} value={orders?.currentCount} previousValue={orders?.previousCount} />
           </Col>
           <Col md={8}>
-            <UsersSummary value={users?.currentCount} previousValue={users?.previousCount} />
+            <UsersSummary loading={getStatisticsQuery.isLoading} value={users?.currentCount} previousValue={users?.previousCount} />
           </Col>
         </Row>
       </Col>
 
       <Col span={24} style={{ padding: '24px 0' }}>
-        <RevenuesChart data={revenues?.details} />
+        <RevenuesChart loading={getStatisticsQuery.isLoading} data={revenues?.details} />
       </Col>
     </Row>
   );

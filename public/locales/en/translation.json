@@ -259,5 +259,12 @@
   "current password...": "Current password...",
   "new password...": "New password...",
   "please enter your current password": "Please enter your current password",
-  "please enter your new password": "Please enter your new password"
+  "please enter your new password": "Please enter your new password",
+  "daily": "Daily",
+  "monthly": "Monthly",
+  "yearly": "Yearly",
+  "weekly": "Weekly",
+  "create report": "Create report",
+  "revenues": "Revenues",
+  "total orders": "Total orders"
 }

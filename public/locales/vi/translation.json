@@ -259,5 +259,12 @@
   "current password...": "Mật khẩu hiện tại...",
   "new password...": "Mật khẩu mới...",
   "please enter your current password": "Vui lòng nhập mật khẩu hiện tại của bạn",
-  "please enter your new password": "Vui lòng nhập mật khẩu mới của bạn"
+  "please enter your new password": "Vui lòng nhập mật khẩu mới của bạn",
+  "daily": "Hôm nay",
+  "monthly": "Tháng này",
+  "yearly": "Năm này",
+  "weekly": "Tuần này",
+  "create report": "Tạo báo cáo",
+  "revenues": "Lợi nhuận",
+  "total orders": "Tổng đơn hàng"
 }

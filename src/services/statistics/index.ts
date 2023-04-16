@@ -16,6 +16,9 @@ export default () => {
     queryKey: ['statistics', from, to],
     queryFn: () => axios.get<IResponseData<StatisticsResponse>>(`/statistics?from=${from}&to=${to}`),
     onError: onError,
+    refetchOnWindowFocus: false,
+    refetchInterval: 10000,
+    refetchIntervalInBackground: true,
     select: res => res.data.data,
   });
 
