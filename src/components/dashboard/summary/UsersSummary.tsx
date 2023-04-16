@@ -1,5 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import StatisticCard, { StatisticCardProps } from '../../shared/StatisticCard';
 
-export default function UsersSummary({ value, previousValue }: Partial<StatisticCardProps>) {
-  return <StatisticCard value={value as number} previousValue={previousValue as number} label="Total users" />;
+export default function UsersSummary({ loading, value, previousValue }: Partial<StatisticCardProps>) {
+  const { t } = useTranslation();
+
+  return (
+    <StatisticCard
+      loading={loading}
+      value={value as number}
+      previousValue={previousValue as number}
+      label={t('total users').toString()}
+    />
+  );
 }

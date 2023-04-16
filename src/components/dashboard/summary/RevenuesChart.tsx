@@ -1,4 +1,5 @@
 import { Card } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 interface RevenuesChartProps {
   data:
@@ -7,11 +8,14 @@ interface RevenuesChartProps {
         value: number;
       }[]
     | undefined;
+  loading?: boolean;
 }
-export default function RevenuesChart({ data }: RevenuesChartProps) {
+export default function RevenuesChart({ data, loading }: RevenuesChartProps) {
+  const { t } = useTranslation();
   return (
     <Card
-      title="Revenues"
+      loading={loading}
+      title={t('revenues')}
       style={{
         borderRadius: '12px',
         boxShadow: '0px 0px 16px rgba(17,17,26,0.1)',
