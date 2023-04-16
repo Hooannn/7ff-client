@@ -6,6 +6,7 @@ import AboutPage from '../../pages/AboutPage';
 import BookingPage from '../../pages/BookingPage';
 import HomePage from '../../pages/HomePage';
 import CartPage from '../../pages/CartPage';
+import ProductPage from '../../pages/ProductPage';
 import AuthProtector from '../../components/AuthProtector';
 
 const rootRouter = [
@@ -37,6 +38,10 @@ const rootRouter = [
       {
         path: 'cart',
         element: <AuthProtector children={<CartPage />} redirect="/auth" />,
+      },
+      {
+        path: 'product/:productId',
+        element: <ProductPage />,
       },
     ],
   },
