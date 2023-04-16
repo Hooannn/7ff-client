@@ -266,5 +266,6 @@
   "weekly": "Tuần này",
   "create report": "Tạo báo cáo",
   "revenues": "Doanh thu",
-  "total orders": "Tổng đơn hàng"
+  "total orders": "Tổng đơn hàng",
+  "are you sure you want to sign out ?": "Đăng xuất khỏi phiên đăng nhập này ?"
 }

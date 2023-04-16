@@ -2,14 +2,14 @@ import { FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, getI18n } from 'react-i18next';
-import { Layout, Button, Badge, Dropdown, Tooltip, Switch, Avatar } from 'antd';
-import { DashboardOutlined, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Layout, Button, Badge, Dropdown, Tooltip, Switch, Avatar, Modal } from 'antd';
+import { DashboardOutlined, ExclamationCircleFilled, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import CartDrawer from './CartDrawer';
 import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
 import { setTheme } from '../../slices/app.slice';
-import { containerStyle } from '../../assets/styles/globalStyle';
+import { buttonStyle, containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/components/AppBar.css';
 
 interface IProps {
@@ -55,10 +55,31 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       label: t('sign out'),
       key: 'signOut',
       danger: true,
-      onClick: () => dispatch(signOut()),
+      onClick: () => onSignOutBtnClick(),
     },
   ];
 
+  const onSignOutBtnClick = () => {
+    Modal.confirm({
+      icon: <ExclamationCircleFilled />,
+      title: t('are you sure you want to sign out ?'),
+      okText: t('sign out'),
+      cancelText: t('cancel'),
+      onOk: () => {
+        dispatch(signOut());
+      },
+      okButtonProps: {
+        danger: true,
+        shape: 'round',
+        style: { ...buttonStyle, width: '100px', marginLeft: '12px' },
+      },
+      cancelButtonProps: {
+        type: 'text',
+        shape: 'round',
+        style: { ...buttonStyle, width: '100px' },
+      },
+    });
+  };
   return (
     <Layout.Header className="app-bar">
       <div style={containerStyle} className="container">
