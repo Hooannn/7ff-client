@@ -1,9 +1,10 @@
 import type { CSSProperties } from 'react';
 
 export const buttonStyle: CSSProperties = {
-  padding: '12px 0',
   height: 'unset',
+  padding: '12px 0',
   margin: '4px 0',
+  outline: 'none',
 };
 
 export const inputStyle: CSSProperties = {
