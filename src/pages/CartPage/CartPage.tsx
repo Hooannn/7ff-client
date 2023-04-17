@@ -1,42 +1,16 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button, ConfigProvider, Input, Progress, Table, Image, Space, Tooltip, Avatar } from 'antd';
 import { LockOutlined, DeleteOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
+import useCart from '../../hooks/useCart';
 import { IDetailedItem } from '../../types';
 import { RootState } from '../../@core/store';
 import { addToCart, decreaseCartItem, removeCartItem } from '../../slices/app.slice';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/CartPage.css';
-
-interface IPrice {
-  totalPrice: number;
-  shippingFee: number;
-}
-
-// Fake data
-const products = [
-  {
-    _id: 'hgh0001',
-    name: 'Chicken burger',
-    price: '30000',
-    featuredImages: ['/food-images/burger-01.png'],
-  },
-  {
-    _id: 'hgh0002',
-    name: 'Fish burger',
-    price: '35000',
-    featuredImages: ['/food-images/burger-02.png'],
-  },
-  {
-    _id: 'hgh0003',
-    name: 'Beef burger',
-    price: '40000',
-    featuredImages: ['/food-images/burger-03.png'],
-  },
-];
 
 const CartPage: FC = () => {
   const { t } = useTranslation();
@@ -49,25 +23,7 @@ const CartPage: FC = () => {
   }, []);
 
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
-
-  const DETAILED_CART_ITEMS = useMemo(() => {
-    return cartItems.map((item: { productId: string; quantity: number }) => {
-      // Products will be a global state fetched when app start
-      // Or call api to get the product info
-      const itemInfo = products.find(product => product._id === item.productId);
-      return {
-        ...item,
-        name: itemInfo?.name,
-        price: itemInfo?.price,
-        image: itemInfo?.featuredImages[0],
-      };
-    });
-  }, [cartItems]);
-  const totalPrice = useMemo(() => {
-    return DETAILED_CART_ITEMS.reduce((total: number, item: IDetailedItem) => {
-      return (total += item.price * item.quantity);
-    }, 0);
-  }, [DETAILED_CART_ITEMS]);
+  const { detailedItems, totalPrice, MINIMUM_VALUE_FOR_FREE_SHIPPING } = useCart();
 
   return (
     <ConfigProvider
@@ -81,17 +37,17 @@ const CartPage: FC = () => {
                   <div className="heading-and-progress">
                     <h2 className="heading">{t('my cart')}</h2>
                     <div className="cart-progress">
-                      {totalPrice < 300000 ? (
+                      {totalPrice < MINIMUM_VALUE_FOR_FREE_SHIPPING ? (
                         <>
                           <span>{t('buy')} </span>
-                          <strong>{`₫${(300000 - totalPrice).toLocaleString('en-US')}`}</strong>
+                          <strong>{`₫${(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice).toLocaleString('en-US')}`}</strong>
                           <span> {t('more to get free shipping')}</span>
                         </>
                       ) : (
                         <span>{t('your order is free shipping now')}</span>
                       )}
                       <Progress
-                        percent={(totalPrice / 300000) * 100}
+                        percent={(totalPrice / MINIMUM_VALUE_FOR_FREE_SHIPPING) * 100}
                         size="small"
                         showInfo={false}
                         strokeColor="#1a1a1a"
@@ -174,7 +130,7 @@ const CartPage: FC = () => {
                             },
                           },
                         ]}
-                        dataSource={DETAILED_CART_ITEMS}
+                        dataSource={detailedItems}
                       />
                     </div>
 
