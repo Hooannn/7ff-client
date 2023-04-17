@@ -269,5 +269,6 @@
   "create report": "Create report",
   "revenues": "Revenues",
   "total orders": "Total orders",
-  "are you sure you want to sign out ?": "Are you sure you want to sign out ?"
+  "are you sure you want to sign out ?": "Are you sure you want to sign out ?",
+  "thanks {{name}} booking {{time}}": "Thanks {{name}}. Your booking at 7FF is sent. We are expecting you on {{time}}"
 }
