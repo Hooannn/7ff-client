@@ -22,26 +22,26 @@ const DashboardPage: FC = () => {
     {
       label: t('daily'),
       value: 'daily',
-      from: dayjs().startOf('day').valueOf(),
-      to: dayjs().valueOf(),
+      from: dayjs(Date.now()).startOf('day').valueOf(),
+      to: dayjs(Date.now()).valueOf(),
     },
     {
       label: t('weekly'),
       value: 'weekly',
-      from: dayjs().startOf('week').valueOf(),
-      to: dayjs().valueOf(),
+      from: dayjs(Date.now()).startOf('week').valueOf(),
+      to: dayjs(Date.now()).valueOf(),
     },
     {
       label: t('monthly'),
       value: 'monthly',
-      from: dayjs().startOf('month').valueOf(),
-      to: dayjs().valueOf(),
+      from: dayjs(Date.now()).startOf('month').valueOf(),
+      to: dayjs(Date.now()).valueOf(),
     },
     {
       label: t('yearly'),
       value: 'yearly',
-      from: dayjs().startOf('year').valueOf(),
-      to: dayjs().valueOf(),
+      from: dayjs(Date.now()).startOf('year').valueOf(),
+      to: dayjs(Date.now()).valueOf(),
     },
   ];
   const [selectedSegment, setSelectedSegment] = useState<string>(segmentedOptions[0].value);

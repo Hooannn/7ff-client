@@ -9,8 +9,8 @@ interface StatisticsResponse {
   [key: string]: IStatistics;
 }
 export default () => {
-  const [from, setFrom] = useState(dayjs().startOf('day').valueOf());
-  const [to, setTo] = useState(dayjs().valueOf());
+  const [from, setFrom] = useState(dayjs(Date.now()).startOf('day').valueOf());
+  const [to, setTo] = useState(dayjs(Date.now()).valueOf());
   const axios = useAxiosIns();
   const getStatisticsQuery = useQuery({
     queryKey: ['statistics', from, to],

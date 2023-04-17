@@ -29,8 +29,8 @@ export default () => {
       const redirectPath = cookies.get('redirect_path') || '/';
       toast(res.data.message, toastConfig('success'));
       const { accessToken, refreshToken, user } = res.data.data;
-      cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs().add(30, 'day').toISOString()) });
-      cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs().add(30, 'day').toISOString()) });
+      cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
+      cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
       dispatch(setLogged(true));
       dispatch(setUser(user));
       navigate(redirectPath as string);
