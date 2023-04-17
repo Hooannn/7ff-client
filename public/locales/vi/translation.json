@@ -269,5 +269,6 @@
   "create report": "Tạo báo cáo",
   "revenues": "Doanh thu",
   "total orders": "Tổng đơn hàng",
-  "are you sure you want to sign out ?": "Đăng xuất khỏi phiên đăng nhập này ?"
+  "are you sure you want to sign out ?": "Đăng xuất khỏi phiên đăng nhập này ?",
+  "thanks {{name}} booking {{time}}": "Cảm ơn {{name}}. Đơn đặt bàn của bạn đã được gửi. Chúng tôi mong gặp bạn vào {{time}}"
 }

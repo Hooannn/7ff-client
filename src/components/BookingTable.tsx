@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { Button, DatePicker, Form, Input, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Modal, Result, Select } from 'antd';
 import { getI18n, useTranslation } from 'react-i18next';
-import { containerStyle, inputStyle } from '../assets/styles/globalStyle';
+import { buttonStyle, containerStyle, inputStyle } from '../assets/styles/globalStyle';
 import dayjs from 'dayjs';
+import useReservation from '../services/reservation';
 import '../assets/styles/components/BookingTable.css';
 import localeUS from 'antd/es/date-picker/locale/en_US';
 import localeVN from 'antd/es/date-picker/locale/vi_VN';
@@ -10,7 +11,7 @@ import localeVN from 'antd/es/date-picker/locale/vi_VN';
 const BookingTable: FC = () => {
   const { t } = useTranslation();
   const language = getI18n().resolvedLanguage;
-
+  const { bookReservationMutation } = useReservation();
   const numberOfGuestOptions = (min: number, max: number) => {
     const options = [];
     for (let i = min; i <= max; i++) {
@@ -19,13 +20,51 @@ const BookingTable: FC = () => {
     return options;
   };
 
+  const onFinish = (values: any) => {
+    const reservation = {
+      underName: values.name,
+      contacts: {
+        phone: values.phoneNumber,
+        email: values.email,
+      },
+      bookingTime: values.bookingTime.valueOf(),
+      attrs: {
+        guests: values.noOfGuests,
+      },
+    };
+    return bookReservationMutation.mutateAsync(reservation).then(res => {
+      Modal.confirm({
+        content: (
+          <Result
+            style={{ width: '368px' }}
+            status="success"
+            title={res.data.message}
+            subTitle={t('thanks {{name}} booking {{time}}', {
+              name: res.data?.data?.underName,
+              time: dayjs(new Date(parseInt(res.data?.data?.bookingTime as string))).format('HH:mm DD-MM-YYYY'),
+            })}
+          />
+        ),
+        icon: null,
+        okText: t('confirm'),
+        bodyStyle: { width: '368px' },
+        okCancel: false,
+        okButtonProps: {
+          shape: 'round',
+          type: 'primary',
+          style: { ...buttonStyle, width: '100px', marginLeft: '12px' },
+        },
+      });
+    });
+  };
+
   return (
     <section className="booking-table">
       <div className="container" style={containerStyle}>
         <h2 className="heading">{t('booking a table')}</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 30 }}>
           <div className="booking-form-container">
-            <Form layout="vertical" validateTrigger="onSubmit">
+            <Form layout="vertical" validateTrigger="onSubmit" onFinish={onFinish}>
               <Form.Item
                 name="name"
                 rules={[
@@ -66,7 +105,7 @@ const BookingTable: FC = () => {
                   className="number-of-guests"
                 />
               </Form.Item>
-              <Form.Item name="bookingDate" rules={[{ required: true, message: t('please choose the booking date').toString() }]}>
+              <Form.Item name="bookingTime" rules={[{ required: true, message: t('please choose the booking date').toString() }]}>
                 <DatePicker
                   locale={language === 'vi' ? localeVN : localeUS}
                   picker="date"
@@ -81,7 +120,14 @@ const BookingTable: FC = () => {
                 />
               </Form.Item>
               <Form.Item style={{ marginBottom: 0 }}>
-                <Button size="large" shape="round" type="primary" htmlType="submit" className="book-now-btn">
+                <Button
+                  loading={bookReservationMutation.isLoading}
+                  size="large"
+                  shape="round"
+                  type="primary"
+                  htmlType="submit"
+                  className="book-now-btn"
+                >
                   {t('book now')}
                 </Button>
               </Form.Item>
