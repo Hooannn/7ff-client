@@ -2,13 +2,12 @@ import { FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, getI18n } from 'react-i18next';
-import { Layout, Button, Badge, Dropdown, Tooltip, Switch, Avatar, Modal } from 'antd';
+import { Layout, Button, Badge, Dropdown, Tooltip, Avatar, Modal } from 'antd';
 import { DashboardOutlined, ExclamationCircleFilled, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import CartDrawer from './CartDrawer';
 import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
-import { setTheme } from '../../slices/app.slice';
 import { buttonStyle, containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/components/AppBar.css';
 
@@ -31,7 +30,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
 
   const user = useSelector((state: RootState) => state.auth.user);
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
-  const { theme, activeTab } = useSelector((state: RootState) => state.app);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -116,10 +114,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
             {i18n.resolvedLanguage === 'vi' && (
               <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>
             )}
-          </Tooltip>
-
-          <Tooltip title={t('toggle theme')}>
-            <Switch checked={theme === 'dark'} onChange={() => dispatch(setTheme())} checkedChildren="Dark" unCheckedChildren="Light" />
           </Tooltip>
 
           {!user && (

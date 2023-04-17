@@ -1,12 +1,13 @@
-import { Avatar, Button, Divider, Drawer, Progress, Image, Space, Tooltip, Modal } from 'antd';
-import { FC, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Avatar, Button, Divider, Drawer, Progress, Image, Space, Tooltip, Modal } from 'antd';
+import { DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
+import useCart from '../../hooks/useCart';
+import { IDetailedItem } from '../../types';
 import { RootState } from '../../@core/store';
 import { addToCart, decreaseCartItem, removeCartItem, resetCart } from '../../slices/app.slice';
-import { useNavigate } from 'react-router-dom';
-import { IDetailedItem } from '../../types';
-import { DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
 import { buttonStyle } from '../../assets/styles/globalStyle';
 
 interface IProps {
@@ -14,52 +15,13 @@ interface IProps {
   setIsCartOpen: (value: boolean) => void;
 }
 
-// Fake data
-const products = [
-  {
-    _id: 'hgh0001',
-    name: 'Chicken burger',
-    price: '30000',
-    featuredImages: ['/food-images/burger-01.png'],
-  },
-  {
-    _id: 'hgh0002',
-    name: 'Fish burger',
-    price: '35000',
-    featuredImages: ['/food-images/burger-02.png'],
-  },
-  {
-    _id: 'hgh0003',
-    name: 'Beef burger',
-    price: '40000',
-    featuredImages: ['/food-images/burger-03.png'],
-  },
-];
-
 const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
 
-  const DETAILED_CART_ITEMS = useMemo(() => {
-    return cartItems.map((item: { productId: string; quantity: number }) => {
-      // Products will be a global state fetched when app start
-      // Or call api to get the product info
-      const itemInfo = products.find(product => product._id === item.productId);
-      return {
-        ...item,
-        name: itemInfo?.name,
-        price: itemInfo?.price,
-        image: itemInfo?.featuredImages[0],
-      };
-    });
-  }, [cartItems]);
-  const totalPrice = useMemo(() => {
-    return DETAILED_CART_ITEMS.reduce((total: number, item: IDetailedItem) => {
-      return (total += item.price * item.quantity);
-    }, 0);
-  }, [DETAILED_CART_ITEMS]);
+  const { detailedItems, totalPrice, MINIMUM_VALUE_FOR_FREE_SHIPPING } = useCart();
 
   const handleResetCartBtnClick = () => {
     Modal.confirm({
@@ -114,17 +76,17 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
         ) : (
           <>
             <div className="cart-progress">
-              {totalPrice < 300000 ? (
+              {totalPrice < MINIMUM_VALUE_FOR_FREE_SHIPPING ? (
                 <>
                   <span>{t('buy')} </span>
-                  <strong>{`₫${(300000 - totalPrice).toLocaleString('en-US')}`}</strong>
+                  <strong>{`₫${(MINIMUM_VALUE_FOR_FREE_SHIPPING - totalPrice).toLocaleString('en-US')}`}</strong>
                   <span> {t('more to get free shipping')}</span>
                 </>
               ) : (
                 <span>{t('your order is free shipping now')}</span>
               )}
               <Progress
-                percent={(totalPrice / 300000) * 100}
+                percent={(totalPrice / MINIMUM_VALUE_FOR_FREE_SHIPPING) * 100}
                 size="small"
                 showInfo={false}
                 strokeColor="#1a1a1a"
@@ -136,7 +98,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
             <Divider style={{ margin: '12px 0', borderColor: 'rgba(26, 26, 26, 0.12)' }} />
 
             <div className="cart-items">
-              {DETAILED_CART_ITEMS.map((item: IDetailedItem) => (
+              {detailedItems.map((item: IDetailedItem) => (
                 <div key={item.productId} className="cart-item">
                   <div className="item-image">
                     <Image src={item.image} />

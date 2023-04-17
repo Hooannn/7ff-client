@@ -1,17 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-type ITheme = 'light' | 'dark';
-type IActiveTab = 'home' | 'menu' | 'about us' | 'booking table' | null;
 interface IProductItem {
   productId: string;
   quantity: number;
 }
 export interface AppState {
-  theme: ITheme;
   cartItems: IProductItem[];
 }
 
 const initialState: AppState = {
-  theme: 'dark',
   cartItems: [],
 };
 
@@ -19,9 +15,6 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setTheme: state => {
-      state.theme = state.theme === 'light' ? 'dark' : 'light';
-    },
     addToCart: (state, { payload }: { payload: string }) => {
       const foundItem = state.cartItems.find(item => item.productId === payload);
       if (foundItem) {
@@ -50,6 +43,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setTheme, addToCart, decreaseCartItem, removeCartItem, resetCart } = appSlice.actions;
+export const { addToCart, decreaseCartItem, removeCartItem, resetCart } = appSlice.actions;
 
 export default appSlice.reducer;

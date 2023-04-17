@@ -1,15 +1,14 @@
 import { FC, useState, useEffect } from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Form, Input, Button, Typography, Divider, Space, Tooltip, Switch, Avatar } from 'antd';
+import { toast } from 'react-toastify';
+import { Form, Input, Button, Typography, Divider, Space, Tooltip, Avatar } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import useAuth from '../../services/auth';
 import useTitle from '../../hooks/useTitle';
 import toastConfig from '../../configs/toast';
 import { RootState } from '../../@core/store';
-import { setTheme } from '../../slices/app.slice';
 import { inputStyle, buttonStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/AuthPage.css';
 type FormType = 'signIn' | 'signUp' | 'forgot' | 'reset';
@@ -205,9 +204,7 @@ const AuthPage: FC = () => {
   const [formType, setFormType] = useState<FormType>('signIn');
   const { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation } = useAuth();
   const [query, setQuery] = useSearchParams();
-  const theme = useSelector((state: RootState) => state.app.theme);
   const isLogged = useSelector((state: RootState) => state.auth.isLogged);
-  const dispatch = useDispatch();
 
   const { t } = useTranslation();
   const i18n = getI18n();
@@ -259,9 +256,6 @@ const AuthPage: FC = () => {
   return (
     <div className="auth-page">
       <div className="abs-btns">
-        <Tooltip title={t('toggle theme')}>
-          <Switch checked={theme === 'dark'} onChange={() => dispatch(setTheme())} checkedChildren="Dark" unCheckedChildren="Light" />
-        </Tooltip>
         <Tooltip title={t('change language')}>
           {i18n.resolvedLanguage === 'en' && <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>}
           {i18n.resolvedLanguage === 'vi' && <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>}

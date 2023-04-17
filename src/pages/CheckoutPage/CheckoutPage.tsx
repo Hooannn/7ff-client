@@ -1,87 +1,38 @@
-import { FC, useState, useEffect, useRef, useMemo } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Avatar, Button, Divider, Form, Input, Radio, Space, Switch, Tooltip, Image, Badge, ConfigProvider } from 'antd';
+import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
 import useTitle from '../../hooks/useTitle';
+import useCart from '../../hooks/useCart';
 import toastConfig from '../../configs/toast';
 import { containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../@core/store';
 import { IDetailedItem } from '../../types';
-import { setTheme } from '../../slices/app.slice';
 import '../../assets/styles/pages/CheckoutPage.css';
-import { toast } from 'react-toastify';
 
 interface IPrice {
   totalPrice: number;
   shippingFee: number;
 }
 
-// Fake data
-const products = [
-  {
-    _id: 'hgh0001',
-    name: 'Chicken burger',
-    price: '30000',
-    featuredImages: ['/food-images/burger-01.png'],
-  },
-  {
-    _id: 'hgh0002',
-    name: 'Fish burger',
-    price: '35000',
-    featuredImages: ['/food-images/burger-02.png'],
-  },
-  {
-    _id: 'hgh0003',
-    name: 'Beef burger',
-    price: '40000',
-    featuredImages: ['/food-images/burger-03.png'],
-  },
-];
-
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
   const i18n = getI18n();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useTitle(`${t('checkout')} - 7FF`);
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const theme = useSelector((state: RootState) => state.app.theme);
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
   useEffect(() => {
     formRef.current?.setFieldsValue({ name: `${user.lastName} ${user.firstName}` });
   }, []);
 
-  const DETAILED_CART_ITEMS = useMemo(() => {
-    return cartItems.map((item: { productId: string; quantity: number }) => {
-      // Products will be a global state fetched when app start
-      // Or call api to get the product info
-      const itemInfo = products.find(product => product._id === item.productId);
-      return {
-        ...item,
-        name: itemInfo?.name,
-        price: itemInfo?.price,
-        image: itemInfo?.featuredImages[0],
-      };
-    });
-  }, [cartItems]);
-  const { totalPrice, shippingFee } = useMemo(() => {
-    return DETAILED_CART_ITEMS.reduce(
-      (acc: IPrice, item: IDetailedItem) => {
-        const newTotalPrice = acc.totalPrice + item.price * item.quantity;
-        return {
-          totalPrice: newTotalPrice,
-          shippingFee: newTotalPrice > 300000 ? 0 : 20000,
-        };
-      },
-      { totalPrice: 0, shippingFee: 0 },
-    );
-  }, [DETAILED_CART_ITEMS]);
-
+  const { detailedItems, totalPrice, shippingFee } = useCart();
   const [isDelivery, setIsDelivery] = useState(false);
   const formRef = useRef<FormInstance>(null);
   const onFinish = (value: any) => {
@@ -99,9 +50,6 @@ const CheckoutPage: FC = () => {
       children={
         <div className="checkout-page">
           <div className="abs-btns">
-            <Tooltip title={t('toggle theme')}>
-              <Switch checked={theme === 'dark'} onChange={() => dispatch(setTheme())} checkedChildren="Dark" unCheckedChildren="Light" />
-            </Tooltip>
             <Tooltip title={t('change language')}>
               {i18n.resolvedLanguage === 'en' && (
                 <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>
@@ -200,7 +148,7 @@ const CheckoutPage: FC = () => {
             </div>
 
             <div className="cart-items">
-              {DETAILED_CART_ITEMS.map((item: IDetailedItem) => (
+              {detailedItems.map((item: IDetailedItem) => (
                 <div key={item.productId} className="checkout-cart-item">
                   <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
                     <div className="item-image">
