@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Breadcrumb, Button, Image, Space } from 'antd';
+import { Breadcrumb, Button, Image, Rate, Space } from 'antd';
 import { HomeOutlined, ReadOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
 import { IProduct } from '../../types';
@@ -18,9 +18,10 @@ const product = {
   price: 25000,
   yearlyTotalSoldUnits: 6969,
   category: 'burger',
-  rating: 4,
+  rating: 4.3,
   viewsCount: 1000,
   featuredImages: ['/food-images/burger-01.png', '/food-images/burger-02.png', '/food-images/burger-03.png'],
+  isAvailable: true,
 };
 
 const ProductPage: FC = () => {
@@ -61,7 +62,7 @@ const ProductPage: FC = () => {
                 },
                 {
                   title: (
-                    <Link to="/menu">
+                    <Link to={`/menu?category=${product.category.toLowerCase()}`}>
                       <span className="breadcrumb-item">{product.category}</span>
                     </Link>
                   ),
@@ -71,29 +72,44 @@ const ProductPage: FC = () => {
                 },
               ]}
             />
+
             <div className="product-info">
               <div className="product-feature-images">
                 <div className="active-image">
-                  <img src={activeImage} />
+                  <Image src={activeImage} width={430} height={430} />
                 </div>
-                <div className="feature-images">feature imgs</div>
+                <div className="feature-images">
+                  {product.featuredImages.map(imageSrc => (
+                    <div key={imageSrc} className={`image-wrapper ${activeImage === imageSrc ? 'active' : ''}`}>
+                      <img src={imageSrc} onMouseEnter={() => setActiveImage(imageSrc)} />
+                    </div>
+                  ))}
+                </div>
               </div>
+
               <div className="product-desc">
                 <div className="product-name">{product.name}</div>
                 <div className="product-sold-units">
                   <span style={{ fontSize: '1rem', fontWeight: 500 }}>{product.yearlyTotalSoldUnits}</span>
-                  <span style={{ color: '#767676', textTransform: 'capitalize' }}>{`${
+                  <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${
                     product.yearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
                   } ${t('sold this year')}`}</span>
                 </div>
+                <Rate disabled defaultValue={Math.ceil(product.rating / 0.5) * 0.5} allowHalf className="product-rating" />
                 <p className="product-description">{product.description}</p>
                 <div className="product-price">{`₫ ${product.price.toLocaleString('en-US')}`}</div>
                 <div className="product-rating"></div>
                 <Space align="center" size={15} style={{ marginTop: 30 }}>
-                  <Button onClick={() => dispatch(addToCart(product._id))} className="product-atc-btn">
-                    <ShoppingCartOutlined style={{ fontSize: '1.4rem' }} />
-                    {t('add to cart')}
-                  </Button>
+                  {product.isAvailable ? (
+                    <Button onClick={() => dispatch(addToCart(product._id))} className="product-atc-btn">
+                      <ShoppingCartOutlined style={{ fontSize: '1.4rem' }} />
+                      {t('add to cart')}
+                    </Button>
+                  ) : (
+                    <Button disabled className="product-atc-btn">
+                      {t('this item is currently unavailable')}
+                    </Button>
+                  )}
                   <Button type="primary" onClick={() => navigate('/menu')} className="product-btm-btn">
                     <ReadOutlined style={{ fontSize: '1.4rem' }} />
                     {t('see the menu')}
