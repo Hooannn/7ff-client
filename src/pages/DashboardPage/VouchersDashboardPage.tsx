@@ -40,8 +40,8 @@ export default function UsersDashboardPage() {
   const onUpdateVoucher = (values: IVoucher) => {
     updateVoucherMutation.mutateAsync({ voucherId: selectedVoucher?._id as string, data: values }).finally(() => setUpdateModalOpen(false));
   };
-  const onDeleteVoucher = (userId: string) => {
-    deleteVoucherMutation.mutate(userId);
+  const onDeleteVoucher = (voucherId: string) => {
+    deleteVoucherMutation.mutate(voucherId);
   };
 
   const onExportToCSV = () => exportToCSV(vouchers, `7FF_Vouchers_${Date.now()}`);

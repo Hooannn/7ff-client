@@ -9,6 +9,7 @@ import localeUS from 'antd/es/date-picker/locale/en_US';
 import localeVN from 'antd/es/date-picker/locale/vi_VN';
 
 const BookingTable: FC = () => {
+  const [form] = Form.useForm();
   const { t } = useTranslation();
   const language = getI18n().resolvedLanguage;
   const { bookReservationMutation } = useReservation();
@@ -20,7 +21,7 @@ const BookingTable: FC = () => {
     return options;
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     const reservation = {
       underName: values.name,
       contacts: {
@@ -33,6 +34,7 @@ const BookingTable: FC = () => {
       },
     };
     return bookReservationMutation.mutateAsync(reservation).then(res => {
+      form.resetFields();
       Modal.confirm({
         content: (
           <Result
@@ -52,7 +54,7 @@ const BookingTable: FC = () => {
         okButtonProps: {
           shape: 'round',
           type: 'primary',
-          style: { ...buttonStyle, width: '100px', marginLeft: '12px' },
+          style: { ...buttonStyle, width: '100px' },
         },
       });
     });
@@ -64,7 +66,7 @@ const BookingTable: FC = () => {
         <h2 className="heading">{t('booking a table')}</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 30 }}>
           <div className="booking-form-container">
-            <Form layout="vertical" validateTrigger="onSubmit" onFinish={onFinish}>
+            <Form form={form} layout="vertical" validateTrigger="onSubmit" onFinish={onFinish}>
               <Form.Item
                 name="name"
                 rules={[

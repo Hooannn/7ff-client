@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import { ConfigProvider } from 'antd';
 import './index.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { RouterProvider } from 'react-router-dom';
 import { store } from './@core/store';

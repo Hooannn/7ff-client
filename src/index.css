@@ -9,7 +9,12 @@ body {
   border: 0;
   font-size: 100%;
 }
+
 /* */
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}
 
 @media only screen and (min-width: 769px) {
   ::-webkit-scrollbar-track {
