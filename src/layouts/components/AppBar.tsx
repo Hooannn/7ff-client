@@ -10,6 +10,7 @@ import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
 import { buttonStyle, containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/components/AppBar.css';
+import useCart from '../../hooks/useCart';
 
 interface IProps {
   isDashboard?: boolean;
@@ -29,7 +30,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const cartItems = useSelector((state: RootState) => state.app.cartItems);
+  const { detailedItems } = useCart();
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -131,7 +132,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
           {user && (
             <>
               <Tooltip title={t('cart')}>
-                <Badge count={cartItems.length}>
+                <Badge count={detailedItems.length}>
                   <ShoppingCartOutlined onClick={() => setIsCartOpen(true)} className="nav-icon" style={{ color: 'white' }} />
                 </Badge>
               </Tooltip>

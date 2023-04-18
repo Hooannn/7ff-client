@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IDetailedItem } from '../types';
 import { RootState } from '../@core/store';
 
@@ -39,18 +39,17 @@ interface ICartValues {
   shippingFee: number;
 }
 
+const MINIMUM_VALUE_FOR_FREE_SHIPPING = 300000;
+const DEFAULT_SHIPPING_FEE = 20000;
+const INITIAL_CART_VALUES = {
+  detailedItems: [],
+  totalPrice: 0,
+  shippingFee: 0,
+};
+
 const useCart = () => {
   //   const { products } = useProducts();
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
-
-  const INITIAL_CART_VALUES = {
-    detailedItems: [],
-    totalPrice: 0,
-    shippingFee: 0,
-  };
-
-  const DEFAULT_SHIPPING_FEE = 20000;
-  const MINIMUM_VALUE_FOR_FREE_SHIPPING = 300000;
 
   const cartValues = useMemo(() => {
     return cartItems.reduce((acc: ICartValues, item: ICartItem) => {
@@ -68,13 +67,13 @@ const useCart = () => {
         return {
           detailedItems: [...acc.detailedItems, detailedItem],
           totalPrice: newTotalPrice,
-          shippingFee: newTotalPrice > MINIMUM_VALUE_FOR_FREE_SHIPPING ? 0 : DEFAULT_SHIPPING_FEE,
+          shippingFee: newTotalPrice >= MINIMUM_VALUE_FOR_FREE_SHIPPING ? 0 : DEFAULT_SHIPPING_FEE,
         };
       } else {
         return acc;
       }
     }, INITIAL_CART_VALUES);
-  }, [cartItems]);
+  }, [cartItems, products]);
 
   return { ...cartValues, MINIMUM_VALUE_FOR_FREE_SHIPPING };
 };

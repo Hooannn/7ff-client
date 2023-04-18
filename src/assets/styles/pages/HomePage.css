@@ -59,8 +59,9 @@
 }
 
 .banner .order-btn {
+  min-width: 160px;
   height: unset !important;
-  padding: 9px 45px !important;
+  padding: 9px 25px !important;
   margin-top: 10px;
   text-transform: capitalize;
   transition: all 0.3s;
@@ -144,11 +145,71 @@
   text-align: center;
 }
 
-.feedback .carousel-item-wrapper {
-  width: 50% !important;
+.feedback .item {
+  padding: 15px;
+}
+
+.feedback .item .feedback-content {
+  padding: 25px 25px 15px 25px;
+  border-radius: 5px;
+  background-color: #222831;
+  color: #fff;
+}
+
+.feedback .feedback-content p {
+  min-height: 70px;
+  margin: 0 0 10px;
+  font-size: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.feedback .feedback-content .author-name {
+  margin: 15px 0 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.feedback .feedback-content .feedback-date {
+  margin: 0 0 10px;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.feedback .feedback-author {
+  position: relative;
+  width: 115px;
+  height: 115px;
+  margin-top: 30px;
+}
+
+.feedback .feedback-author::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #ffbe33;
+  transform: rotate(45deg) translateX(-50%);
+  z-index: -1;
+}
+
+.feedback .feedback-author img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 5px solid #ffbe33;
+  border-radius: 100%;
 }
 
 .feedback .btns {
+  margin-top: 45px;
   display: flex;
   justify-content: center;
   gap: 10px;
