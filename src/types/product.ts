@@ -1,21 +1,22 @@
 import { IUser } from './auth';
-import { ICategory } from './category';
+import { ICategory, IContent } from './category';
 
 export interface IProduct {
-  _id: string;
-  name: string;
-  description: string;
+  _id?: string;
+  name: IContent;
+  description: IContent;
   price: number;
-  yearlyTotalSales: number;
-  yearlyTotalSoldUnits: number;
-  monthlyData: {
+  stocks?: number;
+  yearlyTotalSales?: number;
+  yearlyTotalSoldUnits?: number;
+  monthlyData?: {
     month: string;
     totalSales: number;
     totalUnits: number;
   }[];
   category: string | ICategory;
   isAvailable: boolean;
-  rating: number;
+  rating?: number;
   views?: string[] | IUser[];
   viewsCount?: number;
   featuredImages?: string[];

@@ -63,5 +63,13 @@ export default () => {
     },
   });
 
-  return { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation };
+  const deactivateAccountMutation = useMutation({
+    mutationFn: (data: { password: string }) => axios.post<IResponseData<any>>('/auth/deactivate', data),
+    onError: onError,
+    onSuccess: res => {
+      toast(res.data.message, toastConfig('success'));
+    },
+  });
+
+  return { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation, deactivateAccountMutation };
 };

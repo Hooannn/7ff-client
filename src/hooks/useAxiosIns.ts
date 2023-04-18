@@ -5,7 +5,7 @@ import cookies from '../libs/cookies';
 import useRefreshToken from './useRefreshToken';
 
 export const axiosIns = axios.create({
-  baseURL: /*import.meta.env.VITE_API_ENDPOINT || */ 'https://sevenfastfood-be.onrender.com',
+  baseURL: /*import.meta.env.VITE_API_ENDPOINT || */ 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
