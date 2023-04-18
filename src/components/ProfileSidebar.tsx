@@ -6,6 +6,7 @@ import { Divider, Modal } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { RootState } from '../@core/store';
 import { signOut } from '../slices/auth.slice';
+import useAuth from '../services/auth';
 import { buttonStyle } from '../assets/styles/globalStyle';
 import '../assets/styles/components/ProfileSidebar.css';
 
@@ -20,6 +21,7 @@ const ProfileSidebar: FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { deactivateAccountMutation } = useAuth();
   const location = useLocation();
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -56,6 +58,9 @@ const ProfileSidebar: FC = () => {
         // delete credentials cookies and persist states
         // delete account on database
         // change all undone orders by this account to cancel status (on database)
+        
+        // Get password then pass to this function
+        return deactivateAccountMutation.mutateAsync({ password: '' });
       },
       okButtonProps: {
         danger: true,
