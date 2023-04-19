@@ -47,7 +47,7 @@ export default function UsersDashboardPage() {
     enabled: false,
     select: res => res.data,
   });
-  const categories = fetchAllCategoriesQuery.data?.data;
+  const categories = fetchAllCategoriesQuery.data?.data || [];
   const { t } = useTranslation();
   useTitle(`${t('products')} - 7FF`);
 
@@ -115,7 +115,7 @@ export default function UsersDashboardPage() {
           <Col span={12}>
             <Row align="middle" justify="end" gutter={8}>
               <Col span={5}>
-                <SortAndFilter onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
+                <SortAndFilter categories={categories} onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
               </Col>
               <Col span={5}>
                 <Button block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModelOpen(true)}>

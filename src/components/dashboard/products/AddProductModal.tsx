@@ -1,10 +1,12 @@
-import { Modal, Row, Col, Button, Form, Input, FormInstance, Select, Empty, Spin, SelectProps, Image } from 'antd';
+import { Modal, Row, Col, Button, Form, Input, FormInstance, Select, Empty, Spin, SelectProps, Image, Upload } from 'antd';
 import { getI18n, useTranslation } from 'react-i18next';
 import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { ICategory, IProduct } from '../../../types';
 import { useMemo, useState } from 'react';
 import { DeleteFilled, MoneyCollectOutlined } from '@ant-design/icons';
+import useFiles from '../../../services/files';
 import Slider from 'react-slick';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
 interface AddProductModalProps {
   shouldOpen: boolean;
   onCancel: () => void;
@@ -85,12 +87,16 @@ export const AddProductForm = ({
   onSearchCategory: (value: string) => void;
   onCategoryChange: (value: string) => void;
 }) => {
+  const { uploadMutation, deleteMutation } = useFiles();
   const { t } = useTranslation();
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
+  const [featuredImages, setFeaturedImages] = useState<string[]>([]);
+
   const onFinish = (values: any) => {
     onSubmit({
       category: values.category.value,
       isAvailable: values.isAvailable,
+      featuredImages,
       price: values.price,
       name: {
         vi: values['name.vi'],
@@ -102,10 +108,19 @@ export const AddProductForm = ({
       },
     });
   };
-  const [featuredImages, setFeaturedImages] = useState<string[]>([]);
-  const onDeleteFeaturedImage = (image: string) => {
+
+  const onDeleteFeaturedImage = async (image: string) => {
+    await deleteMutation.mutateAsync(image);
     setFeaturedImages(prev => prev?.filter(item => item !== image));
   };
+
+  const handleUpload = ({ file }: UploadRequestOption<any>) => {
+    uploadMutation.mutateAsync({ file, folder: 'products' }).then(res => {
+      const url = res.data.data?.url;
+      setFeaturedImages(prev => [url, ...prev]);
+    });
+  };
+
   const categoryOptions: SelectProps['options'] = useMemo(() => {
     if (isLoadingCategory) return [{ key: 'loading', label: <Spin />, disabled: true }];
     else if (!categories?.length) return [{ key: 'empty', label: <Empty />, disabled: true }];
@@ -121,11 +136,13 @@ export const AddProductForm = ({
           </div>
         </Col>
         <Col>
-          <Button type="primary" shape="round" ghost size="large">
-            <small>
-              <strong>+ {t('add')}</strong>
-            </small>
-          </Button>
+          <Upload customRequest={handleUpload} accept="image/*" showUploadList={false} multiple>
+            <Button loading={uploadMutation.isLoading} type="primary" shape="round" ghost size="large">
+              <small>
+                <strong>+ {t('add')}</strong>
+              </small>
+            </Button>
+          </Upload>
         </Col>
       </Row>
       {featuredImages?.length > 0 && (
@@ -135,6 +152,7 @@ export const AddProductForm = ({
               <div style={{ position: 'relative' }}>
                 <Image preview={false} src={image} />
                 <Button
+                  loading={deleteMutation.isLoading}
                   style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '10' }}
                   danger
                   shape="circle"
