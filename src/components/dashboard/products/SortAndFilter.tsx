@@ -1,5 +1,5 @@
-import { Row, Col, Input, DatePicker, Button, Select, Popover, Space, Badge } from 'antd';
-import { useEffect, useState } from 'react';
+import { Row, Col, Input, DatePicker, Button, Select, Popover, Space, Badge, SelectProps, Empty } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 import { getI18n, useTranslation } from 'react-i18next';
 import { FilterOutlined, SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 import type { Dayjs } from 'dayjs';
@@ -7,13 +7,17 @@ import type { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import localeUS from 'antd/es/date-picker/locale/en_US';
 import localeVN from 'antd/es/date-picker/locale/vi_VN';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
+import { ICategory } from '../../../types';
 interface SortAndFilterProps {
   onChange: (params: SortAndFilterChangeParams) => void;
   onSearch: () => void;
   onReset: () => void;
+  categories: ICategory[];
 }
 
 interface SortAndFilterChangeParams {
+  searchPriceQuery: string;
+  searchCategory: string;
   searchNameVi: string;
   searchNameEn: string;
   searchDescVi: string;
@@ -22,17 +26,22 @@ interface SortAndFilterChangeParams {
   range: string[] | any[] | undefined;
 }
 
-export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFilterProps) {
+export default function SortAndFilter({ onChange, onSearch, onReset, categories }: SortAndFilterProps) {
   const { t } = useTranslation();
   const [searchNameVi, setSearchNameVi] = useState<string>('');
+  const [searchPriceQuery, setSearchPriceQuery] = useState<string>('');
+  const [priceSort, setPriceSort] = useState<string>('$lte');
+  const [searchPrice, setSearchPrice] = useState<string>('');
   const [searchNameEn, setSearchNameEn] = useState<string>('');
   const [searchDescVi, setSearchDescVi] = useState<string>('');
   const [searchDescEn, setSearchDescEn] = useState<string>('');
+  const [searchCategory, setSearchCategory] = useState<string>('');
   const [filterCount, setFilterCount] = useState<number>(0);
   const [sort, setSort] = useState<string>('-createdAt');
   const [rangePickerDate, setRangePickerDate] = useState<any[]>([]);
   const [range, setRange] = useState<string[] | any[]>();
   const i18n = getI18n();
+  const locale = i18n.resolvedLanguage as 'vi' | 'en';
 
   const onCalendarChange: RangePickerProps<Dayjs>['onCalendarChange'] = values => {
     setRangePickerDate(values as any);
@@ -40,10 +49,12 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
   };
 
   const onInternalReset = () => {
+    setSearchPriceQuery('');
     setSearchNameVi('');
     setSearchNameEn('');
     setSearchDescVi('');
     setSearchDescEn('');
+    setSearchCategory('');
     setSort('-createdAt');
     setRangePickerDate([]);
     setFilterCount(0);
@@ -52,19 +63,75 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
 
   const onInternalSearch = () => {
     onSearch();
-    if (!searchNameVi && !searchNameEn && !searchDescVi && !searchDescEn && sort === '-createdAt' && !range?.length) return setFilterCount(0);
+    if (
+      !searchPriceQuery &&
+      !searchCategory &&
+      !searchNameVi &&
+      !searchNameEn &&
+      !searchDescVi &&
+      !searchDescEn &&
+      sort === '-createdAt' &&
+      !range?.length
+    )
+      return setFilterCount(0);
     setFilterCount(1);
   };
 
-  useEffect(() => {
-    onChange({ searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range });
-  }, [searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range]);
+  const categoryOptions: SelectProps['options'] = useMemo(() => {
+    if (!categories?.length) return [{ key: 'empty', label: <Empty />, disabled: true }];
+    return categories.map(category => ({ key: category._id, label: category.name[locale], value: category._id }));
+  }, [categories]);
 
+  useEffect(() => {
+    onChange({ searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range });
+  }, [searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range]);
+
+  useEffect(() => {
+    if (searchPrice) {
+      const query = { [priceSort]: searchPrice };
+      setSearchPriceQuery(JSON.stringify(query));
+    } else setSearchPriceQuery('');
+  }, [searchPrice, priceSort]);
   const content = () => {
     return (
       <Row style={{ minWidth: '250px' }}>
         <Col span={24}>
           <Space direction="vertical">
+            <div>
+              <div>{t('filter by category')}</div>
+              <Select
+                style={{ width: '100%' }}
+                placeholder={t('select category')}
+                labelInValue
+                filterOption={false}
+                size="large"
+                onChange={category => {
+                  setSearchCategory(category.value);
+                }}
+                options={categoryOptions}
+              ></Select>
+            </div>
+            <div>
+              <div>{t('search by price')}</div>
+              <Row gutter={8}>
+                <Col span={16}>
+                  <Input
+                    value={searchPrice}
+                    size="large"
+                    type="number"
+                    allowClear
+                    placeholder={t('price').toString()}
+                    onChange={e => setSearchPrice(e.target.value)}
+                  />
+                </Col>
+                <Col span={8}>
+                  <Select value={priceSort} size="large" defaultValue="$lte" style={{ width: '100%' }} onChange={value => setPriceSort(value)}>
+                    <Select.Option value="$gte">{t('greater than or equal')}</Select.Option>
+                    <Select.Option value="$lte">{t('less than or equal')}</Select.Option>
+                  </Select>
+                </Col>
+              </Row>
+            </div>
             <div>
               <div>{t('search by name vi')}</div>
               <Input
@@ -111,7 +178,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset }: SortAndFi
                 locale={i18n.resolvedLanguage === 'vi' ? localeVN : localeUS}
                 value={rangePickerDate as any}
                 size="large"
-                style={{ width: '250px' }}
+                style={{ width: '100%' }}
                 onCalendarChange={onCalendarChange}
               />
             </div>

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import useFiles from '../../../services/files';
 import { IUser } from '../../../types';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
 interface AddUserModalProps {
   shouldOpen: boolean;
   onCancel: () => void;
@@ -55,7 +56,7 @@ export const AddUserForm = ({ form, onSubmit }: { form: FormInstance; onSubmit: 
   const { t } = useTranslation();
   const [avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqtrHsVnbfPaERaPm8v_vcvIXYxCGR0Lnbcw&usqp=CAU');
   const { uploadMutation } = useFiles();
-  const handleUpload = ({ file }: any) => {
+  const handleUpload = ({ file }: UploadRequestOption<any>) => {
     uploadMutation.mutateAsync({ file, folder: 'avatar' }).then(res => {
       const newUrl = res.data.data?.url;
       setAvatar(newUrl);

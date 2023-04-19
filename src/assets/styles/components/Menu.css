@@ -73,6 +73,7 @@
 
 .menu-card .description {
   padding: 25px;
+  min-height: 210px;
   color: #fff;
 }
 
