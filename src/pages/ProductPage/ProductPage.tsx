@@ -1,17 +1,16 @@
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useQuery } from 'react-query';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Avatar, Breadcrumb, Button, Card, Image, Rate, Skeleton, Space } from 'antd';
-import { EditOutlined, EllipsisOutlined, HomeOutlined, ReadOutlined, SettingOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Breadcrumb, Button, Card, Image, Rate, Skeleton, Space } from 'antd';
+import { HomeOutlined, ReadOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
+import useAxiosIns from '../../hooks/useAxiosIns';
+import { addToCart } from '../../slices/app.slice';
 import { IProduct, IResponseData } from '../../types';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/ProductPage.css';
-import { addToCart } from '../../slices/app.slice';
-import { useQuery } from 'react-query';
-import useAxiosIns from '../../hooks/useAxiosIns';
-import Meta from 'antd/es/card/Meta';
 
 const ProductPage: FC = () => {
   const { t } = useTranslation();
@@ -66,7 +65,9 @@ const ProductPage: FC = () => {
                     </Link>
                   ),
                 },
-                <span className="breadcrumb-item">{product?.name[locale]}</span>,
+                {
+                  title: <span className="breadcrumb-item">{product?.name[locale]}</span>,
+                },
               ]}
             />
 
@@ -93,7 +94,7 @@ const ProductPage: FC = () => {
                 <div className="product-desc">
                   <div className="product-name">{product?.name[locale]}</div>
                   <div className="product-sold-units">
-                    <span style={{ fontSize: '1rem', fontWeight: 500 }}>{product?.yearlyTotalSoldUnits}</span>
+                    <span style={{ fontSize: '1rem', fontWeight: 500 }}>{product?.yearlyTotalSoldUnits || 0}</span>
                     <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${
                       product?.yearlyTotalSoldUnits && product.yearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
                     } ${t('sold this year')}`}</span>

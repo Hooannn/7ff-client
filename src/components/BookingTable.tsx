@@ -138,7 +138,7 @@ const BookingTable: FC = () => {
           <div className="map-container">
             <div style={{ height: '100%', background: '#FFBE33' }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d979.4379703726116!2d106.60081657554642!3d10.906451778935992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1680434015663!5m2!1svi!2s"
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3918.1663439049316!2d106.57142507346776!3d10.874949657371902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDUyJzI5LjgiTiAxMDbCsDM0JzI2LjQiRQ!5e0!3m2!1svi!2s!4v1681998690477!5m2!1svi!2s"
                 width="100%"
                 height="100%"
                 style={{ border: '0' }}

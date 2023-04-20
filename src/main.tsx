@@ -1,18 +1,18 @@
 import ReactDOM from 'react-dom/client';
-import { ConfigProvider } from 'antd';
-import './index.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import 'react-toastify/dist/ReactToastify.css';
 import { RouterProvider } from 'react-router-dom';
-import { store } from './@core/store';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-import getRouter from './@core/router/index';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastContainer } from 'react-toastify';
+import { ConfigProvider } from 'antd';
 import './libs/i18n';
+import 'react-toastify/dist/ReactToastify.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import getRouter from './@core/router/index';
+import { store } from './@core/store';
+import './index.css';
 
 const isDev = import.meta.env.VITE_NODE_ENV === 'dev';
 const persistor = persistStore(store);

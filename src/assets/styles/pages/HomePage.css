@@ -21,6 +21,8 @@
 
 .banner .carousel .slick-dots {
   inset-inline-end: unset;
+  width: fit-content;
+  margin: 14px 0 0;
 }
 
 .banner .carousel .slick-dots li button {
@@ -31,6 +33,10 @@
 
 .banner .carousel .slick-dots li.slick-active {
   width: 16px;
+}
+
+.banner .carousel .slick-dots li button::before {
+  font-size: unset;
 }
 
 .banner .carousel .slick-dots li.slick-active button {
@@ -51,6 +57,7 @@
   font-family: 'Dancing Script', cursive;
   font-size: 56px;
   font-weight: 700;
+  text-transform: capitalize;
 }
 
 .banner .carousel-item .description {
