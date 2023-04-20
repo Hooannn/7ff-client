@@ -23,6 +23,8 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
   const axios = useAxiosIns();
 
   const buildQuery = (values: {
+    searchPriceQuery: string;
+    searchCategory: string;
     searchNameVi: string;
     searchNameEn: string;
     searchDescVi: string;
@@ -30,8 +32,10 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
     sort: string;
     range: string[] | any[] | undefined;
   }) => {
-    const { searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
+    const { searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
     const query: any = {};
+    if (searchPriceQuery) query.price = JSON.parse(searchPriceQuery);
+    if (searchCategory) query.category = searchCategory;
     if (searchNameVi) query['name.vi'] = { $regex: `^${searchNameVi}` };
     if (searchNameEn) query['name.en'] = { $regex: `^${searchNameEn}` };
     if (searchDescVi) query['description.vi'] = { $regex: `^${searchDescVi}` };

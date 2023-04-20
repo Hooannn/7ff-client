@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal, Space, Table, Tag, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { IProduct } from '../../../types';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
 import dayjs from '../../../libs/dayjs';
@@ -29,6 +29,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
   setItemPerPage,
 }) => {
   const { t } = useTranslation();
+  const locale = getI18n().resolvedLanguage;
   const onDeleteBtnClick = (productId: string) => {
     Modal.confirm({
       icon: <ExclamationCircleFilled />,
@@ -152,6 +153,20 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
               </small>
             )}
           </div>
+        </div>
+      ),
+    },
+    {
+      title: t('category'),
+      dataIndex: 'category',
+      key: 'category',
+      render: category => (
+        <div>
+          {category.name[locale] || (
+            <small>
+              <em>{t('not updated yet')}</em>
+            </small>
+          )}
         </div>
       ),
     },

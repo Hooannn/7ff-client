@@ -1,9 +1,11 @@
-import { Modal, Row, Col, Button, Form, Input, FormInstance, Select, Empty, SelectProps, Spin, Image } from 'antd';
+import { Modal, Row, Col, Button, Form, Input, FormInstance, Select, Empty, SelectProps, Spin, Image, Upload } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { getI18n, useTranslation } from 'react-i18next';
 import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { ICategory, IProduct } from '../../../types';
 import { DeleteFilled, MoneyCollectOutlined } from '@ant-design/icons';
+import useFiles from '../../../services/files';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
 import Slider from 'react-slick';
 interface UpdateProductModalProps {
   shouldOpen: boolean;
@@ -103,14 +105,13 @@ export const UpdateProductForm = ({
   onCategoryChange: (value: string) => void;
 }) => {
   const { t } = useTranslation();
+  const { uploadMutation, deleteMutation } = useFiles();
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
-  const [featuredImages, setFeaturedImages] = useState<string[] | undefined>(product?.featuredImages);
-  const onDeleteFeaturedImage = (image: string) => {
-    setFeaturedImages(prev => prev?.filter(item => item !== image));
-  };
+  const [featuredImages, setFeaturedImages] = useState<string[]>(product?.featuredImages || []);
   const onFinish = (values: any) => {
     onSubmit({
       category: values.category.value,
+      featuredImages,
       isAvailable: values.isAvailable,
       price: values.price,
       name: {
@@ -121,6 +122,18 @@ export const UpdateProductForm = ({
         vi: values['description.vi'],
         en: values['description.en'],
       },
+    });
+  };
+
+  const onDeleteFeaturedImage = async (image: string) => {
+    await deleteMutation.mutateAsync(image);
+    setFeaturedImages(prev => prev?.filter(item => item !== image));
+  };
+
+  const handleUpload = ({ file }: UploadRequestOption<any>) => {
+    uploadMutation.mutateAsync({ file, folder: 'products' }).then(res => {
+      const url = res.data.data?.url;
+      setFeaturedImages(prev => [url, ...prev]);
     });
   };
 
@@ -139,11 +152,13 @@ export const UpdateProductForm = ({
           </div>
         </Col>
         <Col>
-          <Button type="primary" shape="round" ghost size="large">
-            <small>
-              <strong>+ {t('add')}</strong>
-            </small>
-          </Button>
+          <Upload customRequest={handleUpload} accept="image/*" showUploadList={false} multiple>
+            <Button loading={uploadMutation.isLoading} type="primary" shape="round" ghost size="large">
+              <small>
+                <strong>+ {t('add')}</strong>
+              </small>
+            </Button>
+          </Upload>
         </Col>
       </Row>
       {featuredImages && featuredImages?.length > 0 && (
@@ -153,6 +168,7 @@ export const UpdateProductForm = ({
               <div style={{ position: 'relative' }}>
                 <Image preview={false} src={image} />
                 <Button
+                  loading={deleteMutation.isLoading}
                   style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '10' }}
                   danger
                   shape="circle"

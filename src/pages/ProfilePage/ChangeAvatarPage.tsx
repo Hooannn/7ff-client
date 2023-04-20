@@ -11,6 +11,7 @@ import { RootState } from '../../@core/store';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/ProfilePage.css';
 import { setUser } from '../../slices/auth.slice';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
 
 const ChangeAvatarPage: FC = () => {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ const ChangeAvatarPage: FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleUpload = ({ file }: any) => {
+  const handleUpload = ({ file }: UploadRequestOption<any>) => {
     uploadMutation.mutateAsync({ file, folder: 'avatar' }).then(res => {
       const newUrl = res.data.data?.url;
       setAvatar(newUrl);
