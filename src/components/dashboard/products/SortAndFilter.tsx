@@ -16,6 +16,7 @@ interface SortAndFilterProps {
 }
 
 interface SortAndFilterChangeParams {
+  isAvailable: boolean;
   searchPriceQuery: string;
   searchCategory: string;
   searchNameVi: string;
@@ -33,6 +34,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
   const [priceSort, setPriceSort] = useState<string>('$lte');
   const [searchPrice, setSearchPrice] = useState<string>('');
   const [searchNameEn, setSearchNameEn] = useState<string>('');
+  const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [searchDescVi, setSearchDescVi] = useState<string>('');
   const [searchDescEn, setSearchDescEn] = useState<string>('');
   const [searchCategory, setSearchCategory] = useState<string>('');
@@ -64,6 +66,7 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
   const onInternalSearch = () => {
     onSearch();
     if (
+      isAvailable &&
       !searchPriceQuery &&
       !searchCategory &&
       !searchNameVi &&
@@ -83,8 +86,8 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
   }, [categories]);
 
   useEffect(() => {
-    onChange({ searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range });
-  }, [searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range]);
+    onChange({ isAvailable, searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range });
+  }, [isAvailable, searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range]);
 
   useEffect(() => {
     if (searchPrice) {
@@ -181,6 +184,13 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
                 style={{ width: '100%' }}
                 onCalendarChange={onCalendarChange}
               />
+            </div>
+            <div>
+              <div>{t("filter by product's availability")}</div>
+              <Select size="large" value={isAvailable} onChange={value => setIsAvailable(value)} style={{ width: '100%' }}>
+                <Select.Option value={true}>{t('yes')}</Select.Option>
+                <Select.Option value={false}>{t('no')}</Select.Option>
+              </Select>
             </div>
             <div>
               <div>{t('sort by order')}</div>

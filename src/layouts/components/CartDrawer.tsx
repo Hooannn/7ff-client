@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { getI18n, useTranslation } from 'react-i18next';
 import { Avatar, Button, Divider, Drawer, Progress, Image, Space, Tooltip, Modal } from 'antd';
 import { DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
 import useCart from '../../hooks/useCart';
 import { IDetailedItem } from '../../types';
 import { RootState } from '../../@core/store';
-import { addToCart, decreaseCartItem, removeCartItem, resetCart } from '../../slices/app.slice';
 import { buttonStyle } from '../../assets/styles/globalStyle';
-
+import useCartItems from '../../services/cart';
+import QuantityInput from '../../components/shared/QuantityInput';
 interface IProps {
   isCartOpen: boolean;
   setIsCartOpen: (value: boolean) => void;
@@ -17,12 +17,12 @@ interface IProps {
 
 const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const locale = getI18n().resolvedLanguage as 'vi' | 'en';
+  const { removeCartItemMutation, addCartItemMutation, resetCartItemsMutation } = useCartItems({ enabledFetchCartItems: true });
   const navigate = useNavigate();
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
 
   const { detailedItems, totalPrice, MINIMUM_VALUE_FOR_FREE_SHIPPING } = useCart();
-
   const handleResetCartBtnClick = () => {
     Modal.confirm({
       icon: <ExclamationCircleFilled />,
@@ -30,7 +30,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
       okText: t('delete'),
       cancelText: t('cancel'),
       onOk: () => {
-        dispatch(resetCart());
+        resetCartItemsMutation.mutate();
       },
       okButtonProps: {
         danger: true,
@@ -53,7 +53,13 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
       }}
       title={t('cart')}
       contentWrapperStyle={{ width: 600 }}
-      extra={cartItems.length !== 0 && <Button onClick={handleResetCartBtnClick}>{t('reset cart')}</Button>}
+      extra={
+        cartItems.length !== 0 && (
+          <Button loading={resetCartItemsMutation.isLoading} onClick={handleResetCartBtnClick}>
+            {t('reset cart')}
+          </Button>
+        )
+      }
     >
       <div className={`cart-content ${cartItems.length === 0 ? 'no-items' : ''}`}>
         {cartItems.length === 0 ? (
@@ -99,31 +105,42 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
 
             <div className="cart-items">
               {detailedItems.map((item: IDetailedItem) => (
-                <div key={item.productId} className="cart-item">
-                  <div className="item-image">
-                    <Image src={item.image} />
-                  </div>
+                <div key={item.product._id} className="cart-item">
+                  <div className="item-image">{item.product.featuredImages?.length && <Image src={item.product.featuredImages[0]} />}</div>
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <h4 className="item-name">{item.name}</h4>
-                    <p className="item-price">{(item.price * item.quantity).toLocaleString('en-US')}</p>
+                    <h4 className="item-name">{item.product.name[locale]}</h4>
+                    <p className="item-price">
+                      {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product.price * item.quantity)}
+                    </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                    <Space.Compact className="item-quantity">
-                      <Button type="text" onClick={() => dispatch(decreaseCartItem(item.productId))}>
-                        -
-                      </Button>
-                      <span>{item.quantity}</span>
-                      <Button type="text" onClick={() => dispatch(addToCart(item.productId))}>
-                        +
-                      </Button>
-                    </Space.Compact>
+                    <QuantityInput
+                      loading={removeCartItemMutation.isLoading || addCartItemMutation.isLoading}
+                      tag="cartDrawer"
+                      initValue={item.quantity}
+                      quantity={item.quantity}
+                      onChange={newValue => {
+                        const quantity = newValue - item.quantity;
+                        if (quantity === 0) return;
+                        else if (quantity < 0)
+                          return removeCartItemMutation.mutate({
+                            productId: item.product._id as string,
+                            quantity: Math.abs(quantity),
+                          });
+                        return addCartItemMutation.mutate({
+                          productId: item.product._id as string,
+                          quantity: Math.abs(quantity),
+                        });
+                      }}
+                    />
                     <Tooltip title={t('delete item')} placement="bottom">
                       <Button
                         type="primary"
                         danger
                         shape="circle"
+                        loading={removeCartItemMutation.isLoading}
                         icon={<DeleteOutlined />}
-                        onClick={() => dispatch(removeCartItem(item.productId))}
+                        onClick={() => removeCartItemMutation.mutate({ productId: item.product._id as string, quantity: 100000 })}
                       />
                     </Tooltip>
                   </div>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Avatar, Button, Card, Col, Row, Skeleton, Tooltip } from 'antd';
 import { getI18n, useTranslation } from 'react-i18next';
@@ -8,13 +8,15 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useQuery } from 'react-query';
 import useAxiosIns from '../hooks/useAxiosIns';
 import { IResponseData, ICategory, IProduct } from '../types';
-
+import useCartItems from '../services/cart';
 interface IProps {
   isMenuPage?: boolean;
 }
 
 const Menu: FC<IProps> = ({ isMenuPage }) => {
   const { t } = useTranslation();
+  const ADDITIONAL_FILTER = { isAvailable: true };
+  const { addCartItemMutation } = useCartItems({ enabledFetchCartItems: false });
   const [searchProductQuery, setSearchProductQuery] = useState<string>('');
   const [skip, setSkip] = useState<number>(0);
   const [limit, setLimit] = useState<number | null>(3);
@@ -49,8 +51,8 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
 
   useEffect(() => {
     const activeCategory = categories?.find(category => category.name[locale] === categoryQuery.get('category'));
-    if (activeCategory) setSearchProductQuery(JSON.stringify({ category: activeCategory }));
-    else setSearchProductQuery('');
+    if (activeCategory) setSearchProductQuery(JSON.stringify({ category: activeCategory, ...ADDITIONAL_FILTER }));
+    else setSearchProductQuery(JSON.stringify({ ...ADDITIONAL_FILTER }));
   }, [categoryQuery.get('category')]);
 
   useEffect(() => {
@@ -115,7 +117,9 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
                         type="primary"
                         shape="circle"
                         size="large"
+                        loading={addCartItemMutation.isLoading}
                         icon={<ShoppingCartOutlined style={{ marginLeft: -1, marginTop: 3, fontSize: '1.3rem' }} />}
+                        onClick={() => addCartItemMutation.mutate({ productId: product?._id as string, quantity: 1 })}
                       />
                     </Tooltip>
                   </div>

@@ -23,11 +23,8 @@ export interface IProduct {
 }
 
 export interface IDetailedItem {
-  productId: string;
+  product: IProduct;
   quantity: number;
-  name: string;
-  price: number;
-  image: string;
 }
 
 export interface IVoucher {

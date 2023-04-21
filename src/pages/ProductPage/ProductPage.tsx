@@ -1,21 +1,20 @@
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Breadcrumb, Button, Card, Image, Rate, Skeleton, Space } from 'antd';
 import { HomeOutlined, ReadOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
 import useAxiosIns from '../../hooks/useAxiosIns';
-import { addToCart } from '../../slices/app.slice';
 import { IProduct, IResponseData } from '../../types';
 import { containerStyle } from '../../assets/styles/globalStyle';
+import useCartItems from '../../services/cart';
 import '../../assets/styles/pages/ProductPage.css';
 
 const ProductPage: FC = () => {
   const { t } = useTranslation();
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
-  const dispatch = useDispatch();
+  const { addCartItemMutation } = useCartItems({ enabledFetchCartItems: false });
   const navigate = useNavigate();
   const { productId } = useParams();
   const axios = useAxiosIns();
@@ -103,7 +102,10 @@ const ProductPage: FC = () => {
                   <div className="product-rating"></div>
                   <Space align="center" size={15} style={{ marginTop: 30 }}>
                     {product?.isAvailable ? (
-                      <Button onClick={() => dispatch(addToCart(product?._id as string))} className="product-atc-btn">
+                      <Button
+                        onClick={() => addCartItemMutation.mutate({ productId: product._id as string, quantity: 1 })}
+                        className="product-atc-btn"
+                      >
                         <ShoppingCartOutlined style={{ fontSize: '1.4rem' }} />
                         {t('add to cart')}
                       </Button>
