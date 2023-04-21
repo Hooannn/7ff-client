@@ -14,7 +14,9 @@ import AddProductModal from '../../components/dashboard/products/AddProductModal
 import { useQuery } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import useDebounce from '../../hooks/useDebounce';
-export default function UsersDashboardPage() {
+import '../../assets/styles/pages/ProductsDashboardPage.css';
+
+export default function ProductsDashboardPage() {
   const {
     fetchProductsQuery,
     products,

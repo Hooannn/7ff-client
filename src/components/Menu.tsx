@@ -1,13 +1,13 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Avatar, Button, Card, Col, Row, Skeleton, Tooltip } from 'antd';
 import { getI18n, useTranslation } from 'react-i18next';
-import { containerStyle } from '../assets/styles/globalStyle';
-import '../assets/styles/components/Menu.css';
-import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useQuery } from 'react-query';
+import { Avatar, Button, Card, Col, Row, Skeleton, Tooltip } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import useAxiosIns from '../hooks/useAxiosIns';
 import { IResponseData, ICategory, IProduct } from '../types';
+import { containerStyle } from '../assets/styles/globalStyle';
+import '../assets/styles/components/Menu.css';
 
 interface IProps {
   isMenuPage?: boolean;

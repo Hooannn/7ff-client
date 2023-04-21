@@ -211,7 +211,6 @@ export default function SortAndFilter({ onChange, onSearch, onReset, categories 
 
   return (
     <Popover
-      placement="bottom"
       content={content}
       title={
         <>

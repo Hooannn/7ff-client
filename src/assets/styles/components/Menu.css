@@ -75,6 +75,8 @@
   padding: 25px;
   min-height: 210px;
   color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 .description .name {
@@ -85,6 +87,7 @@
 }
 
 .description p {
+  flex: 1;
   margin: 0 0 16px;
   font-size: 1rem;
   display: -webkit-box;
