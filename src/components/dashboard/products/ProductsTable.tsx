@@ -157,6 +157,12 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
       ),
     },
     {
+      title: t('is available'),
+      dataIndex: 'isAvailable',
+      key: 'isAvailable',
+      render: isAvailable => <div>{isAvailable ? t('yes') : t('no')}</div>,
+    },
+    {
       title: t('category'),
       dataIndex: 'category',
       key: 'category',

@@ -23,6 +23,7 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
   const axios = useAxiosIns();
 
   const buildQuery = (values: {
+    isAvailable: boolean;
     searchPriceQuery: string;
     searchCategory: string;
     searchNameVi: string;
@@ -32,14 +33,15 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
     sort: string;
     range: string[] | any[] | undefined;
   }) => {
-    const { searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
+    const { isAvailable, searchPriceQuery, searchCategory, searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
     const query: any = {};
+    query.isAvailable = isAvailable;
     if (searchPriceQuery) query.price = JSON.parse(searchPriceQuery);
     if (searchCategory) query.category = searchCategory;
-    if (searchNameVi) query['name.vi'] = { $regex: `${searchNameVi}`, $options: 'i' };
-    if (searchNameEn) query['name.en'] = { $regex: `${searchNameEn}`, $options: 'i' };
-    if (searchDescVi) query['description.vi'] = { $regex: `${searchDescVi}`, $options: 'i' };
-    if (searchDescEn) query['description.en'] = { $regex: `${searchDescEn}`, $options: 'i' };
+    if (searchNameVi) query['name.vi'] = { $regex: `${searchNameVi}` };
+    if (searchNameEn) query['name.en'] = { $regex: `${searchNameEn}` };
+    if (searchDescVi) query['description.vi'] = { $regex: `${searchDescVi}` };
+    if (searchDescEn) query['description.en'] = { $regex: `${searchDescEn}` };
     if (range)
       query.createdAt = {
         $gte: range[0],

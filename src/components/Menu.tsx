@@ -6,6 +6,7 @@ import { Avatar, Button, Card, Col, Row, Skeleton, Tooltip } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import useAxiosIns from '../hooks/useAxiosIns';
 import { IResponseData, ICategory, IProduct } from '../types';
+import useCartItems from '../services/cart';
 import { containerStyle } from '../assets/styles/globalStyle';
 import '../assets/styles/components/Menu.css';
 
@@ -15,6 +16,8 @@ interface IProps {
 
 const Menu: FC<IProps> = ({ isMenuPage }) => {
   const { t } = useTranslation();
+  const ADDITIONAL_FILTER = { isAvailable: true };
+  const { addCartItemMutation } = useCartItems({ enabledFetchCartItems: false });
   const [searchProductQuery, setSearchProductQuery] = useState<string>('');
   const [skip, setSkip] = useState<number>(0);
   const [limit, setLimit] = useState<number | null>(3);
@@ -49,8 +52,8 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
 
   useEffect(() => {
     const activeCategory = categories?.find(category => category.name[locale] === categoryQuery.get('category'));
-    if (activeCategory) setSearchProductQuery(JSON.stringify({ category: activeCategory }));
-    else setSearchProductQuery('');
+    if (activeCategory) setSearchProductQuery(JSON.stringify({ category: activeCategory, ...ADDITIONAL_FILTER }));
+    else setSearchProductQuery(JSON.stringify({ ...ADDITIONAL_FILTER }));
   }, [categoryQuery.get('category')]);
 
   useEffect(() => {
@@ -115,7 +118,9 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
                         type="primary"
                         shape="circle"
                         size="large"
+                        loading={addCartItemMutation.isLoading}
                         icon={<ShoppingCartOutlined style={{ marginLeft: -1, marginTop: 3, fontSize: '1.3rem' }} />}
+                        onClick={() => addCartItemMutation.mutate({ productId: product?._id as string, quantity: 1 })}
                       />
                     </Tooltip>
                   </div>

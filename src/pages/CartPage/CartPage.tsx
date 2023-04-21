@@ -1,21 +1,23 @@
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import { Button, ConfigProvider, Input, Progress, Table, Image, Space, Tooltip, Avatar } from 'antd';
 import { LockOutlined, DeleteOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
 import useCart from '../../hooks/useCart';
 import { IDetailedItem } from '../../types';
 import { RootState } from '../../@core/store';
-import { addToCart, decreaseCartItem, removeCartItem } from '../../slices/app.slice';
+import useCartItems from '../../services/cart';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/CartPage.css';
+import QuantityInput from '../../components/shared/QuantityInput';
 
 const CartPage: FC = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const locale = getI18n().resolvedLanguage as 'vi' | 'en';
   const navigate = useNavigate();
+  const { removeCartItemMutation, addCartItemMutation } = useCartItems({ enabledFetchCartItems: false });
 
   useTitle(`${t('cart')} - 7FF`);
   useEffect(() => {
@@ -24,7 +26,6 @@ const CartPage: FC = () => {
 
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
   const { detailedItems, totalPrice, MINIMUM_VALUE_FOR_FREE_SHIPPING } = useCart();
-
   return (
     <ConfigProvider
       theme={{ token: { colorPrimary: '#1a1a1a' } }}
@@ -61,34 +62,34 @@ const CartPage: FC = () => {
                     <div className="cart-items">
                       <Table
                         pagination={false}
-                        rowKey={(record: IDetailedItem) => record.productId}
+                        rowKey={(record: IDetailedItem) => record.product._id as string}
                         columns={[
                           {
                             title: t('feature image'),
-                            dataIndex: 'image',
+                            dataIndex: 'product',
                             width: 150,
-                            render: (value: string) => {
+                            render: (value: IDetailedItem['product']) => {
                               return (
                                 <div className="item-image">
-                                  <Image src={value} />
+                                  <Image src={value.featuredImages?.length ? value.featuredImages[0] : ''} />
                                 </div>
                               );
                             },
                           },
                           {
                             title: t("product's name"),
-                            dataIndex: 'name',
-                            render: (value: string) => {
-                              return <strong>{value}</strong>;
+                            dataIndex: 'product',
+                            render: (value: IDetailedItem['product']) => {
+                              return <strong>{value.name[locale]}</strong>;
                             },
                           },
                           {
                             title: t('unit price'),
-                            dataIndex: 'price',
+                            dataIndex: 'product',
                             align: 'center',
                             width: 120,
-                            render: (value: number) => {
-                              return <span>{(value * 1).toLocaleString('en-US')} /1</span>;
+                            render: (value: IDetailedItem['product']) => {
+                              return <span>{value.price.toLocaleString('en-US')} /1</span>;
                             },
                           },
                           {
@@ -99,22 +100,33 @@ const CartPage: FC = () => {
                             render: (value: number, record: IDetailedItem) => {
                               return (
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                                  <Space.Compact className="item-quantity">
-                                    <Button type="text" onClick={() => dispatch(decreaseCartItem(record.productId))}>
-                                      -
-                                    </Button>
-                                    <span>{value}</span>
-                                    <Button type="text" onClick={() => dispatch(addToCart(record.productId))}>
-                                      +
-                                    </Button>
-                                  </Space.Compact>
+                                  <QuantityInput
+                                    loading={removeCartItemMutation.isLoading || addCartItemMutation.isLoading}
+                                    quantity={value}
+                                    tag="cartPage"
+                                    initValue={value}
+                                    onChange={newValue => {
+                                      const quantity = newValue - value;
+                                      if (quantity === 0) return;
+                                      else if (quantity < 0)
+                                        return removeCartItemMutation.mutate({
+                                          productId: record.product._id as string,
+                                          quantity: Math.abs(quantity),
+                                        });
+                                      return addCartItemMutation.mutate({
+                                        productId: record.product._id as string,
+                                        quantity: Math.abs(quantity),
+                                      });
+                                    }}
+                                  />
                                   <Tooltip title={t('delete item')} placement="bottom">
                                     <Button
                                       type="primary"
                                       danger
                                       shape="circle"
+                                      loading={removeCartItemMutation.isLoading}
                                       icon={<DeleteOutlined />}
-                                      onClick={() => dispatch(removeCartItem(record.productId))}
+                                      onClick={() => removeCartItemMutation.mutate({ productId: record.product._id as string, quantity: 100000 })}
                                     />
                                   </Tooltip>
                                 </div>
@@ -126,7 +138,7 @@ const CartPage: FC = () => {
                             align: 'center',
                             width: 120,
                             render: (value: any, record: IDetailedItem) => {
-                              return <span>{(record.price * record.quantity).toLocaleString('en-US')}₫</span>;
+                              return <span>{(record.product.price * record.quantity).toLocaleString('en-US')}₫</span>;
                             },
                           },
                         ]}

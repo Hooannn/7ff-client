@@ -23,7 +23,7 @@ const CheckoutPage: FC = () => {
   const { t } = useTranslation();
   const i18n = getI18n();
   const navigate = useNavigate();
-
+  const locale = i18n.resolvedLanguage as 'vi' | 'en';
   useTitle(`${t('checkout')} - 7FF`);
 
   const user = useSelector((state: RootState) => state.auth.user);
@@ -149,17 +149,17 @@ const CheckoutPage: FC = () => {
 
             <div className="cart-items">
               {detailedItems.map((item: IDetailedItem) => (
-                <div key={item.productId} className="checkout-cart-item">
+                <div key={item.product._id} className="checkout-cart-item">
                   <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
                     <div className="item-image">
-                      <Image src={item.image} />
+                      <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : ''} />
                     </div>
                   </Badge>
                   <div className="item-name">
-                    <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.name}</h4>
-                    <span>{`${(item.price * 1).toLocaleString('en-US')} /1`}</span>
+                    <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.product.name[locale]}</h4>
+                    <span>{`${(item.product.price * 1).toLocaleString('en-US')} /1`}</span>
                   </div>
-                  <div className="item-price">{`₫${(item.price * item.quantity).toLocaleString('en-US')}`}</div>
+                  <div className="item-price">{`₫${(item.product.price * item.quantity).toLocaleString('en-US')}`}</div>
                 </div>
               ))}
               <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
