@@ -51,13 +51,11 @@
   gap: 16px;
 }
 
-.footer-col .social-link {
-  cursor: pointer;
-}
-
 .footer-col .contact-box:hover,
-.footer-col .social-link:hover {
+.footer-col .social-link:hover,
+.footer-col .text.address:hover {
   color: #ffbe33;
+  cursor: pointer;
 }
 
 .footer .copyright {

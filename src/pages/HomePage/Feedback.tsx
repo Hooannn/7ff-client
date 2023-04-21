@@ -8,32 +8,28 @@ import { containerStyle } from '../../assets/styles/globalStyle';
 const CUSTOMER_FEEDBACKS = [
   {
     author: 'Võ Kiều Thiên Ân',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+    content: 'Đồ ăn ngon, giao hàng nhanh chóng, thái độ phục vụ khách hàng rất chu đáo.',
     postingDate: '14/03/2023',
     authorImg:
       'https://images.unsplash.com/photo-1614104301615-9467f637be75?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHZpZXRuYW1lc2UlMjBnaXJsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
   },
   {
     author: 'Trần Thị Thu Thảo',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+    content: 'Quá OK, 10đ cho 7FF, sẽ ủng hộ nhiều. Mong rằng sắp tới 7FF sẽ ngày càng phát triển.',
     postingDate: '07/02/2023',
     authorImg:
       'https://images.unsplash.com/photo-1670167872812-c4f4de6db44f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dmlldG5hbWVzZSUyMGFvJTIwZGFpfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
   },
   {
     author: 'Nguyễn Trần Như Ý',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+    content: 'Ngon, rẻ, nhưng đôi khi giao hàng hơi lâu.',
     postingDate: '23/01/2023',
     authorImg:
       'https://images.unsplash.com/photo-1673194493752-22444ca69f81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHZpZXRuYW1lc2UlMjBhbyUyMGRhaXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60',
   },
   {
     author: 'Phạm Ngọc Yến Nhi',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+    content: 'Giá cả hợp lý với học sinh, sinh viên. Quán thường xuyên cập nhật các món hot trend. Sẽ tiếp tục ủng hộ 7FF.',
     postingDate: '21/11/2022',
     authorImg:
       'https://images.unsplash.com/photo-1613899804101-4ef0823fa55c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dmlldG5hbWVzZSUyMGdpcmx8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60',
