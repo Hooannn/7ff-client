@@ -68,7 +68,7 @@ export default function ProductsDashboardPage() {
   const onExportToCSV = () => exportToCSV(products, `7FF_Products_${Date.now()}`);
 
   useEffect(() => {
-    if (!debouncedSearchCategory || !debouncedSearchCategory.trim()) {
+    if (!debouncedSearchCategory || !(debouncedSearchCategory as string).trim()) {
       setQuery('');
     } else {
       const query: any = {};
