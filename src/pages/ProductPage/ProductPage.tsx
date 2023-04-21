@@ -28,7 +28,7 @@ const ProductPage: FC = () => {
     },
   });
   const product = getProductQuery.data?.data as IProduct;
-  const [activeImage, setActiveImage] = useState('');
+  const [activeImage, setActiveImage] = useState(product?.featuredImages?.length ? product?.featuredImages[0] : '');
 
   useTitle(`${t('product')} - 7FF`);
   useEffect(() => {
@@ -79,9 +79,7 @@ const ProductPage: FC = () => {
             {!getProductQuery.isLoading && (
               <div className="product-info">
                 <div className="product-feature-images">
-                  <div className="active-image">
-                    <Image src={activeImage} width={430} height={430} />
-                  </div>
+                  <div className="active-image">{activeImage && <Image src={activeImage} width={430} height={430} />}</div>
                   <div className="feature-images">
                     {product?.featuredImages?.map(imageSrc => (
                       <div key={imageSrc} className={`image-wrapper ${activeImage === imageSrc ? 'active' : ''}`}>

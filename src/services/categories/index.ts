@@ -32,10 +32,10 @@ export default ({ enabledFetchCategories }: { enabledFetchCategories?: boolean }
   }) => {
     const { searchNameVi, searchNameEn, searchDescVi, searchDescEn, sort, range } = values;
     const query: any = {};
-    if (searchNameVi) query['name.vi'] = { $regex: `^${searchNameVi}` };
-    if (searchNameEn) query['name.en'] = { $regex: `^${searchNameEn}` };
-    if (searchDescVi) query['description.vi'] = { $regex: `^${searchDescVi}` };
-    if (searchDescEn) query['description.en'] = { $regex: `^${searchDescEn}` };
+    if (searchNameVi) query['name.vi'] = { $regex: `${searchNameVi}` };
+    if (searchNameEn) query['name.en'] = { $regex: `${searchNameEn}` };
+    if (searchDescVi) query['description.vi'] = { $regex: `${searchDescVi}` };
+    if (searchDescEn) query['description.en'] = { $regex: `${searchDescEn}` };
     if (range)
       query.createdAt = {
         $gte: range[0],
@@ -144,6 +144,6 @@ export default ({ enabledFetchCategories }: { enabledFetchCategories?: boolean }
     onResetFilterSearch,
     searchCategoriesQuery,
     itemPerPage,
-    setItemPerPage
+    setItemPerPage,
   };
 };
