@@ -8,8 +8,6 @@ import { ToastContainer } from 'react-toastify';
 import { ConfigProvider } from 'antd';
 import './libs/i18n';
 import 'react-toastify/dist/ReactToastify.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import getRouter from './@core/router/index';
 import { store } from './@core/store';
 import './index.css';
