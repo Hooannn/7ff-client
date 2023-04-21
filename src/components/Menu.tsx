@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Button, Card, Col, Row, Skeleton, Tooltip } from 'antd';
+import { Avatar, Button, Card, Col, Row, Skeleton, Tooltip } from 'antd';
 import { getI18n, useTranslation } from 'react-i18next';
 import { containerStyle } from '../assets/styles/globalStyle';
 import '../assets/styles/components/Menu.css';
@@ -16,11 +16,11 @@ interface IProps {
 const Menu: FC<IProps> = ({ isMenuPage }) => {
   const { t } = useTranslation();
   const [searchProductQuery, setSearchProductQuery] = useState<string>('');
-  const [activeCategory, setActiveCategory] = useState<string>();
   const [skip, setSkip] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(3);
+  const [limit, setLimit] = useState<number | null>(3);
   const axios = useAxiosIns();
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
+  const [prevLocale, setPrevLocale] = useState<'vi' | 'en'>();
   const fetchCategoriesQuery = useQuery(['categories'], {
     queryFn: () => axios.get<IResponseData<ICategory[]>>(`/categories`),
     enabled: true,
@@ -42,15 +42,22 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
 
   useEffect(() => {
     if (isMenuPage) {
-      setLimit(20);
+      setLimit(null);
     }
     return () => {};
   }, [isMenuPage]);
 
   useEffect(() => {
+    const activeCategory = categories?.find(category => category.name[locale] === categoryQuery.get('category'));
     if (activeCategory) setSearchProductQuery(JSON.stringify({ category: activeCategory }));
     else setSearchProductQuery('');
-  }, [activeCategory]);
+  }, [categoryQuery.get('category')]);
+
+  useEffect(() => {
+    setPrevLocale(locale);
+    const newCategory = categories?.find(category => category.name[prevLocale as 'vi' | 'en'] === categoryQuery.get('category'));
+    if (newCategory?.name[locale]) setCategoryQuery({ category: newCategory?.name[locale] as string });
+  }, [locale]);
 
   return (
     <section className="menu">
@@ -61,7 +68,6 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
           <li
             className={`filters-item ${!categoryQuery.get('category') || categoryQuery.get('category') === 'all' ? 'active' : ''}`}
             onClick={() => {
-              setActiveCategory('');
               setCategoryQuery({});
             }}
           >
@@ -72,7 +78,6 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
               className={`filters-item ${categoryQuery.get('category') === value.name[locale] ? 'active' : ''}`}
               key={value._id}
               onClick={() => {
-                setActiveCategory(value._id);
                 setCategoryQuery({ category: value.name[locale] });
               }}
             >
@@ -118,6 +123,15 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
               </div>
             </div>
           ))}
+
+          {!fetchProductsQuery.isLoading && !products?.length && (
+            <Row style={{ width: '100%' }} justify="center">
+              <Col style={{ textAlign: 'center' }}>
+                <Avatar src="/empty-cart.png" size={340} />
+                <h4 className="heading">{t('cannot find any products')}</h4>
+              </Col>
+            </Row>
+          )}
         </div>
 
         {!isMenuPage && (

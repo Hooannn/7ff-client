@@ -298,5 +298,6 @@
   "filter by category": "Filter by category",
   "search by price": "Search by price",
   "greater than or equal": "Greater than or equal",
-  "less than or equal": "Less than or equal"
+  "less than or equal": "Less than or equal",
+  "cannot find any products": "Cannot find any products"
 }

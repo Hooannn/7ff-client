@@ -36,10 +36,10 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
     const query: any = {};
     if (searchPriceQuery) query.price = JSON.parse(searchPriceQuery);
     if (searchCategory) query.category = searchCategory;
-    if (searchNameVi) query['name.vi'] = { $regex: `^${searchNameVi}` };
-    if (searchNameEn) query['name.en'] = { $regex: `^${searchNameEn}` };
-    if (searchDescVi) query['description.vi'] = { $regex: `^${searchDescVi}` };
-    if (searchDescEn) query['description.en'] = { $regex: `^${searchDescEn}` };
+    if (searchNameVi) query['name.vi'] = { $regex: `${searchNameVi}` };
+    if (searchNameEn) query['name.en'] = { $regex: `${searchNameEn}` };
+    if (searchDescVi) query['description.vi'] = { $regex: `${searchDescVi}` };
+    if (searchDescEn) query['description.en'] = { $regex: `${searchDescEn}` };
     if (range)
       query.createdAt = {
         $gte: range[0],
