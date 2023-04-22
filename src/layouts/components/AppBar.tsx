@@ -1,16 +1,16 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, getI18n } from 'react-i18next';
 import { Layout, Button, Badge, Dropdown, Tooltip, Avatar, Modal } from 'antd';
-import { DashboardOutlined, ExclamationCircleFilled, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { CloseOutlined, DashboardOutlined, ExclamationCircleFilled, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import CartDrawer from './CartDrawer';
+import useCart from '../../hooks/useCart';
 import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
 import { buttonStyle, containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/components/AppBar.css';
-import useCart from '../../hooks/useCart';
 
 interface IProps {
   isDashboard?: boolean;
@@ -34,6 +34,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
   const location = useLocation();
 
   const items: MenuProps['items'] = [
@@ -79,6 +80,14 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       },
     });
   };
+
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const handleTyping = (e: any) => {
+    const searchInput = e.target.value;
+    if (searchInput.startsWith(' ')) return;
+    setSearchTerm(searchInput);
+  };
+
   return (
     <Layout.Header className="app-bar">
       <div style={containerStyle} className="container">
@@ -93,9 +102,22 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
               className="search-input"
               spellCheck="false"
               value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
+              onChange={handleTyping}
+              ref={searchInputRef}
             />
-            <SearchOutlined className="search-icon" />
+            {searchTerm ? (
+              <CloseOutlined
+                className="search-icon"
+                onClick={() => {
+                  setSearchTerm('');
+                  setSearchResult([]);
+                  searchInputRef.current?.focus();
+                }}
+              />
+            ) : (
+              <SearchOutlined className="search-icon" />
+            )}
+            {searchResult.length > 0 && <div className="search-result"></div>}
           </div>
         </div>
 

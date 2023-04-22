@@ -38,6 +38,7 @@
 }
 
 .app-bar .search-box {
+  position: relative;
   flex: 1;
   height: 40px;
   padding: 0 12px;
@@ -59,10 +60,20 @@
 }
 
 .search-box .search-icon {
-  padding: 8px;
+  padding: 8px 2px 8px 8px;
   font-size: 1.4rem;
   color: #e4e6eb;
   cursor: pointer;
+}
+
+.search-box .search-result {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 3px;
+  background-color: #3a3b3c;
 }
 
 /* Tabs */
