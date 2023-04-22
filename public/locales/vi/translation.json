@@ -300,5 +300,7 @@
   "greater than or equal": "Lớn hơn hoặc bằng",
   "less than or equal": "Bé hơn hoặc bằng",
   "cannot find any products": "Không tìm được sản phẩm nào",
-  "filter by product's availability": "Lọc theo tình trạng sẵn có của sản phẩm"
+  "filter by product's availability": "Lọc theo tình trạng sẵn có của sản phẩm",
+  "see your orders": "Xem các đơn hàng của bạn",
+  "buy again": "Tiếp tục mua hàng"
 }
