@@ -40,14 +40,13 @@ const CheckoutPage: FC = () => {
 
   const onFinish = async (values: any) => {
     const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
-    await checkoutMutation.mutateAsync({
+    const { data } = await checkoutMutation.mutateAsync({
       customerId: user._id,
       items,
       isDelivery,
       ...values,
     });
-
-    alert('success');
+    navigate(`/sales/confirmation/${data.data._id}`);
   };
 
   if (cartItems.length <= 0) {
