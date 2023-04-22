@@ -113,9 +113,6 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
 
   const verifyVoucherMutation = useMutation({
     mutationFn: (code: string) => axios.get<IResponseData<IVoucher>>(`/vouchers/validate?code=${code}`),
-    onSuccess: res => {
-      toast(res.data.message, toastConfig('success'));
-    },
     onError: onError,
   });
 

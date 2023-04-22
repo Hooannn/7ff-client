@@ -109,6 +109,7 @@ const ProductPage: FC = () => {
                   <Space align="center" size={15} style={{ marginTop: 30 }}>
                     {product?.isAvailable ? (
                       <Button
+                        loading={addCartItemMutation.isLoading}
                         onClick={() => addCartItemMutation.mutate({ productId: product._id as string, quantity: 1 })}
                         className="product-atc-btn"
                       >

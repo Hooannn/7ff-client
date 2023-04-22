@@ -1,8 +1,8 @@
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal } from 'antd';
+import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal, Col, Row } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
@@ -11,44 +11,57 @@ import useCart from '../../hooks/useCart';
 import toastConfig from '../../configs/toast';
 import { buttonStyle, containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../@core/store';
-import { IDetailedItem } from '../../types';
+import { IDetailedItem, IVoucher } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
 import useCheckout from '../../services/checkout';
-
-interface IPrice {
-  totalPrice: number;
-  shippingFee: number;
-}
-
+import useVouchers from '../../services/vouchers';
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
   const i18n = getI18n();
+  const [voucher, setVoucher] = useState<IVoucher>();
+  const [voucherInput, setVoucherInput] = useState<string>('');
   const navigate = useNavigate();
   const locale = i18n.resolvedLanguage as 'vi' | 'en';
+  const { verifyVoucherMutation } = useVouchers({ enabledFetchVouchers: false });
   const { checkoutMutation } = useCheckout();
   useTitle(`${t('checkout')} - 7FF`);
 
   const user = useSelector((state: RootState) => state.auth.user);
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
+
   useEffect(() => {
     formRef.current?.setFieldsValue({ name: `${user.lastName} ${user.firstName}` });
   }, []);
 
   const { detailedItems, totalPrice, shippingFee } = useCart();
+
+  const discount = useMemo(() => {
+    if (!voucher?._id) return 0;
+    else if (voucher?.discountType === 'percent') {
+      return totalPrice * voucher?.discountAmount;
+    } else return voucher?.discountAmount > totalPrice ? totalPrice : voucher?.discountAmount;
+  }, [voucher]);
+
   const [isDelivery, setIsDelivery] = useState(false);
   const formRef = useRef<FormInstance>(null);
+
+  const onApplyVoucher = async ({ voucher }: { voucher: string }) => {
+    const { data } = await verifyVoucherMutation.mutateAsync(voucher.toUpperCase());
+    setVoucher(data.data);
+  };
 
   const onFinish = async (values: any) => {
     const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
     Modal.confirm({
       icon: null,
       title: t(`your order total is {{total}}, please confirm before ordering`, {
-        total: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice + shippingFee),
+        total: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice + shippingFee - discount),
       }),
       okText: t('confirm'),
       cancelText: t('cancel'),
       onOk: async () => {
         const { data } = await checkoutMutation.mutateAsync({
+          voucher: voucher?._id,
           customerId: user._id,
           items,
           isDelivery,
@@ -194,10 +207,45 @@ const CheckoutPage: FC = () => {
               ))}
               <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
               <Space size={14} style={{ width: '100%', justifyContent: 'space-between' }}>
-                <Input placeholder={t('gift or discount code...').toString()} style={inputStyle} />
-                <Button type="primary" className="submit-coupon-btn">
-                  {t('apply')}
-                </Button>
+                <Form onFinish={onApplyVoucher} requiredMark={false} name="basic" autoComplete="off">
+                  <Row gutter={12} align="middle">
+                    <Col span={18}>
+                      <Form.Item name="voucher" rules={[{ required: true, message: t('required').toString() }]}>
+                        <Input
+                          readOnly={voucher?._id as any}
+                          placeholder={t('gift or discount code...').toString()}
+                          style={inputStyle}
+                          value={voucherInput}
+                          onChange={e => setVoucherInput(e.target.value)}
+                        />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={6}>
+                      <Form.Item>
+                        {!voucher?._id && (
+                          <Button loading={verifyVoucherMutation.isLoading} block type="primary" className="submit-coupon-btn" htmlType="submit">
+                            {t('apply')}
+                          </Button>
+                        )}
+                        {voucher?._id && (
+                          <Button
+                            onClick={() => {
+                              setVoucher(undefined);
+                            }}
+                            loading={verifyVoucherMutation.isLoading}
+                            block
+                            type="primary"
+                            danger
+                            className="submit-coupon-btn"
+                          >
+                            {t('cancel')}
+                          </Button>
+                        )}
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Form>
               </Space>
               <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
               <div className="display-price">
@@ -210,12 +258,18 @@ const CheckoutPage: FC = () => {
                 </span>
                 <span style={{ fontWeight: 500 }}>{`₫${shippingFee.toLocaleString('en-US')}`}</span>
               </div>
+              {discount > 0 && (
+                <div className="display-price">
+                  <span>{t('discount')}</span>
+                  <span style={{ fontWeight: 500, color: 'green' }}>{`₫${discount.toLocaleString('en-US')}`}</span>
+                </div>
+              )}
               <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
               <div className="display-price">
                 <span style={{ fontSize: '1rem', fontWeight: 500 }}>{t('total')}:</span>
                 <span>
                   <span style={{ marginRight: 9, fontSize: '0.75rem' }}>VND</span>
-                  <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>{`₫${(totalPrice + shippingFee).toLocaleString('en-US')}`}</span>
+                  <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>{`₫${(totalPrice + shippingFee - discount).toLocaleString('en-US')}`}</span>
                 </span>
               </div>
             </div>
