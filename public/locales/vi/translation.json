@@ -302,5 +302,6 @@
   "cannot find any products": "Không tìm được sản phẩm nào",
   "filter by product's availability": "Lọc theo tình trạng sẵn có của sản phẩm",
   "see your orders": "Xem các đơn hàng của bạn",
-  "buy again": "Tiếp tục mua hàng"
+  "buy again": "Tiếp tục mua hàng",
+  "your order total is {{total}}, please confirm before ordering": "Đơn hàng của bạn là {{total}}, hãy xác nhận trước khi đặt hàng"
 }

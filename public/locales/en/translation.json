@@ -302,5 +302,6 @@
   "cannot find any products": "Cannot find any products",
   "filter by product's availability": "Filter by product's availability",
   "see your orders": "See your orders",
-  "buy again": "Buy again"
+  "buy again": "Buy again",
+  "your order total is {{total}}, please confirm before ordering": "Your order total is {{total}}, please confirm before ordering"
 }

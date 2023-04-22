@@ -2,14 +2,14 @@ import { FC, useState, useEffect, useRef } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider } from 'antd';
+import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
 import useTitle from '../../hooks/useTitle';
 import useCart from '../../hooks/useCart';
 import toastConfig from '../../configs/toast';
-import { containerStyle, inputStyle } from '../../assets/styles/globalStyle';
+import { buttonStyle, containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../@core/store';
 import { IDetailedItem } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
@@ -40,13 +40,33 @@ const CheckoutPage: FC = () => {
 
   const onFinish = async (values: any) => {
     const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
-    const { data } = await checkoutMutation.mutateAsync({
-      customerId: user._id,
-      items,
-      isDelivery,
-      ...values,
+    Modal.confirm({
+      icon: null,
+      title: t(`your order total is {{total}}, please confirm before ordering`, {
+        total: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice + shippingFee),
+      }),
+      okText: t('confirm'),
+      cancelText: t('cancel'),
+      onOk: async () => {
+        const { data } = await checkoutMutation.mutateAsync({
+          customerId: user._id,
+          items,
+          isDelivery,
+          ...values,
+        });
+        navigate(`/sales/confirmation/${data.data._id}`);
+      },
+      okButtonProps: {
+        type: 'primary',
+        shape: 'round',
+        style: { ...buttonStyle, width: '100px', marginLeft: '12px' },
+      },
+      cancelButtonProps: {
+        type: 'text',
+        shape: 'round',
+        style: { ...buttonStyle, width: '100px' },
+      },
     });
-    navigate(`/sales/confirmation/${data.data._id}`);
   };
 
   if (cartItems.length <= 0) {
