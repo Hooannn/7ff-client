@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getI18n, useTranslation } from 'react-i18next';
@@ -33,6 +33,12 @@ const ProductPage: FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const productYearlyTotalSoldUnits = useMemo(() => {
+    const year = new Date().getFullYear().toString();
+    const yearlyDataIndex = product?.yearlyData?.find(data => data.year === year);
+    return yearlyDataIndex?.totalUnits;
+  }, [product]);
 
   return (
     <div className="product-page">
@@ -91,9 +97,9 @@ const ProductPage: FC = () => {
                 <div className="product-desc">
                   <div className="product-name">{product?.name[locale]}</div>
                   <div className="product-sold-units">
-                    <span style={{ fontSize: '1rem', fontWeight: 500 }}>{product?.yearlyTotalSoldUnits || 0}</span>
+                    <span style={{ fontSize: '1rem', fontWeight: 500 }}>{productYearlyTotalSoldUnits || 0}</span>
                     <span style={{ color: '#767676', textTransform: 'lowercase' }}>{`${
-                      product?.yearlyTotalSoldUnits && product.yearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
+                      productYearlyTotalSoldUnits && productYearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
                     } ${t('sold this year')}`}</span>
                   </div>
                   <Rate disabled defaultValue={Math.ceil((product?.rating as any) / 0.5) * 0.5} allowHalf className="product-rating" />

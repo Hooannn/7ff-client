@@ -22,7 +22,7 @@ const useCart = () => {
 
   const cartValues = useMemo(() => {
     return cartItems.reduce((acc: ICartValues, item: ICartItem) => {
-      if (item.product.isAvailable) {
+      if (item.product?.isAvailable) {
         const newTotalPrice = acc.totalPrice + item.product.price * item.quantity;
         return {
           detailedItems: [...acc.detailedItems, { product: item.product, quantity: item.quantity }],

@@ -13,6 +13,7 @@ import { containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../@core/store';
 import { IDetailedItem } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
+import useCheckout from '../../services/checkout';
 
 interface IPrice {
   totalPrice: number;
@@ -24,6 +25,7 @@ const CheckoutPage: FC = () => {
   const i18n = getI18n();
   const navigate = useNavigate();
   const locale = i18n.resolvedLanguage as 'vi' | 'en';
+  const { checkoutMutation } = useCheckout();
   useTitle(`${t('checkout')} - 7FF`);
 
   const user = useSelector((state: RootState) => state.auth.user);
@@ -35,8 +37,17 @@ const CheckoutPage: FC = () => {
   const { detailedItems, totalPrice, shippingFee } = useCart();
   const [isDelivery, setIsDelivery] = useState(false);
   const formRef = useRef<FormInstance>(null);
-  const onFinish = (value: any) => {
-    console.log(value);
+
+  const onFinish = async (values: any) => {
+    const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
+    await checkoutMutation.mutateAsync({
+      customerId: user._id,
+      items,
+      isDelivery,
+      ...values,
+    });
+
+    alert('success');
   };
 
   if (cartItems.length <= 0) {
@@ -103,7 +114,7 @@ const CheckoutPage: FC = () => {
                   {isDelivery && (
                     <>
                       <Form.Item
-                        name="phoneNumber"
+                        name="deliveryPhone"
                         rules={[
                           { required: true, message: t('required').toString() },
                           {
@@ -115,7 +126,7 @@ const CheckoutPage: FC = () => {
                         <Input size="large" placeholder={t('phone number...').toString()} style={inputStyle} />
                       </Form.Item>
                       <Form.Item
-                        name="address"
+                        name="deliveryAddress"
                         rules={[
                           { required: true, message: t('required').toString() },
                           { whitespace: true, message: t('required').toString() },
@@ -130,7 +141,7 @@ const CheckoutPage: FC = () => {
                       {`< ${t('back to cart')}`}
                     </div>
                     <Form.Item style={{ marginBottom: 0 }}>
-                      <Button size="large" type="primary" htmlType="submit" className="submit-btn">
+                      <Button loading={checkoutMutation.isLoading} size="large" type="primary" htmlType="submit" className="submit-btn">
                         {t('checkout')}
                       </Button>
                     </Form.Item>

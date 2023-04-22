@@ -7,10 +7,20 @@ export interface IProduct {
   description: IContent;
   price: number;
   stocks?: number;
-  yearlyTotalSales?: number;
-  yearlyTotalSoldUnits?: number;
+  yearlyData?: {
+    year: string;
+    totalSales: number;
+    totalUnits: number;
+  }[];
   monthlyData?: {
     month: string;
+    year: string;
+    totalSales: number;
+    totalUnits: number;
+  }[];
+  weeklyData?: {
+    week: string;
+    year: string;
     totalSales: number;
     totalUnits: number;
   }[];
