@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url('/auth-background.jpg') no-repeat bottom left;
   background-size: cover;
 }
 

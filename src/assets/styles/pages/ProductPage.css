@@ -121,9 +121,12 @@
 }
 
 .product-page .product-desc .product-atc-btn,
-.product-page .product-desc .product-btm-btn {
+.product-page .product-desc .product-btm-btn,
+.product-page .product-not-found .product-bth-btn,
+.product-page .product-not-found .product-btm-btn {
   height: 58px !important;
   padding: 0 20px;
+  border-width: 2px;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 500;
@@ -140,4 +143,57 @@
 
 .product-page .product-desc .product-atc-btn:hover {
   background-color: rgba(255, 190, 51, 0.1);
+}
+
+.product-page .product-not-found {
+  padding: 60px 35px;
+  border-radius: 3px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.product-page .product-not-found .oops-title {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 10rem;
+  font-weight: 800;
+  user-select: none;
+}
+
+.product-page .product-not-found p {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.product-page .product-not-found .product-bth-btn {
+  border-color: #dc2743;
+  background: transparent;
+  color: #dc2743;
+}
+
+.product-page .product-not-found .product-bth-btn:hover {
+  background-color: rgba(220, 39, 67, 0.1);
+}
+
+.product-page .product-not-found .product-btm-btn {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background-origin: border-box;
+}
+
+.product-page .product-not-found .product-btm-btn:hover {
+  background: linear-gradient(
+    45deg,
+    rgba(240, 148, 51, 0.8) 0%,
+    rgba(230, 104, 60, 0.8) 25%,
+    rgba(220, 39, 67, 0.8) 50%,
+    rgba(204, 35, 102, 0.8) 75%,
+    rgba(188, 24, 136, 0.8) 100%
+  );
+  background-origin: border-box;
 }

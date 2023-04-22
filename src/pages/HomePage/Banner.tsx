@@ -23,8 +23,8 @@ const BANNER_CAROUSEL_CONTENT = [
       vi: 'Tận hưởng từng miếng cắn !',
     },
     description: {
-      en: '7 Fast Food specializes in snacks and popular fast foods.\nWe also serve hot trending dishes on social media platforms, as well as cooling teas that are both refreshing and have many health benefits.',
-      vi: '7 Fast Food chuyên về các món ăn vặt và các loại đồ ăn nhanh phố biến.\nChúng tôi còn có các món hot trend trên các nền tảng mạng xã hội, cũng như các loại trà giải nhiệt vừa giúp giải khát lại có nhiều lợi ích cho sức khỏe.',
+      en: '7FF is known for its familiar and popular snacks. All 7FF chefs and staff are selected and trained in technical skills to ensure quality of food and service.',
+      vi: '7FF được biết đến với các món ăn vặt quen thuộc và phổ biến. Tất cả các đầu bếp và nhân viên của 7FF đều được tuyển chọn và đào tạo kỹ lưỡng để có thể đảm bảo được chất lượng của món ăn và chất lượng phục vụ.',
     },
     buttonTitle: 'see the menu',
     btnNavigation: '/menu',

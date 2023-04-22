@@ -224,7 +224,13 @@ export const UpdateProductForm = ({
               { whitespace: true, message: t('required').toString() },
             ]}
           >
-            <Input size="large" spellCheck={false} placeholder={t('description vi').toString()} style={inputStyle} />
+            <Input.TextArea
+              size="large"
+              spellCheck={false}
+              placeholder={t('description vi').toString()}
+              autoSize={{ minRows: 2 }}
+              style={inputStyle}
+            />
           </Form.Item>
           <Form.Item
             label={t('description en')}
@@ -234,7 +240,13 @@ export const UpdateProductForm = ({
               { whitespace: true, message: t('required').toString() },
             ]}
           >
-            <Input size="large" spellCheck={false} placeholder={t('description en').toString()} style={inputStyle} />
+            <Input.TextArea
+              size="large"
+              spellCheck={false}
+              placeholder={t('description en').toString()}
+              autoSize={{ minRows: 2 }}
+              style={inputStyle}
+            />
           </Form.Item>
           <Form.Item name="price" rules={[{ required: true, message: t('required').toString() }]}>
             <Input
