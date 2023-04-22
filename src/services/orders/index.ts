@@ -26,7 +26,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
     const { customerId, sort, range, status } = values;
     const query: any = {};
     if (customerId) query.customerId = customerId;
-    if (status) query.status = status;
+    if (status) query.status = status !== 'All' ? status : undefined;
     if (range)
       query.createdAt = {
         $gte: range[0],
