@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Avatar, Button, Modal, Space, Table, Tag } from 'antd';
+import React from 'react';
+import { Image, Button, Col, Modal, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { IOrder } from '../../../types';
-import { useTranslation } from 'react-i18next';
+import { IOrder, IVoucher } from '../../../types';
+import { getI18n, useTranslation } from 'react-i18next';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { buttonStyle } from '../../../assets/styles/globalStyle';
 import dayjs from '../../../libs/dayjs';
+import { ICartItem } from '../../../slices/app.slice';
 interface OrdersTableProps {
   isLoading: boolean;
   total: number;
@@ -29,6 +30,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   setItemPerPage,
 }) => {
   const { t } = useTranslation();
+  const locale = getI18n().resolvedLanguage as 'vi' | 'en';
   const onDeleteBtnClick = (orderId: string) => {
     Modal.confirm({
       icon: <ExclamationCircleFilled />,
@@ -102,7 +104,26 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       title: t('items'),
       dataIndex: 'items',
       key: 'items',
-      render: src => <span>{JSON.stringify(src)}</span>,
+      render: (items: ICartItem[]) => (
+        <Space direction="vertical" size="middle">
+          {items.map((item, idx) => (
+            <Row key={idx + 'order::product::row'} gutter={8} align="middle">
+              <Col>{item.product.featuredImages?.length && <Image width={50} src={item.product.featuredImages[0]} />}</Col>
+              <Col>
+                <div>
+                  {t('name')}: {item.product.name[locale]}
+                </div>
+                <div>
+                  {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product.price)}
+                </div>
+                <div>
+                  {t('quantity')}: {item.quantity}
+                </div>
+              </Col>
+            </Row>
+          ))}
+        </Space>
+      ),
     },
     {
       title: t('total price'),
@@ -122,12 +143,23 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       title: t('voucher'),
       dataIndex: 'voucher',
       key: 'voucher',
-      render: text => (
+      render: (voucher: IVoucher) => (
         <span>
-          {JSON.stringify(text) || (
+          {!voucher?._id && (
             <small>
               <em>{t('not updated yet')}</em>
             </small>
+          )}
+          {voucher?._id && (
+            <>
+              <div>CODE: {voucher.code}</div>
+              <div>
+                {t('discount amount')}: {voucher.discountAmount}
+              </div>
+              <div>
+                {t('discount type')}: {voucher.discountType}
+              </div>
+            </>
           )}
         </span>
       ),
@@ -150,15 +182,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       title: t('is delivery'),
       dataIndex: 'isDelivery',
       key: 'isDelivery',
-      render: text => (
-        <span>
-          {text || (
-            <small>
-              <em>{t('not updated yet')}</em>
-            </small>
-          )}
-        </span>
-      ),
+      render: value => <span>{value ? t('yes') : t('no')}</span>,
     },
     {
       title: t('status'),
@@ -166,7 +190,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       key: 'status',
       render: text => (
         <span>
-          {text || (
+          {t(text.toLowerCase()) || (
             <small>
               <em>{t('not updated yet')}</em>
             </small>

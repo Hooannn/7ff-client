@@ -43,14 +43,14 @@ export default function UsersDashboardPage() {
 
   return (
     <Row>
-      {/*<UpdateOrderModal
-        isLoading={updateVoucherMutation.isLoading}
-        onSubmit={onUpdateVoucher}
-        voucher={selectedVoucher}
+      <UpdateOrderModal
+        isLoading={updateOrderMutation.isLoading}
+        onSubmit={onUpdateOrder}
+        order={selectedOrder}
         shouldOpen={shouldUpdateModalOpen}
         onCancel={() => setUpdateModalOpen(false)}
       />
-      <AddOrderModal
+      {/*<AddOrderModal
         onSubmit={onAddVoucher}
         isLoading={addVoucherMutation.isLoading}
         shouldOpen={shouldAddModalOpen}

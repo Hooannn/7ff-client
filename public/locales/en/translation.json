@@ -301,5 +301,22 @@
   "greater than or equal": "Greater than or equal",
   "less than or equal": "Less than or equal",
   "cannot find any products": "Cannot find any products",
-  "filter by product's availability": "Filter by product's availability"
+  "filter by product's availability": "Filter by product's availability",
+  "see your orders": "See your orders",
+  "buy again": "Buy again",
+  "your order total is {{total}}, please confirm before ordering": "Your order total is {{total}}, please confirm before ordering",
+  "discount": "Discount",
+  "items": "Items",
+  "customer id": "Customer id",
+  "total price": "Total price",
+  "voucher": "Voucher",
+  "note": "Note",
+  "is delivery": "Is delivery",
+  "search by customer id": "Search by customer id",
+  "search by order status": "Filter by order status",
+  "processing": "Processing",
+  "delivering": "Delivering",
+  "cancelled": "Cancelled",
+  "update order": "Update order",
+  "order status": "Order status"
 }

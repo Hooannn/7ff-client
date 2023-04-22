@@ -1,8 +1,7 @@
-import { LoadingOutlined, LockOutlined, MailOutlined, PlusOutlined, CompassOutlined, PhoneOutlined } from '@ant-design/icons';
-import { Modal, Row, Col, Button, Form, Input, Upload, FormInstance, Avatar, Select } from 'antd';
-import { useEffect, useState } from 'react';
+import { Modal, Row, Col, Button, Form, FormInstance, Select } from 'antd';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
+import { buttonStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { IOrder } from '../../../types';
 interface UpdateOrderModalProps {
   shouldOpen: boolean;
@@ -64,7 +63,16 @@ export const UpdateOrderForm = ({ form, onSubmit, order }: { form: FormInstance;
 
   return (
     <>
-      <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}></Form>
+      <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+        <Form.Item label={t('order status')} name="status">
+          <Select size="large" style={{ width: '100%' }}>
+            <Select.Option value="Processing">{t('processing')}</Select.Option>
+            <Select.Option value="Delivering">{t('delivering')}</Select.Option>
+            <Select.Option value="Done">{t('done')}</Select.Option>
+            <Select.Option value="Cancelled">{t('cancelled')}</Select.Option>
+          </Select>
+        </Form.Item>
+      </Form>
     </>
   );
 };

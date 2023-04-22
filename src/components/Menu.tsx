@@ -91,7 +91,7 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
         <div className="filter-content">
           {fetchProductsQuery.isLoading && (
             <Row style={{ width: '100%' }} gutter={12}>
-              {Array(limit)
+              {Array(limit ? limit : 20)
                 .fill(0)
                 .map((_, idx) => (
                   <Col key={idx} span={8}>

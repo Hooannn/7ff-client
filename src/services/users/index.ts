@@ -26,9 +26,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     const { searchString, sort, role, range } = values;
     const query: any = {};
     if (searchString) query.email = { $regex: `^${searchString}` };
-    if (role) {
-      query.role = role !== 'All' ? role : undefined;
-    }
+    if (role) query.role = role !== 'All' ? role : undefined;
     if (range)
       query.createdAt = {
         $gte: range[0],
