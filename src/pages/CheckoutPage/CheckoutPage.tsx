@@ -6,15 +6,16 @@ import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Bad
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
+import toastConfig from '../../configs/toast';
 import useTitle from '../../hooks/useTitle';
 import useCart from '../../hooks/useCart';
-import toastConfig from '../../configs/toast';
+import useCheckout from '../../services/checkout';
+import useVouchers from '../../services/vouchers';
 import { buttonStyle, containerStyle, inputStyle } from '../../assets/styles/globalStyle';
 import { RootState } from '../../@core/store';
 import { IDetailedItem, IVoucher } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
-import useCheckout from '../../services/checkout';
-import useVouchers from '../../services/vouchers';
+
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
   const i18n = getI18n();
@@ -206,47 +207,53 @@ const CheckoutPage: FC = () => {
                 </div>
               ))}
               <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
-              <Space size={14} style={{ width: '100%', justifyContent: 'space-between' }}>
-                <Form onFinish={onApplyVoucher} requiredMark={false} name="basic" autoComplete="off">
-                  <Row gutter={12} align="middle">
-                    <Col span={18}>
-                      <Form.Item name="voucher" rules={[{ required: true, message: t('required').toString() }]}>
-                        <Input
-                          readOnly={voucher?._id as any}
-                          placeholder={t('gift or discount code...').toString()}
-                          style={inputStyle}
-                          value={voucherInput}
-                          onChange={e => setVoucherInput(e.target.value)}
-                        />
-                      </Form.Item>
-                    </Col>
+              <Form onFinish={onApplyVoucher} requiredMark={false} name="basic" autoComplete="off">
+                <Row gutter={12} align="middle">
+                  <Col span={18}>
+                    <Form.Item name="voucher">
+                      <Input
+                        readOnly={voucher?._id as any}
+                        placeholder={t('gift or discount code...').toString()}
+                        style={inputStyle}
+                        value={voucherInput}
+                        onChange={e => setVoucherInput(e.target.value)}
+                        spellCheck="false"
+                      />
+                    </Form.Item>
+                  </Col>
 
-                    <Col span={6}>
-                      <Form.Item>
-                        {!voucher?._id && (
-                          <Button loading={verifyVoucherMutation.isLoading} block type="primary" className="submit-coupon-btn" htmlType="submit">
-                            {t('apply')}
-                          </Button>
-                        )}
-                        {voucher?._id && (
-                          <Button
-                            onClick={() => {
-                              setVoucher(undefined);
-                            }}
-                            loading={verifyVoucherMutation.isLoading}
-                            block
-                            type="primary"
-                            danger
-                            className="submit-coupon-btn"
-                          >
-                            {t('cancel')}
-                          </Button>
-                        )}
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                </Form>
-              </Space>
+                  <Col span={6}>
+                    <Form.Item>
+                      {!voucher?._id && (
+                        <Button
+                          loading={verifyVoucherMutation.isLoading}
+                          block
+                          type="primary"
+                          className="submit-coupon-btn"
+                          htmlType="submit"
+                          disabled={!voucherInput}
+                        >
+                          {t('apply')}
+                        </Button>
+                      )}
+                      {voucher?._id && (
+                        <Button
+                          onClick={() => {
+                            setVoucher(undefined);
+                          }}
+                          loading={verifyVoucherMutation.isLoading}
+                          block
+                          type="primary"
+                          danger
+                          className="submit-coupon-btn cancel-coupon"
+                        >
+                          {t('cancel')}
+                        </Button>
+                      )}
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
               <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
               <div className="display-price">
                 <span>{t('subtotal')}</span>
