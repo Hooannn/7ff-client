@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, getI18n } from 'react-i18next';
@@ -7,10 +7,14 @@ import { CloseOutlined, DashboardOutlined, ExclamationCircleFilled, SearchOutlin
 import type { MenuProps } from 'antd';
 import CartDrawer from './CartDrawer';
 import useCart from '../../hooks/useCart';
+import useDebounce from '../../hooks/useDebounce';
 import { RootState } from '../../@core/store';
 import { signOut } from '../../slices/auth.slice';
 import { buttonStyle, containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/components/AppBar.css';
+import { useQuery } from 'react-query';
+import useAxiosIns from '../../hooks/useAxiosIns';
+import { IProduct, IResponseData } from '../../types';
 
 interface IProps {
   isDashboard?: boolean;
@@ -33,9 +37,8 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const { detailedItems } = useCart();
 
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
   const location = useLocation();
+  const axios = useAxiosIns();
 
   const items: MenuProps['items'] = [
     {
@@ -82,11 +85,45 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   };
 
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchBoxRef = useRef<HTMLDivElement>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState<IProduct[]>([]);
+  const [inputFocusing, setInputFocusing] = useState(false);
   const handleTyping = (e: any) => {
     const searchInput = e.target.value;
     if (searchInput.startsWith(' ')) return;
     setSearchTerm(searchInput);
   };
+
+  const searchProducts = useQuery(['appbar-search-products'], {
+    queryFn: () => axios.get<IResponseData<IProduct[]>>(`/search/products?q=${JSON.stringify({ $regex: debouncedSearchTerm, $options: 'i' })}`),
+    enabled: false,
+    onSuccess: res => {
+      setSearchResult(res.data?.data);
+    },
+  });
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchBoxRef.current && !searchBoxRef.current?.contains(event.target as Node)) {
+        setInputFocusing(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [searchBoxRef]);
+
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  useEffect(() => {
+    if (!debouncedSearchTerm || !(debouncedSearchTerm as string).trim()) {
+      setSearchResult([]);
+      return;
+    }
+
+    searchProducts.refetch();
+  }, [debouncedSearchTerm]);
 
   return (
     <Layout.Header className="app-bar">
@@ -95,7 +132,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
           <div className="logo" onClick={() => navigate('/')}>
             <img src="/appbar-logo.png" className="logo-img" />
           </div>
-          <div className="search-box">
+          <div ref={searchBoxRef} className="search-box">
             <input
               type="text"
               placeholder={t('search...').toString()}
@@ -103,6 +140,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
               spellCheck="false"
               value={searchTerm}
               onChange={handleTyping}
+              onFocus={() => setInputFocusing(true)}
               ref={searchInputRef}
             />
             {searchTerm ? (
@@ -117,7 +155,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
             ) : (
               <SearchOutlined className="search-icon" />
             )}
-            {searchResult.length > 0 && <div className="search-result"></div>}
+            {inputFocusing && searchResult.length > 0 && <div className="search-result"></div>}
           </div>
         </div>
 
