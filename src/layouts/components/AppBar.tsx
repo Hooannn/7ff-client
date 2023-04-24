@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, getI18n } from 'react-i18next';
-import { Layout, Button, Badge, Dropdown, Tooltip, Avatar, Modal } from 'antd';
+import { Layout, Button, Badge, Dropdown, Tooltip, Avatar, Modal, Divider, Rate } from 'antd';
 import { CloseOutlined, DashboardOutlined, ExclamationCircleFilled, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import CartDrawer from './CartDrawer';
@@ -39,6 +39,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const location = useLocation();
   const axios = useAxiosIns();
+  const locale = i18n.resolvedLanguage as 'en' | 'vi';
 
   const items: MenuProps['items'] = [
     {
@@ -89,10 +90,12 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useState<IProduct[]>([]);
   const [inputFocusing, setInputFocusing] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const handleTyping = (e: any) => {
     const searchInput = e.target.value;
     if (searchInput.startsWith(' ')) return;
     setSearchTerm(searchInput);
+    setIsTyping(true);
   };
 
   const searchProducts = useQuery(['appbar-search-products'], {
@@ -117,6 +120,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   useEffect(() => {
+    setIsTyping(false);
     if (!debouncedSearchTerm || !(debouncedSearchTerm as string).trim()) {
       setSearchResult([]);
       return;
@@ -130,7 +134,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       <div style={containerStyle} className="container">
         <div className="logo-search">
           <div className="logo" onClick={() => navigate('/')}>
-            <img src="/appbar-logo.png" className="logo-img" />
+            <img src="/logo.png" className="logo-img" />
           </div>
           <div ref={searchBoxRef} className="search-box">
             <input
@@ -155,7 +159,59 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
             ) : (
               <SearchOutlined className="search-icon" />
             )}
-            {inputFocusing && searchResult.length > 0 && <div className="search-result"></div>}
+            {inputFocusing && (
+              <div className="search-result">
+                {(!searchTerm || isTyping || searchProducts.isLoading) && (
+                  <div className="search-result-no-result">
+                    <p>{t('enter the name of the product')}</p>
+                    <p>{t('you want to search for')}.</p>
+                  </div>
+                )}
+
+                {searchResult.length === 0 && searchTerm && !isTyping && !searchProducts.isLoading && (
+                  <div className="search-result-no-result">
+                    <p>{t("we don't have any products")}</p>
+                    <p>
+                      {t(`named "{{searchTerm}}"`, {
+                        searchTerm: searchTerm,
+                      })}
+                    </p>
+                    <p>{t('or they are currently unavailable')}.</p>
+                  </div>
+                )}
+
+                {searchResult.length > 0 &&
+                  !isTyping &&
+                  searchResult.map((product: IProduct, i: number) => (
+                    <div key={product._id}>
+                      <div
+                        onClick={() => {
+                          setSearchTerm('');
+                          setSearchResult([]);
+                          setInputFocusing(false);
+                          navigate(`/product/${product._id}`);
+                        }}
+                        className="search-result-item"
+                      >
+                        <Avatar src={product.featuredImages && product.featuredImages[0]} size={44} style={{ flexShrink: 0 }} />
+                        <div className="search-result-item-desc">
+                          <div className="search-result-item-name">{product.name[locale]}</div>
+                          <div className="search-result-item-price">
+                            <p style={{ margin: 0 }}>
+                              {t('price')}: {product.price.toLocaleString('en-US')}/1
+                            </p>
+                            <p style={{ margin: '2px 0 0' }}>
+                              {t('sold this month')}:{' '}
+                              {product.monthlyData?.length ? product.monthlyData[product.monthlyData.length - 1]?.totalUnits : 0}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      {i !== searchResult.length - 1 && <div className="divider"></div>}
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
 

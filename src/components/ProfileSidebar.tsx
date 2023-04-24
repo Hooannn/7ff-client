@@ -58,7 +58,7 @@ const ProfileSidebar: FC = () => {
         // delete credentials cookies and persist states
         // delete account on database
         // change all undone orders by this account to cancel status (on database)
-        
+
         // Get password then pass to this function
         return deactivateAccountMutation.mutateAsync({ password: '' });
       },
@@ -77,7 +77,7 @@ const ProfileSidebar: FC = () => {
 
   return (
     <div className="profile-sidebar">
-      <img src="/appbar-logo.png" className="app-logo" />
+      <img src="/logo.png" className="app-logo" />
       <h2 className="welcome-user">{`${t('welcome')}, ${user.lastName} ${user.firstName}`}</h2>
       <span className="sign-out-btn" onClick={onSignOutBtnClick}>
         {t('sign out')}
