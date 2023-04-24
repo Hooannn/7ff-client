@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setLogged } from '../../slices/auth.slice';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import { useTranslation } from 'react-i18next';
 interface SignInResponse {
   accessToken: string;
   refreshToken: string;
@@ -19,6 +20,7 @@ interface SignUpResponse {
   password: string;
 }
 export default () => {
+  const { t } = useTranslation();
   const axios = useAxiosIns();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ export default () => {
     onError: onError,
     onSuccess: res => {
       const redirectPath = cookies.get('redirect_path') || '/';
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
       const { accessToken, refreshToken, user } = res.data.data;
       cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
       cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
@@ -51,7 +53,7 @@ export default () => {
     mutationFn: ({ email }: { email: string }) => axios.post('/auth/forgot-password', { email }),
     onError: onError,
     onSuccess: res => {
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
   });
 
@@ -59,7 +61,7 @@ export default () => {
     mutationFn: (data: { password: string; token: string }) => axios.post<IResponseData<SignUpResponse>>('/auth/reset-password', data),
     onError: onError,
     onSuccess: res => {
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
   });
 
@@ -67,7 +69,7 @@ export default () => {
     mutationFn: (data: { password: string }) => axios.post<IResponseData<any>>('/auth/deactivate', data),
     onError: onError,
     onSuccess: res => {
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
   });
 

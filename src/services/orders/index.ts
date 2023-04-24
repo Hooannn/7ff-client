@@ -5,6 +5,7 @@ import { onError } from '../../utils/error-handlers';
 import { IResponseData, IOrder } from '../../types';
 import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
   '-createdAt': { createdAt: -1 },
   createdAt: { createdAt: 1 },
@@ -12,6 +13,7 @@ const SORT_MAPPING = {
   updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
+  const { t } = useTranslation();
   const [itemPerPage, setItemPerPage] = useState<number>(8);
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -91,7 +93,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
         queryClient.invalidateQueries('search-orders');
         searchOrdersQuery.refetch();
       } else queryClient.invalidateQueries('orders');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -103,7 +105,7 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
         queryClient.invalidateQueries('search-orders');
         searchOrdersQuery.refetch();
       } else queryClient.invalidateQueries('orders');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
