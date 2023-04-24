@@ -107,7 +107,7 @@ const CheckoutPage: FC = () => {
           <div className="container" style={containerStyle}>
             <div className="shipping-form-wrapper">
               <div className="shipping-form__logo">
-                <img src="/appbar-logo.png" alt="logo" onClick={() => navigate('/')} />
+                <img src="/logo.png" alt="logo" onClick={() => navigate('/')} />
               </div>
               <div className="shipping-form">
                 <Form
