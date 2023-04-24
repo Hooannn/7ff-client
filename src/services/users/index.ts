@@ -5,6 +5,7 @@ import { onError } from '../../utils/error-handlers';
 import { IResponseData, IUser } from '../../types';
 import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
   '-createdAt': { createdAt: -1 },
   createdAt: { createdAt: 1 },
@@ -12,6 +13,7 @@ const SORT_MAPPING = {
   updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
+  const { t } = useTranslation();
   const [itemPerPage, setItemPerPage] = useState<number>(8);
   const [users, setUsers] = useState<IUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -90,7 +92,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
         queryClient.invalidateQueries('search-users');
         searchUsersQuery.refetch();
       } else queryClient.invalidateQueries('users');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -102,7 +104,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
         queryClient.invalidateQueries('search-users');
         searchUsersQuery.refetch();
       } else queryClient.invalidateQueries('users');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -110,7 +112,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
   const updateProfileMutation = useMutation({
     mutationFn: ({ data }: { data: IUser }) => axios.patch<IResponseData<IUser>>(`/users/profile`, data),
     onSuccess: res => {
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -119,7 +121,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     mutationFn: ({ currentPassword, newPassword }: { currentPassword: string; newPassword: string }) =>
       axios.patch<IResponseData<IUser>>(`/users/change-password`, { currentPassword, newPassword }),
     onSuccess: res => {
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -131,7 +133,7 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
         queryClient.invalidateQueries('search-users');
         searchUsersQuery.refetch();
       } else queryClient.invalidateQueries('users');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });

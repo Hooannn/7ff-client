@@ -5,6 +5,7 @@ import { onError } from '../../utils/error-handlers';
 import { IResponseData, IVoucher } from '../../types';
 import { useEffect, useState } from 'react';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import { useTranslation } from 'react-i18next';
 const SORT_MAPPING = {
   '-createdAt': { createdAt: -1 },
   createdAt: { createdAt: 1 },
@@ -12,6 +13,7 @@ const SORT_MAPPING = {
   updatedAt: { updatedAt: 1 },
 };
 export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) => {
+  const { t } = useTranslation();
   const [itemPerPage, setItemPerPage] = useState<number>(8);
   const [vouchers, setVouchers] = useState<IVoucher[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -93,7 +95,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
         queryClient.invalidateQueries('search-vouchers');
         searchVouchersQuery.refetch();
       } else queryClient.invalidateQueries('vouchers');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -106,7 +108,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
         queryClient.invalidateQueries('search-vouchers');
         searchVouchersQuery.refetch();
       } else queryClient.invalidateQueries('vouchers');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
@@ -123,7 +125,7 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
         queryClient.invalidateQueries('search-vouchers');
         searchVouchersQuery.refetch();
       } else queryClient.invalidateQueries('vouchers');
-      toast(res.data.message, toastConfig('success'));
+      toast(t(res.data.message), toastConfig('success'));
     },
     onError: onError,
   });
