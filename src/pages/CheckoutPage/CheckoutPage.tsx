@@ -68,7 +68,7 @@ const CheckoutPage: FC = () => {
           isDelivery,
           ...values,
         });
-        navigate(`/sales/confirmation/${data.data._id}`);
+        navigate(`/sales/thanks/${data.data._id}`);
       },
       okButtonProps: {
         type: 'primary',

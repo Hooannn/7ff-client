@@ -11,7 +11,7 @@ const BANNER_CAROUSEL_CONTENT = [
       vi: 'Nhà hàng 7 Fast Food',
     },
     description: {
-      en: 'Với 7 tiêu chí đã đề ra, sự  bảo đảm cho từng đơn đặt hàng cho khách, các đầu bếp và nhân viên thông qua tuyển chọn kỹ lưỡng, cùng với sự đa dạng của các món ăn 7FF hứa hẹn sẽ mang đến cho quý khách những sự lựa chọn tốt nhất.',
+      en: 'With 7 criteria as our pointer, highly trained employees and a diverse menu to select from, here at 7FF we value each and every order placed in order to bring you the best dining experience.',
       vi: 'Với 7 tiêu chí đã đề ra, sự  bảo đảm cho từng đơn đặt hàng cho khách, các đầu bếp và nhân viên thông qua tuyển chọn kỹ lưỡng, cùng với sự đa dạng của các món ăn 7FF hứa hẹn sẽ mang đến cho quý khách những sự lựa chọn tốt nhất.',
     },
     buttonTitle: 'learn more about us',
@@ -23,7 +23,7 @@ const BANNER_CAROUSEL_CONTENT = [
       vi: 'Tận hưởng từng miếng cắn !',
     },
     description: {
-      en: '7FF is known for its familiar and popular snacks. All 7FF chefs and staff are selected and trained in technical skills to ensure quality of food and service.',
+      en: '7FF is a food chain that specialize in providing refreshment and snack as well as conventional fast food. In order to bring you the best dining experience, our chefs and staffs all have been carefully selected and trained to provide the premium quality meals and service in our restaurant.',
       vi: '7FF được biết đến với các món ăn vặt quen thuộc và phổ biến. Tất cả các đầu bếp và nhân viên của 7FF đều được tuyển chọn và đào tạo kỹ lưỡng để có thể đảm bảo được chất lượng của món ăn và chất lượng phục vụ.',
     },
     buttonTitle: 'see the menu',

@@ -20,12 +20,26 @@ interface IProps {
   isDashboard?: boolean;
 }
 
+interface IMonthlyData {
+  month: string;
+  year: string;
+  totalSales: number;
+  totalUnits: number;
+}
+
 const TABS = [
   { label: 'home', to: '/' },
   { label: 'menu', to: '/menu' },
   { label: 'about us', to: '/about' },
   { label: 'booking table', to: '/booking' },
 ];
+
+const getThisMonthSoldUnits = (monthlyData: IMonthlyData[] | undefined) => {
+  const year = new Date().getFullYear().toString();
+  const month = new Date().getMonth() + 1;
+  const currentMonthData = monthlyData?.find(data => data.year === year && data.month === month.toString());
+  return currentMonthData?.totalUnits ?? 0;
+};
 
 const AppBar: FC<IProps> = ({ isDashboard }) => {
   const { t } = useTranslation();
@@ -167,7 +181,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                     <p>{t('you want to search for')}.</p>
                   </div>
                 )}
-
                 {searchResult.length === 0 && searchTerm && !isTyping && !searchProducts.isLoading && (
                   <div className="search-result-no-result">
                     <p>{t("we don't have any products")}</p>
@@ -179,7 +192,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                     <p>{t('or they are currently unavailable')}.</p>
                   </div>
                 )}
-
                 {searchResult.length > 0 &&
                   !isTyping &&
                   searchResult.map((product: IProduct, i: number) => (
@@ -200,10 +212,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                             <p style={{ margin: 0 }}>
                               {t('price')}: {product.price.toLocaleString('en-US')}/1
                             </p>
-                            <p style={{ margin: '2px 0 0' }}>
-                              {t('sold this month')}:{' '}
-                              {product.monthlyData?.length ? product.monthlyData[product.monthlyData.length - 1]?.totalUnits : 0}
-                            </p>
+                            <p style={{ margin: '2px 0 0' }}>{`${t('sold this month')}: ${getThisMonthSoldUnits(product.monthlyData)}`}</p>
                           </div>
                         </div>
                       </div>
