@@ -157,7 +157,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 {t('discount amount')}: {voucher.discountAmount}
               </div>
               <div>
-                {t('discount type')}: {voucher.discountType}
+                {t('discount type')}: {t(voucher.discountType)}
               </div>
             </>
           )}

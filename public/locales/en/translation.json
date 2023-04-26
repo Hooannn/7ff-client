@@ -356,5 +356,7 @@
   "CREATE_SUCCESSFULLY": "Created successfully",
   "DELETE_SUCCESSFULLY": "Deleted successfully",
   "UPDATE_SUCCESSFULLY": "Updated successfully",
-  "BOOK_RESERVATION_SUCCESSFULLY": "You have successfully booked a reservation"
+  "BOOK_RESERVATION_SUCCESSFULLY": "You have successfully booked a reservation",
+  "total usage limit": "Total usage limit",
+  "expired": "Expired"
 }

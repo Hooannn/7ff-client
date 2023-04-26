@@ -19,7 +19,7 @@ import '../../assets/styles/pages/CheckoutPage.css';
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
   const i18n = getI18n();
-  const [voucher, setVoucher] = useState<IVoucher>();
+  const [voucher, setVoucher] = useState<IVoucher | null>(null);
   const [voucherInput, setVoucherInput] = useState<string>('');
   const navigate = useNavigate();
   const locale = i18n.resolvedLanguage as 'vi' | 'en';
@@ -239,7 +239,7 @@ const CheckoutPage: FC = () => {
                       {voucher?._id && (
                         <Button
                           onClick={() => {
-                            setVoucher(undefined);
+                            setVoucher(null);
                           }}
                           loading={verifyVoucherMutation.isLoading}
                           block

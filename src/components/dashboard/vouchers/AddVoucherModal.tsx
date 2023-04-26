@@ -53,7 +53,7 @@ export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmi
   const { t } = useTranslation();
 
   const onFinish = (values: any) => {
-    onSubmit({ ...values });
+    onSubmit({ ...values, expiredDate: values.expiredDate?.valueOf() || undefined });
   };
 
   return (
@@ -68,13 +68,7 @@ export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmi
         >
           <Input prefix={<TagOutlined />} size="large" spellCheck={false} placeholder={t('code').toString()} style={inputStyle} />
         </Form.Item>
-        <Form.Item
-          name="discountAmount"
-          rules={[
-            { required: true, message: t('required').toString() },
-            { whitespace: true, message: t('required').toString() },
-          ]}
-        >
+        <Form.Item name="discountAmount" rules={[{ required: true, message: t('required').toString() }]}>
           <Input
             size="large"
             prefix={<PayCircleOutlined />}
@@ -83,6 +77,9 @@ export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmi
             placeholder={t('discount amount').toString()}
             style={inputStyle}
           />
+        </Form.Item>
+        <Form.Item name="totalUsageLimit" rules={[{ required: true, message: t('required').toString() }]}>
+          <Input size="large" type="number" spellCheck={false} placeholder={t('total usage limit').toString()} style={inputStyle} />
         </Form.Item>
         <Form.Item name="expiredDate" label={t('expired date')}>
           <DatePicker style={{ width: '100%' }} size="large" />

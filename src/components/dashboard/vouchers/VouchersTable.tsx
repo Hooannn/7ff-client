@@ -127,12 +127,30 @@ const VouchersTable: React.FC<VouchersTableProps> = ({
       ),
     },
     {
+      title: t('total usage limit'),
+      dataIndex: 'totalUsageLimit',
+      key: 'totalUsageLimit',
+      render: value => (
+        <span>
+          {value ? (
+            value
+          ) : (
+            <small>
+              <em>{t('expired')}</em>
+            </small>
+          )}
+        </span>
+      ),
+    },
+    {
       title: t('expired date'),
       dataIndex: 'expiredDate',
       key: 'expiredDate',
       render: text => (
         <span>
-          {dayjs(text).format('DD/MM/YYYY') || (
+          {text ? (
+            dayjs(text).format('DD/MM/YYYY')
+          ) : (
             <small>
               <em>{t('not updated yet')}</em>
             </small>
