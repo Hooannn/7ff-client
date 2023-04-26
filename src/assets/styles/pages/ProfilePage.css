@@ -98,3 +98,69 @@
 .empty-order-discover .start-order-btn:hover {
   border-color: #475c01;
 }
+
+.my-orders .order-filter {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.my-orders .order-filter .status-options {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.my-orders .order-filter .status-option-item {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  cursor: pointer;
+  border: 2px solid #222831;
+  color: #222831;
+}
+
+.my-orders .order-filter .status-option-item:hover {
+  background: rgba(34, 40, 49, 0.1);
+}
+
+.my-orders .order-filter .status-option-item.active {
+  background-color: #222831;
+  color: #fff;
+}
+
+.my-orders .sort-options .ant-select-selector {
+  height: 40px;
+  border: 2px solid #222831 !important;
+  border-radius: 4px;
+}
+
+.my-orders .sort-options .ant-select-selection-item {
+  font-size: 0.9rem;
+}
+
+.my-orders .order-list .table-order-status {
+  font-weight: 500;
+}
+
+.my-orders .order-list .table-order-status.Processing {
+  color: #ffbe33;
+}
+
+.my-orders .order-list .table-order-status.Delivering {
+  color: #007bff;
+}
+
+.my-orders .order-list .table-order-status.Done {
+  color: #28a745;
+}
+
+.my-orders .order-list .table-order-status.Cancelled {
+  color: #dc3545;
+}
