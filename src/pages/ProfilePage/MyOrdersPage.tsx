@@ -19,8 +19,7 @@ const MyOrdersPage: FC = () => {
   const navigate = useNavigate();
   const axios = useAxiosIns();
   const user = useSelector((state: RootState) => state.auth.user);
-
-  const [orders, setOrders] = useState<IOrder[]>([]);
+  // const [orders, setOrders] = useState<IOrder[]>([]);
   const [activeStatus, setActiveStatus] = useState<OrderStatus | ''>('');
   const [sortOption, setSortOption] = useState('');
   const fetchOrdersQuery = useQuery(['my-orders', sortOption], {
@@ -28,17 +27,14 @@ const MyOrdersPage: FC = () => {
     enabled: true,
     refetchIntervalInBackground: true,
     refetchInterval: 10000,
-    onSuccess: res => {
-      setOrders(res.data?.data);
-    },
   });
-
+  const orders = fetchOrdersQuery.data?.data?.data;
   useTitle(`${t('my orders')} - 7FF`);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const ORDER_STATUSES = ['Processing', 'Delivering', 'Done', 'Cancelled'];
-  const MATCHING_ITEMS = orders.filter((order: IOrder) => order.status === activeStatus || activeStatus === '');
+  const MATCHING_ITEMS = orders?.filter((order: IOrder) => order.status === activeStatus || activeStatus === '');
 
   return (
     <div className="profile-page">
@@ -50,7 +46,7 @@ const MyOrdersPage: FC = () => {
             <div className="heading">{t('my orders')}</div>
             {fetchOrdersQuery.isLoading && <Skeleton />}
 
-            {orders.length === 0 && !fetchOrdersQuery.isLoading && (
+            {orders?.length === 0 && !fetchOrdersQuery.isLoading && (
               <div className="empty-order">
                 <div className="empty-order-discover">
                   <h2>{t("you don't have any orders")}</h2>
@@ -62,7 +58,7 @@ const MyOrdersPage: FC = () => {
               </div>
             )}
 
-            {orders.length > 0 && !fetchOrdersQuery.isLoading && (
+            {orders?.length && !fetchOrdersQuery.isLoading && (
               <div>
                 <div className="order-filter">
                   <div className="status-options">
@@ -82,6 +78,7 @@ const MyOrdersPage: FC = () => {
                       size="large"
                       style={{ width: 200 }}
                       dropdownStyle={{ padding: 5 }}
+                      value={sortOption}
                       onChange={value => setSortOption(value)}
                     >
                       <Select.Option value="createdAt" className="sort-option-item">
