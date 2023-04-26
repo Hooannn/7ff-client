@@ -16,4 +16,4 @@ export interface IOrder {
   status: OrderStatus;
 }
 
-type OrderStatus = 'Processing' | 'Delivering' | 'Done' | 'Cancelled';
+export type OrderStatus = 'Processing' | 'Delivering' | 'Done' | 'Cancelled';

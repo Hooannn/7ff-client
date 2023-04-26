@@ -208,7 +208,7 @@ const AuthPage: FC = () => {
 
   const { t } = useTranslation();
   const i18n = getI18n();
-  useTitle(`${t('account').toString()} - 7FF`);
+  useTitle(`${t('account')} - 7FF`);
 
   const onSignIn = async (values: any) => {
     signInMutation.mutate(values);
