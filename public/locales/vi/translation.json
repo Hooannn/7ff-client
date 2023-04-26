@@ -347,5 +347,7 @@
   "CREATE_SUCCESSFULLY": "Tạo thành công",
   "DELETE_SUCCESSFULLY": "Xóa thành công",
   "UPDATE_SUCCESSFULLY": "Cập nhật thành công",
-  "BOOK_RESERVATION_SUCCESSFULLY": "Bạn đã đặt bàn thành công"
+  "BOOK_RESERVATION_SUCCESSFULLY": "Bạn đã đặt bàn thành công",
+  "total usage limit": "Số lượt sử dụng",
+  "expired": "Hết lượt"
 }

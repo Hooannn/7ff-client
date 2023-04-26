@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { IVoucher } from '../../../types';
+import dayjs from 'dayjs';
 interface UpdateVoucherModalProps {
   shouldOpen: boolean;
   onCancel: () => void;
@@ -21,7 +22,7 @@ export default function UpdateVoucherModal({ voucher, shouldOpen, onCancel, onSu
   };
 
   useEffect(() => {
-    if (voucher && shouldOpen) form.setFieldsValue({ ...voucher, expiredDate: 0 });
+    if (voucher && shouldOpen) form.setFieldsValue({ ...voucher, expiredDate: dayjs(voucher.expiredDate || Date.now()) });
   }, [shouldOpen]);
 
   return (
@@ -67,7 +68,7 @@ export const UpdateVoucherForm = ({
   const { t } = useTranslation();
 
   const onFinish = (values: any) => {
-    onSubmit({ ...values });
+    onSubmit({ ...values, expiredDate: values.expiredDate?.valueOf() || undefined });
   };
 
   return (
@@ -82,13 +83,7 @@ export const UpdateVoucherForm = ({
         >
           <Input prefix={<TagOutlined />} size="large" spellCheck={false} placeholder={t('code').toString()} style={inputStyle} />
         </Form.Item>
-        <Form.Item
-          name="discountAmount"
-          rules={[
-            { required: true, message: t('required').toString() },
-            { whitespace: true, message: t('required').toString() },
-          ]}
-        >
+        <Form.Item name="discountAmount" rules={[{ required: true, message: t('required').toString() }]}>
           <Input
             size="large"
             prefix={<PayCircleOutlined />}
@@ -99,7 +94,7 @@ export const UpdateVoucherForm = ({
           />
         </Form.Item>
         <Form.Item name="expiredDate" label={t('expired date')}>
-          <DatePicker style={{ width: '100%' }} size="large" />
+          <DatePicker format="DD/MM/YYYY" style={{ width: '100%' }} size="large" />
         </Form.Item>
         <Form.Item name="discountType" label={t('discount type')} initialValue={'amount'}>
           <Select defaultValue={'amount'} size="large">
