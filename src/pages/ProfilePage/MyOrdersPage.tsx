@@ -1,60 +1,44 @@
-import { FC, useEffect } from 'react';
+import dayjs from 'dayjs';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import { Button, Empty, Select, Skeleton, Table } from 'antd';
 import useTitle from '../../hooks/useTitle';
+import useAxiosIns from '../../hooks/useAxiosIns';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import { IOrder } from '../../types';
+import type { OrderStatus } from '../../types';
+import { IOrder, IResponseData } from '../../types';
 import { RootState } from '../../@core/store';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/ProfilePage.css';
-import { Button } from 'antd';
-
-// Fake data
-// const orders: IOrder[] = [
-//   {
-//     _id: 'orders0001',
-//     customerId: '123123',
-//     status: 'Done',
-//     items: [],
-//     isDelivery: false,
-//     totalPrice: 100000,
-//   },
-//   {
-//     _id: 'orders0002',
-//     customerId: '123123',
-//     status: 'Processing',
-//     items: [],
-//     isDelivery: false,
-//     totalPrice: 200000,
-//   },
-//   {
-//     _id: 'orders0003',
-//     customerId: '123123',
-//     status: 'Cancelled',
-//     items: [],
-//     isDelivery: true,
-//     totalPrice: 300000,
-//   },
-//   {
-//     _id: 'orders0004',
-//     customerId: '123123',
-//     status: 'Delivering',
-//     items: [],
-//     isDelivery: true,
-//     totalPrice: 400000,
-//   },
-// ];
 
 const MyOrdersPage: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { orders }: { orders: IOrder[] } = useSelector((state: RootState) => state.auth.user?.orders);
+  const axios = useAxiosIns();
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  useTitle(`${t('change password')} - 7FF`);
+  const [orders, setOrders] = useState<IOrder[]>([]);
+  const [activeStatus, setActiveStatus] = useState<OrderStatus | ''>('');
+  const [sortOption, setSortOption] = useState('');
+  const fetchOrdersQuery = useQuery(['my-orders', sortOption], {
+    queryFn: () => axios.get<IResponseData<IOrder[]>>(`/my-orders/${user._id}?sort=${sortOption}`),
+    enabled: true,
+    refetchIntervalInBackground: true,
+    refetchInterval: 10000,
+    onSuccess: res => {
+      setOrders(res.data?.data);
+    },
+  });
+
+  useTitle(`${t('my orders')} - 7FF`);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const ORDER_STATUSES = ['Processing', 'Delivering', 'Done', 'Cancelled'];
+  const MATCHING_ITEMS = orders.filter((order: IOrder) => order.status === activeStatus || activeStatus === '');
 
   return (
     <div className="profile-page">
@@ -64,7 +48,9 @@ const MyOrdersPage: FC = () => {
 
           <div className="my-orders">
             <div className="heading">{t('my orders')}</div>
-            {!orders || orders.length === 0 ? (
+            {fetchOrdersQuery.isLoading && <Skeleton />}
+
+            {orders.length === 0 && !fetchOrdersQuery.isLoading && (
               <div className="empty-order">
                 <div className="empty-order-discover">
                   <h2>{t("you don't have any orders")}</h2>
@@ -74,8 +60,104 @@ const MyOrdersPage: FC = () => {
                   </Button>
                 </div>
               </div>
-            ) : (
-              <div>orders</div>
+            )}
+
+            {orders.length > 0 && !fetchOrdersQuery.isLoading && (
+              <div>
+                <div className="order-filter">
+                  <div className="status-options">
+                    {ORDER_STATUSES.map((status: string) => (
+                      <div
+                        key={status}
+                        onClick={() => setActiveStatus(prev => (prev !== status ? (status as OrderStatus) : ''))}
+                        className={`status-option-item ${activeStatus === status ? 'active' : ''}`}
+                      >
+                        {t(status.toLowerCase())}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="sort-options">
+                    <Select
+                      placeholder={t('sort by...').toString()}
+                      size="large"
+                      style={{ width: 200 }}
+                      dropdownStyle={{ padding: 5 }}
+                      onChange={value => setSortOption(value)}
+                    >
+                      <Select.Option value="createdAt" className="sort-option-item">
+                        {t('oldest orders')}
+                      </Select.Option>
+                      <Select.Option value="" className="sort-option-item">
+                        {t('latest orders')}
+                      </Select.Option>
+                      <Select.Option value="totalPrice" className="sort-option-item">
+                        {t('total order value')}
+                      </Select.Option>
+                      <Select.Option value="status" className="sort-option-item">
+                        {t('order status')}
+                      </Select.Option>
+                    </Select>
+                  </div>
+                </div>
+                <div className="order-list">
+                  <Table
+                    dataSource={MATCHING_ITEMS}
+                    locale={{
+                      emptyText: (
+                        <Empty
+                          image={Empty.PRESENTED_IMAGE_SIMPLE}
+                          description={
+                            <p style={{ margin: '15px 0 0', fontSize: 15, fontWeight: 500, fontStyle: 'italic' }}>
+                              {t('you have no order with status')}: {t(activeStatus.toLocaleLowerCase())}.
+                            </p>
+                          }
+                        />
+                      ),
+                    }}
+                    rowKey={(record: IOrder) => record._id as string}
+                    columns={[
+                      { title: t('order ID'), dataIndex: '_id', width: 210 },
+                      {
+                        title: t('order date'),
+                        dataIndex: 'createdAt',
+                        render: value => <span>{dayjs(value).format('DD/MM/YYYY HH:mm')}</span>,
+                      },
+                      {
+                        title: t('quantity'),
+                        dataIndex: 'items',
+                        align: 'center',
+                        render: (value: IOrder['items']) => {
+                          const totalItems = value.reduce((acc: number, item: any) => {
+                            return acc + item.quantity;
+                          }, 0);
+                          return <span>{`0${totalItems}`.slice(-2)}</span>;
+                        },
+                      },
+                      {
+                        title: t('total value'),
+                        dataIndex: 'totalPrice',
+                        align: 'center',
+                      },
+                      {
+                        title: t('status'),
+                        dataIndex: 'status',
+                        width: 150,
+                        align: 'center',
+                        render: (value: OrderStatus) => <span className={`table-order-status ${value}`}>{t(value.toLocaleLowerCase())}</span>,
+                      },
+                      {
+                        title: t('details'),
+                        render: () => (
+                          <Button type="primary" shape="round" style={{ fontWeight: 500 }}>
+                            {t('view')}
+                          </Button>
+                        ),
+                      },
+                    ]}
+                    pagination={{ defaultPageSize: 4, showSizeChanger: false }}
+                  ></Table>
+                </div>
+              </div>
             )}
           </div>
         </div>

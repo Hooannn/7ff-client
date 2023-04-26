@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Row, Col, Button, Space } from 'antd';
+import useTitle from '../../hooks/useTitle';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import Loading from '../../components/shared/Loading';
 import { IOrder, IResponseData } from '../../types';
@@ -18,6 +19,7 @@ export default function ThankYouPage() {
   });
   const order = getOrderByIdQuery.data?.data?.data;
   const { t } = useTranslation();
+  useTitle(`${t('thank you')} - 7FF`);
 
   return (
     <Row align="middle" justify="center" className="thank-you-page">

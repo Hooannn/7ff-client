@@ -68,14 +68,16 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
         <h2 className="heading">{t('our menu')}</h2>
         <ul className="filters-menu">
           {fetchCategoriesQuery.isLoading && <Skeleton.Button active size="large" shape="round" block />}
-          <li
-            className={`filters-item ${!categoryQuery.get('category') || categoryQuery.get('category') === 'all' ? 'active' : ''}`}
-            onClick={() => {
-              setCategoryQuery({});
-            }}
-          >
-            {t('all')}
-          </li>
+          {!fetchCategoriesQuery.isLoading && categories?.length && (
+            <li
+              className={`filters-item ${!categoryQuery.get('category') || categoryQuery.get('category') === 'all' ? 'active' : ''}`}
+              onClick={() => {
+                setCategoryQuery({});
+              }}
+            >
+              {t('all')}
+            </li>
+          )}
           {categories?.map(value => (
             <li
               className={`filters-item ${categoryQuery.get('category') === value.name[locale] ? 'active' : ''}`}
