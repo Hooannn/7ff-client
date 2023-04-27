@@ -53,11 +53,11 @@ export default function ProductsDashboardPage() {
   const { t } = useTranslation();
   useTitle(`${t('products')} - 7FF`);
 
-  const onAddCategory = (values: IProduct) => {
+  const onAddCategory = (values: Partial<IProduct>) => {
     addProductMutation.mutateAsync(values).finally(() => setAddModelOpen(false));
   };
 
-  const onUpdateProduct = (values: IProduct) => {
+  const onUpdateProduct = (values: Partial<IProduct>) => {
     updateProductMutation.mutateAsync({ productId: selectedProduct?._id as string, data: values }).finally(() => setUpdateModalOpen(false));
   };
 

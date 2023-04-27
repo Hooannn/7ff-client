@@ -10,7 +10,7 @@ import { CarouselRef } from 'antd/es/carousel';
 interface AddProductModalProps {
   shouldOpen: boolean;
   onCancel: () => void;
-  onSubmit: (values: IProduct) => void;
+  onSubmit: (values: Partial<IProduct>) => void;
   isLoading: boolean;
   onSearchCategory: (value: string) => void;
   onCategoryChange: (value: string) => void;
@@ -84,7 +84,7 @@ export const AddProductForm = ({
   isLoadingCategory: boolean;
   categories: ICategory[] | undefined;
   form: FormInstance;
-  onSubmit: (values: IProduct) => void;
+  onSubmit: (values: Partial<IProduct>) => void;
   onSearchCategory: (value: string) => void;
   onCategoryChange: (value: string) => void;
 }) => {
