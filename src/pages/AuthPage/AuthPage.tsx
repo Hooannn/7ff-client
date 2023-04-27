@@ -275,7 +275,7 @@ const AuthPage: FC = () => {
             </Divider>
             <div className="social-auth-options">
               <img src="/google-brand.png" />
-              <img src="/github-mark.png" />
+              <img src="/github-brand.png" />
               <img src="/facebook-brand.png" />
             </div>
           </>

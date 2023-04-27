@@ -12,19 +12,19 @@ const BANNER_CAROUSEL_CONTENT = [
     },
     description: {
       en: 'With 7 criteria as our pointer, highly trained employees and a diverse menu to select from, here at 7FF we value each and every order placed in order to bring you the best dining experience.',
-      vi: 'Với 7 tiêu chí đã đề ra, sự  bảo đảm cho từng đơn đặt hàng cho khách, các đầu bếp và nhân viên thông qua tuyển chọn kỹ lưỡng, cùng với sự đa dạng của các món ăn 7FF hứa hẹn sẽ mang đến cho quý khách những sự lựa chọn tốt nhất.',
+      vi: 'Với 7 tiêu chí đã đề ra, cùng với đội ngũ nhân viên thông qua tuyển chọn kỹ lưỡng và sự đa dạng trong các món ăn, 7FF luôn đặt tất cả tâm huyết vào từng đơn hàng để mang đến cho quý khách những trải nghiệm tuyệt vời nhất.',
     },
     buttonTitle: 'learn more about us',
     btnNavigation: '/about',
   },
   {
     title: {
-      en: 'Enjoy every bite !',
-      vi: 'Tận hưởng từng miếng cắn !',
+      en: 'Yêu là phải nói, như đói là phải ăn !',
+      vi: 'Yêu là phải nói, như đói là phải ăn !',
     },
     description: {
-      en: '7FF is a food chain that specialize in providing refreshment and snack as well as conventional fast food. In order to bring you the best dining experience, our chefs and staffs all have been carefully selected and trained to provide the premium quality meals and service in our restaurant.',
-      vi: '7FF được biết đến với các món ăn vặt quen thuộc và phổ biến. Tất cả các đầu bếp và nhân viên của 7FF đều được tuyển chọn và đào tạo kỹ lưỡng để có thể đảm bảo được chất lượng của món ăn và chất lượng phục vụ.',
+      en: '7FF is a food chain that specialize in providing refreshment and snack as well as conventional fast food. In order to bring you the best dining experience, our staff members all have been carefully selected and trained to provide the premium quality meals and service in our restaurant.',
+      vi: '7FF được biết đến với các món ăn vặt quen thuộc và phổ biến. Tất cả các nhân viên trong đội ngũ của 7FF đều được tuyển chọn và đào tạo kỹ lưỡng để có thể đảm bảo được chất lượng của món ăn và chất lượng phục vụ.',
     },
     buttonTitle: 'see the menu',
     btnNavigation: '/menu',
