@@ -358,5 +358,15 @@
   "UPDATE_SUCCESSFULLY": "Updated successfully",
   "BOOK_RESERVATION_SUCCESSFULLY": "You have successfully booked a reservation",
   "total usage limit": "Total usage limit",
-  "expired": "Expired"
+  "expired": "Expired",
+  "products with the highest view count": "Products with the highest view count",
+  "products with the highest total sales": "Products with the highest total sales",
+  "products with the highest total sold units": "Products with the highest total sold units",
+  "unit": "Unit",
+  "newest users": "Newest users",
+  "users with highest total order value": "Users with the highest total order value",
+  "products overall": "Products overall",
+  "views": "views",
+  "total sales": "Total sales",
+  "total units": "Total units"
 }

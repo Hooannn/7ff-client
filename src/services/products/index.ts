@@ -102,7 +102,7 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
   });
 
   const addProductMutation = useMutation({
-    mutationFn: (data: IProduct) => axios.post<IResponseData<IProduct>>('/products', data),
+    mutationFn: (data: Partial<IProduct>) => axios.post<IResponseData<IProduct>>('/products', data),
     onSuccess: res => {
       if (isSearching) {
         queryClient.invalidateQueries('search-products');
@@ -114,7 +114,7 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
   });
 
   const updateProductMutation = useMutation({
-    mutationFn: ({ productId, data }: { productId: string; data: IProduct }) =>
+    mutationFn: ({ productId, data }: { productId: string; data: Partial<IProduct> }) =>
       axios.patch<IResponseData<IProduct>>(`/products?id=${productId}`, data),
     onSuccess: res => {
       if (isSearching) {

@@ -8,48 +8,43 @@ import useStatistics from '../../services/statistics';
 import UsersSummary from '../../components/dashboard/summary/UsersSummary';
 import RevenuesSummary from '../../components/dashboard/summary/RevenuesSummary';
 import OrdersSummary from '../../components/dashboard/summary/OrdersSummary';
-import RevenuesChart from '../../components/dashboard/summary/RevenuesChart';
-import dayjs from '../../libs/dayjs';
+import PopularProducts from '../../components/dashboard/summary/PopularProducts';
+import PopularUsers from '../../components/dashboard/summary/PopularUsers';
 const DashboardPage: FC = () => {
   const { t } = useTranslation();
   useTitle(`${t('dashboard')} - 7FF`);
-  const { getStatisticsQuery, setFrom, setTo } = useStatistics();
+  const { getStatisticsQuery, setType, getPopularProductsQuery, type, getPopularUsersQuery } = useStatistics();
   const orders = getStatisticsQuery.data?.orders;
   const revenues = getStatisticsQuery.data?.revenues;
   const users = getStatisticsQuery.data?.users;
-
+  const highestViewCountProducts = getPopularProductsQuery.data?.highestViewCountProducts;
+  const highestTotalSoldUnitsProducts = getPopularProductsQuery.data?.highestTotalSoldUnitsProducts;
+  const highestTotalSalesProducts = getPopularProductsQuery.data?.highestTotalSalesProducts;
+  const newestUsers = getPopularUsersQuery.data?.newestUsers;
+  const usersWithHighestTotalOrderValue = getPopularUsersQuery.data?.usersWithHighestTotalOrderValue;
   const segmentedOptions = [
     {
       label: t('daily'),
       value: 'daily',
-      from: dayjs(Date.now()).startOf('day').valueOf(),
-      to: dayjs(Date.now()).valueOf(),
     },
     {
       label: t('weekly'),
       value: 'weekly',
-      from: dayjs(Date.now()).startOf('week').valueOf(),
-      to: dayjs(Date.now()).valueOf(),
     },
     {
       label: t('monthly'),
       value: 'monthly',
-      from: dayjs(Date.now()).startOf('month').valueOf(),
-      to: dayjs(Date.now()).valueOf(),
     },
     {
       label: t('yearly'),
       value: 'yearly',
-      from: dayjs(Date.now()).startOf('year').valueOf(),
-      to: dayjs(Date.now()).valueOf(),
     },
   ];
   const [selectedSegment, setSelectedSegment] = useState<string>(segmentedOptions[0].value);
 
   useEffect(() => {
     const segmentOption = segmentedOptions.find(option => option.value === selectedSegment);
-    setFrom(segmentOption?.from as number);
-    setTo(segmentOption?.to as number);
+    setType(segmentOption?.value as any);
   }, [selectedSegment]);
 
   const onExportToCSV = () => {};
@@ -97,21 +92,84 @@ const DashboardPage: FC = () => {
 
       <Col span={24}>
         <Row align="middle" justify="space-between" gutter={12}>
-          <Col md={8}>
+          <Col lg={24} xl={8}>
             <RevenuesSummary loading={getStatisticsQuery.isLoading} value={revenues?.currentCount} previousValue={revenues?.previousCount} />
           </Col>
-          <Col md={8}>
+          <Col lg={24} xl={8}>
             <OrdersSummary loading={getStatisticsQuery.isLoading} value={orders?.currentCount} previousValue={orders?.previousCount} />
           </Col>
-          <Col md={8}>
+          <Col lg={24} xl={8}>
             <UsersSummary loading={getStatisticsQuery.isLoading} value={users?.currentCount} previousValue={users?.previousCount} />
           </Col>
         </Row>
       </Col>
 
       <Col span={24} style={{ padding: '24px 0' }}>
-        <RevenuesChart loading={getStatisticsQuery.isLoading} data={revenues?.details} />
+        <Row gutter={12}>
+          <Col lg={24} xl={8}>
+            <PopularProducts
+              isLoading={getPopularProductsQuery.isLoading}
+              data={highestViewCountProducts}
+              highlightFieldDisplay={t('view').toString()}
+              highlightField={`${type}ViewCount`}
+              extra="view"
+              type={type}
+              title={t('products with the highest view count').toString()}
+            />
+          </Col>
+          <Col lg={24} xl={8}>
+            <PopularProducts
+              isLoading={getPopularProductsQuery.isLoading}
+              data={highestTotalSalesProducts}
+              highlightFieldDisplay={t('total').toString()}
+              type={type}
+              highlightField={`${type}Data`}
+              extra="totalSales"
+              title={t('products with the highest total sales').toString()}
+            />
+          </Col>
+          <Col lg={24} xl={8}>
+            <PopularProducts
+              isLoading={getPopularProductsQuery.isLoading}
+              data={highestTotalSoldUnitsProducts}
+              highlightFieldDisplay={t('unit').toString()}
+              type={type}
+              extra="totalUnits"
+              highlightField={`${type}Data`}
+              title={t('products with the highest total sold units').toString()}
+            />
+          </Col>
+        </Row>
       </Col>
+
+      <Col span={24}>
+        <Row gutter={12}>
+          <Col lg={24} xl={12}>
+            <PopularUsers
+              isLoading={getPopularUsersQuery.isLoading}
+              data={newestUsers}
+              highlightFieldDisplay={t('created at').toString()}
+              highlightField="createdAt"
+              type="newest"
+              title={t('newest users').toString()}
+            />
+          </Col>
+          <Col lg={24} xl={12}>
+            <PopularUsers
+              isLoading={getPopularUsersQuery.isLoading}
+              data={usersWithHighestTotalOrderValue}
+              highlightFieldDisplay={t('total order value').toString()}
+              type="highestTotalOrderValue"
+              highlightField="totalOrderValue"
+              title={t('users with highest total order value').toString()}
+            />
+          </Col>
+        </Row>
+      </Col>
+
+      {/*<Col span={24} style={{ padding: '24px 0' }}>
+        <RevenuesChart loading={getStatisticsQuery.isLoading} data={revenues?.details} />
+                  </Col>*/}
     </Row>
   );
 };

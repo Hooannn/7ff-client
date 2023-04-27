@@ -10,6 +10,7 @@ export default function RevenuesSummary({ loading, value, previousValue }: Parti
       value={value as number}
       previousValue={previousValue as number}
       label={t('revenues').toString()}
+      to="/dashboard/overall"
     />
   );
 }

@@ -1,21 +1,30 @@
-import { Card } from 'antd';
+import { Card, Col, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 interface RevenuesChartProps {
   data:
     | {
         name: string;
-        value: number;
+        totalSales: number;
+        totalUnits: number;
       }[]
     | undefined;
   loading?: boolean;
+  extra: JSX.Element;
 }
-export default function RevenuesChart({ data, loading }: RevenuesChartProps) {
+export default function RevenuesChart({ data, loading, extra }: RevenuesChartProps) {
   const { t } = useTranslation();
   return (
     <Card
       loading={loading}
-      title={t('revenues')}
+      title={
+        <Row align="middle" justify="space-between">
+          <Col>
+            <h3>{t('revenues')}</h3>
+          </Col>
+          <Col>{extra}</Col>
+        </Row>
+      }
       style={{
         borderRadius: '12px',
         boxShadow: '0px 0px 16px rgba(17,17,26,0.1)',
@@ -25,10 +34,12 @@ export default function RevenuesChart({ data, loading }: RevenuesChartProps) {
         <BarChart barSize={10} data={data} style={{ margin: '0 auto' }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis yAxisId="left" orientation="left" stroke="#8dbd75" />
+          <YAxis yAxisId="right" orientation="right" stroke="#8884d8" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="#8dbd75" />
+          <Bar yAxisId="left" name={t('total').toString() + ' (VND)'} dataKey="totalSales" fill="#8dbd75" />
+          <Bar yAxisId="right" name={t('unit').toString()} dataKey="totalUnits" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
     </Card>
