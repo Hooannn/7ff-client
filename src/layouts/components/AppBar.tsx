@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation, getI18n } from 'react-i18next';
-import { Layout, Button, Badge, Dropdown, Tooltip, Avatar, Modal, Divider, Rate } from 'antd';
+import { Layout, Button, Badge, Dropdown, Tooltip, Avatar, Modal } from 'antd';
 import { CloseOutlined, DashboardOutlined, ExclamationCircleFilled, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import CartDrawer from './CartDrawer';
@@ -110,6 +110,7 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
     if (searchInput.startsWith(' ')) return;
     setSearchTerm(searchInput);
     setIsTyping(true);
+    countdownTyping();
   };
 
   const searchProducts = useQuery(['appbar-search-products'], {
@@ -119,6 +120,17 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
       setSearchResult(res.data?.data);
     },
   });
+
+  let timerId: undefined | ReturnType<typeof setTimeout> = undefined;
+  const countdownTyping = () => {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => {
+      setIsTyping(false);
+    }, 500);
+  };
+  useEffect(() => {
+    return () => clearTimeout(timerId);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -134,7 +146,6 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   useEffect(() => {
-    setIsTyping(false);
     if (!debouncedSearchTerm || !(debouncedSearchTerm as string).trim()) {
       setSearchResult([]);
       return;
