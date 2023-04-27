@@ -1,34 +1,44 @@
 import { IUser } from './auth';
 import { ICategory, IContent } from './category';
-
+interface IViewCount {
+  time: number;
+  count: number;
+}
 export interface IProduct {
   _id?: string;
   name: IContent;
   description: IContent;
   price: number;
-  stocks?: number;
-  yearlyData?: {
+  yearlyData: {
     year: string;
     totalSales: number;
     totalUnits: number;
   }[];
-  monthlyData?: {
+  monthlyData: {
     month: string;
     year: string;
     totalSales: number;
     totalUnits: number;
   }[];
-  weeklyData?: {
+  weeklyData: {
     week: string;
     year: string;
     totalSales: number;
     totalUnits: number;
   }[];
-  category: string | ICategory;
+  dailyData: {
+    time: number;
+    totalSales: number;
+    totalUnits: number;
+  };
+  stocks: number;
+  category: ICategory | string;
   isAvailable: boolean;
-  rating?: number;
-  views?: string[] | IUser[];
-  viewsCount?: number;
+  rating: number;
+  dailyViewCount?: IViewCount;
+  weeklyViewCount?: IViewCount;
+  monthlyViewCount?: IViewCount;
+  yearlyViewCount?: IViewCount;
   featuredImages?: string[];
 }
 

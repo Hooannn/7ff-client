@@ -10,6 +10,7 @@ export default function UsersSummary({ loading, value, previousValue }: Partial<
       value={value as number}
       previousValue={previousValue as number}
       label={t('total users').toString()}
+      to="/dashboard/users"
     />
   );
 }

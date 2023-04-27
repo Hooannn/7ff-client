@@ -1,6 +1,7 @@
 import { Card, Row, Col } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface StatisticCardProps extends PropsWithChildren {
   value: number;
@@ -9,14 +10,15 @@ export interface StatisticCardProps extends PropsWithChildren {
   unit?: string;
   loading?: boolean;
   background?: string;
+  to: string;
 }
 
 export default function StatisticCard(props: StatisticCardProps) {
   const [count, setCount] = useState<number>(0);
-  const percentGrowth = useMemo(
-    () => (((props.value - props.previousValue) / props.previousValue) * 100).toFixed(2),
-    [props.previousValue, props.value],
-  );
+  const percentGrowth = useMemo(() => {
+    return (((props.value - props.previousValue) / props.previousValue) * 100).toFixed(2);
+  }, [props.previousValue, props.value]);
+  const navigate = useNavigate();
   const isIncreasing = useMemo(() => parseFloat(percentGrowth) > 0, [percentGrowth]);
 
   useEffect(() => {
@@ -38,6 +40,8 @@ export default function StatisticCard(props: StatisticCardProps) {
 
   return (
     <Card
+      hoverable
+      onClick={() => navigate(props.to)}
       loading={props.loading}
       style={{
         borderRadius: '12px',
@@ -62,7 +66,7 @@ export default function StatisticCard(props: StatisticCardProps) {
             <div style={{ fontSize: '32px' }}>
               <strong>{count ? count : 0}</strong>
             </div>
-            {props.value > 0 && (
+            {props.value > 0 && props.previousValue > 0 && (
               <span style={{ marginLeft: '8px', color: isIncreasing ? '#59a959' : '#c52525' }}>
                 <strong>
                   {isIncreasing ? '+' : ''}

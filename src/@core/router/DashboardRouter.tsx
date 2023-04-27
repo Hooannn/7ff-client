@@ -7,6 +7,7 @@ import {
   OrdersDashboardPage,
   VouchersDashboardPage,
   CategoriesDashboardPage,
+  OverallDashboardPage,
 } from '../../pages/DashboardPage';
 import ErrorPage from '../../pages/ErrorPage';
 import AuthProtector from '../../components/AuthProtector';
@@ -43,6 +44,10 @@ const dashboardRouter = [
       {
         path: 'categories',
         element: <CategoriesDashboardPage />,
+      },
+      {
+        path: 'overall',
+        element: <OverallDashboardPage />,
       },
     ],
   },

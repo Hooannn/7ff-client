@@ -22,6 +22,7 @@ const ProductPage: FC = () => {
     queryFn: () => axios.get<IResponseData<IProduct>>(`/products/${productId}`),
     enabled: true,
     select: res => res.data,
+    refetchOnWindowFocus: false,
     onSuccess: data => {
       setActiveImage((data.data as any)?.featuredImages[0]);
     },

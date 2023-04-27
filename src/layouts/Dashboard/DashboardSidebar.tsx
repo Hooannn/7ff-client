@@ -68,26 +68,9 @@ const DashboardSidebar: FC = () => {
       ],
     },
     {
-      label: t('sales'),
-      key: '/sales',
-      icon: <AreaChartOutlined />,
-      children: [
-        {
-          label: t('overall'),
-          key: '/overall',
-          icon: <LineChartOutlined />,
-        },
-        {
-          label: t('monthly data'),
-          key: '/monthly-data',
-          icon: <BarChartOutlined />,
-        },
-        {
-          label: t('breakdown'),
-          key: '/breakdown',
-          icon: <PieChartOutlined />,
-        },
-      ],
+      label: t('overall'),
+      key: '/overall',
+      icon: <LineChartOutlined />,
     },
   ];
 

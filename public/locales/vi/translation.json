@@ -358,5 +358,15 @@
   "UPDATE_SUCCESSFULLY": "Cập nhật thành công",
   "BOOK_RESERVATION_SUCCESSFULLY": "Bạn đã đặt bàn thành công",
   "total usage limit": "Số lượt sử dụng",
-  "expired": "Hết lượt"
+  "expired": "Hết lượt",
+  "products with the highest view count": "Sản phẩm được xem nhiều nhất",
+  "products with the highest total sales": "Sản phẩm với doanh thu cao nhất",
+  "products with the highest total sold units": "Sản phẩm với số lượng bán ra cao nhất",
+  "unit": "Đơn vị",
+  "newest users": "Người dùng mới",
+  "users with highest total order value": "Người dùng có tổng giá trị các đơn hàng cao nhất",
+  "products overall": "Dữ liệu sản phẩm",
+  "views": "Lượt xem",
+  "total sales": "Tổng doanh số",
+  "total units": "Tổng sản phẩm bán ra"
 }

@@ -9,6 +9,7 @@ export default function OrdersSummary({ value, previousValue, loading }: Partial
       value={value as number}
       previousValue={previousValue as number}
       label={t('total orders').toString()}
+      to="/dashboard/orders"
     />
   );
 }
