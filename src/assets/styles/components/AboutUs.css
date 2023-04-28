@@ -8,10 +8,6 @@
   align-items: center;
 }
 
-.about-us .container + .container {
-  margin-top: -60px;
-}
-
 .about-us .image-wrapper {
   flex: 0 0 50%;
   max-width: 50%;
@@ -43,6 +39,7 @@
   margin: 15px 0;
   font-size: 1rem;
   line-height: 24px;
+  text-align: justify;
 }
 
 .story-wrapper .read-more-btn {

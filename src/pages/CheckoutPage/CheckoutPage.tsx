@@ -34,7 +34,10 @@ const CheckoutPage: FC = () => {
     formRef.current?.setFieldsValue({ name: `${user.lastName} ${user.firstName}` });
   }, []);
 
-  const { detailedItems, totalPrice, shippingFee } = useCart();
+  const [isDelivery, setIsDelivery] = useState(false);
+  const formRef = useRef<FormInstance>(null);
+  const { detailedItems, totalPrice, shippingFee: DEFAULT_SHIPPING_FEE } = useCart();
+  const shippingFee = isDelivery ? DEFAULT_SHIPPING_FEE : 0;
 
   const discount = useMemo(() => {
     if (!voucher?._id) return 0;
@@ -42,9 +45,6 @@ const CheckoutPage: FC = () => {
       return totalPrice * voucher?.discountAmount;
     } else return voucher?.discountAmount > totalPrice ? totalPrice : voucher?.discountAmount;
   }, [voucher]);
-
-  const [isDelivery, setIsDelivery] = useState(false);
-  const formRef = useRef<FormInstance>(null);
 
   const onApplyVoucher = async ({ voucher }: { voucher: string }) => {
     const { data } = await verifyVoucherMutation.mutateAsync(voucher.toUpperCase());
