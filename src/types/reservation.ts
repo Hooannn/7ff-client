@@ -1,5 +1,5 @@
 export interface IReservation {
-  _id: string;
+  _id?: string;
   customerId?: string;
   note?: string;
   contacts: {
@@ -12,5 +12,5 @@ export interface IReservation {
   attrs: {
     [key: string]: number | string;
   };
-  status: 'Processing' | 'Done';
+  status?: 'Processing' | 'Done';
 }
