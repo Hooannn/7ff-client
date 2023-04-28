@@ -36,7 +36,7 @@ export default function ProductCard({ product }: IProductCardProps) {
       case 'daily':
         return product.dailyData?.totalSales;
     }
-  }, [type]);
+  }, [type, product]);
   const totalUnits = useMemo(() => {
     switch (type) {
       case 'yearly':
@@ -51,7 +51,7 @@ export default function ProductCard({ product }: IProductCardProps) {
       case 'daily':
         return product.dailyData?.totalUnits;
     }
-  }, [type]);
+  }, [type, product]);
   const segmentedOptions = [
     {
       label: t('daily'),
