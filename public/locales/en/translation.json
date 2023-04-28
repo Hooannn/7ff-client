@@ -369,5 +369,11 @@
   "products overall": "Products overall",
   "views": "views",
   "total sales": "Total sales",
-  "total units": "Total units"
+  "total units": "Total units",
+  "reservation id": "Reservation id",
+  "customer name": "Customer name",
+  "number of guests": "Number of guests",
+  "booking time": "Booking time",
+  "mark as done": "Mark as done",
+  "mark as undone": "Mark as undone"
 }

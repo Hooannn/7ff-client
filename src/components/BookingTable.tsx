@@ -3,7 +3,7 @@ import { Button, DatePicker, Form, Input, Modal, Result, Select } from 'antd';
 import { getI18n, useTranslation } from 'react-i18next';
 import { buttonStyle, containerStyle, inputStyle } from '../assets/styles/globalStyle';
 import dayjs from 'dayjs';
-import useReservation from '../services/reservation';
+import useReservations from '../services/reservations';
 import '../assets/styles/components/BookingTable.css';
 import localeUS from 'antd/es/date-picker/locale/en_US';
 import localeVN from 'antd/es/date-picker/locale/vi_VN';
@@ -12,7 +12,7 @@ const BookingTable: FC = () => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const language = getI18n().resolvedLanguage;
-  const { bookReservationMutation } = useReservation();
+  const { bookReservationMutation } = useReservations({ enabledFetchReservations: false });
   const numberOfGuestOptions = (min: number, max: number) => {
     const options = [];
     for (let i = min; i <= max; i++) {

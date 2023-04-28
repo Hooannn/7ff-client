@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import RevenuesChart from '../../components/dashboard/summary/RevenuesChart';
-import { Row, Col, Select } from 'antd';
+import { Row, Col, Select, Empty, Card } from 'antd';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
@@ -62,13 +62,33 @@ export default function OverallDashboardPage() {
       </Col>
       <Col span={24} style={{ padding: '24px 0' }}>
         <h2>{t('products overall')}</h2>
-        <Row gutter={12}>
-          {products?.map(product => (
-            <Col lg={12} xl={6} key={product._id} style={{ paddingBottom: '24px' }}>
-              <ProductCard product={product} />
+        {getProductsQuery.isLoading && (
+          <Row style={{ width: '100%' }} gutter={12}>
+            {Array(20)
+              .fill(0)
+              .map((_, idx) => (
+                <Col key={idx} span={8}>
+                  <Card loading style={{ height: '350px', width: '100%' }} />
+                </Col>
+              ))}
+          </Row>
+        )}
+        {!getProductsQuery.isLoading && products?.length && (
+          <Row gutter={12}>
+            {products?.map(product => (
+              <Col lg={12} xl={6} key={product._id} style={{ paddingBottom: '24px' }}>
+                <ProductCard product={product} />
+              </Col>
+            ))}
+          </Row>
+        )}
+        {!getProductsQuery.isLoading && products?.length === 0 && (
+          <Row gutter={12} align="middle" justify="center">
+            <Col>
+              <Empty />
             </Col>
-          ))}
-        </Row>
+          </Row>
+        )}
       </Col>
     </Row>
   );
