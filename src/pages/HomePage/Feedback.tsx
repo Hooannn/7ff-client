@@ -44,7 +44,7 @@ const Feedback: FC = () => {
     <section className="feedback">
       <div className="container" style={containerStyle}>
         <h2 className="heading">{t('what our customers say')}</h2>
-        <Carousel autoplay dots={false} slidesToShow={2} ref={carouselRef}>
+        <Carousel autoplay dots={false} slidesToShow={CUSTOMER_FEEDBACKS.length >= 2 ? 2 : 1} ref={carouselRef}>
           {CUSTOMER_FEEDBACKS.map(feedback => (
             <div className="item" key={feedback.author}>
               <div className="feedback-content">
