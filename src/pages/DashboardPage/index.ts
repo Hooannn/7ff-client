@@ -5,6 +5,7 @@ import OrdersDashboardPage from './OrdersDashboardPage';
 import VouchersDashboardPage from './VouchersDashboardPage';
 import CategoriesDashboardPage from './CategoriesDashboardPage';
 import OverallDashboardPage from './OverallDashboardPage';
+import ReservationsDashboardPage from './ReservationsDashboardPage';
 export {
   OverallDashboardPage,
   DashboardPage,
@@ -13,4 +14,5 @@ export {
   OrdersDashboardPage,
   VouchersDashboardPage,
   CategoriesDashboardPage,
+  ReservationsDashboardPage,
 };

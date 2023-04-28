@@ -369,5 +369,11 @@
   "products overall": "Dữ liệu sản phẩm",
   "views": "Lượt xem",
   "total sales": "Tổng doanh số",
-  "total units": "Tổng sản phẩm bán ra"
+  "total units": "Tổng sản phẩm bán ra",
+  "reservation id": "Mã đơn hàng",
+  "customer name": "Tên khách hàng",
+  "number of guests": "Số lượng khách",
+  "booking time": "Thời gian đặt",
+  "mark as done": "Đánh dấu là đã hoàn thành",
+  "mark as undone": "Đánh dấu là đang xử lý"
 }

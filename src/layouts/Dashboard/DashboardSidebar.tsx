@@ -6,12 +6,10 @@ import {
   UserOutlined,
   ShoppingCartOutlined,
   FileTextOutlined,
-  PieChartOutlined,
   LineChartOutlined,
-  BarChartOutlined,
-  AreaChartOutlined,
   TagsOutlined,
   ClusterOutlined,
+  InboxOutlined,
 } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import type { MenuProps } from 'antd';
@@ -34,6 +32,11 @@ const DashboardSidebar: FC = () => {
       label: t('dashboard'),
       key: '',
       icon: <HomeOutlined />,
+    },
+    {
+      label: t('booking table'),
+      key: '/reservations',
+      icon: <InboxOutlined />,
     },
     {
       label: t('client facing'),
