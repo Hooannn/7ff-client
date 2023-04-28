@@ -19,7 +19,7 @@ export default function ReservationCard({ reservation, isLoading, onUpdateStatus
         reservation.status === 'Processing' ? (
           <Tooltip title={t('mark as done')}>
             <Button
-              onClick={() => onUpdateStatus({ reservationId: reservation._id, status: 'Done' })}
+              onClick={() => onUpdateStatus({ reservationId: reservation._id as string, status: 'Done' })}
               loading={isLoading}
               size="small"
               type="text"
@@ -31,7 +31,7 @@ export default function ReservationCard({ reservation, isLoading, onUpdateStatus
         ) : (
           <Tooltip title={t('mark as undone')}>
             <Button
-              onClick={() => onUpdateStatus({ reservationId: reservation._id, status: 'Processing' })}
+              onClick={() => onUpdateStatus({ reservationId: reservation._id as string, status: 'Processing' })}
               loading={isLoading}
               size="small"
               type="text"
@@ -45,7 +45,7 @@ export default function ReservationCard({ reservation, isLoading, onUpdateStatus
       size="small"
       title={
         <>
-          {t('reservation id').toString()} {reservation._id.toString()}
+          {t('reservation id').toString()} {reservation._id?.toString()}
         </>
       }
     >
@@ -66,7 +66,7 @@ export default function ReservationCard({ reservation, isLoading, onUpdateStatus
           {reservation.contacts?.email || t('not updated yet')}
         </Descriptions.Item>
         <Descriptions.Item span={2} label={t('status')}>
-          <Badge status={reservation.status === 'Done' ? 'success' : 'processing'} text={t(reservation.status.toLowerCase())} />
+          <Badge status={reservation.status === 'Done' ? 'success' : 'processing'} text={t((reservation.status as string).toLowerCase())} />
         </Descriptions.Item>
         <Descriptions.Item span={2} label={t('customer id')}>
           {reservation.customerId || t('not updated yet')}
