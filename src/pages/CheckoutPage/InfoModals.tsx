@@ -7,13 +7,11 @@ interface InfoModalProps {
   shouldOpen: boolean;
   onClose: () => void;
 }
-
 interface IProps {
   shouldOpen: boolean;
   onClose: () => void;
 }
-
-export type modalTypes = 'returnPolicy' | 'termsOfDelivery' | 'termsOfUse' | 'informationSecurity' | 'contactInfo';
+type modalTypes = 'returnPolicy' | 'termsOfDelivery' | 'termsOfUse' | 'informationSecurity' | 'contactInfo';
 
 const CONTENT = {
   returnPolicy: {
