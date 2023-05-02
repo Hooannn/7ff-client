@@ -12,5 +12,7 @@ export interface IReservation {
   attrs: {
     [key: string]: number | string;
   };
-  status?: 'Processing' | 'Done';
+  status: ReservationStatus;
 }
+
+export type ReservationStatus = 'Processing' | 'Done';

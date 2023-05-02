@@ -3,9 +3,7 @@ import MainLayout from '../../layouts/Main/Main';
 import ErrorPage from '../../pages/ErrorPage';
 import AuthProtector from '../../components/AuthProtector';
 import { Navigate } from 'react-router-dom';
-import { AccountEditPage, ChangeAvatarPage } from '../../pages/ProfilePage';
-import ChangePasswordPage from '../../pages/ProfilePage/ChangePasswordPage';
-import MyOrdersPage from '../../pages/ProfilePage/MyOrdersPage';
+import { AccountEditPage, ChangeAvatarPage, ChangePasswordPage, MyOrdersPage, MyReservationsPage } from '../../pages/ProfilePage';
 
 const profileRouter = [
   {
@@ -36,6 +34,10 @@ const profileRouter = [
       {
         path: 'orders',
         element: <MyOrdersPage />,
+      },
+      {
+        path: 'reservations',
+        element: <MyReservationsPage />,
       },
     ],
   },

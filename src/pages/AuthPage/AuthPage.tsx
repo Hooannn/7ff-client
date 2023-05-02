@@ -248,48 +248,55 @@ const AuthPage: FC = () => {
     }
   }, [query]);
 
+  let content = null;
   if (isLogged) {
     toast(t('you have already logged in'), toastConfig('error'));
-    return <Navigate to="/" />;
+    content = <Navigate to="/" />;
+  } else {
+    content = (
+      <div className="auth-page">
+        <div className="abs-btns">
+          <Tooltip title={t('change language')}>
+            {i18n.resolvedLanguage === 'en' && (
+              <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>
+            )}
+            {i18n.resolvedLanguage === 'vi' && (
+              <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>
+            )}
+          </Tooltip>
+        </div>
+
+        <Form layout="vertical" className="auth-form" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+          {formType === 'signIn' && <SignInInputs setFormType={setFormType} isLoading={signInMutation.isLoading} />}
+          {formType === 'signUp' && <SignUpInputs isLoading={signUpMutation.isLoading} />}
+          {formType === 'forgot' && <ForgotInputs isLoading={forgotPasswordMutation.isLoading} />}
+          {formType === 'reset' && <ResetInputs isLoading={resetPasswordMutation.isLoading} />}
+
+          {formType !== 'forgot' && formType !== 'reset' && (
+            <>
+              <Divider style={{ borderColor: '#101319', marginBottom: '8px' }}>
+                {formType === 'signIn' ? t('or sign in using') : t('or sign up using')}{' '}
+              </Divider>
+              <div className="social-auth-options">
+                <img src="/google-brand.png" />
+                <img src="/github-brand.png" />
+                <img src="/facebook-brand.png" />
+              </div>
+            </>
+          )}
+
+          <div className="text-center">
+            {formType === 'signIn' ? t("don't have an account?") + ' ' : t('already have an account?') + ' '}
+            <strong onClick={() => setFormType(formType === 'signIn' ? 'signUp' : 'signIn')}>
+              {formType === 'signIn' ? t('sign up') : t('sign in')}
+            </strong>
+          </div>
+        </Form>
+      </div>
+    );
   }
 
-  return (
-    <div className="auth-page">
-      <div className="abs-btns">
-        <Tooltip title={t('change language')}>
-          {i18n.resolvedLanguage === 'en' && <Avatar onClick={() => i18n.changeLanguage('vi')} src="/en.jpg" style={{ cursor: 'pointer' }}></Avatar>}
-          {i18n.resolvedLanguage === 'vi' && <Avatar onClick={() => i18n.changeLanguage('en')} src="/vn.jpg" style={{ cursor: 'pointer' }}></Avatar>}
-        </Tooltip>
-      </div>
-
-      <Form layout="vertical" className="auth-form" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
-        {formType === 'signIn' && <SignInInputs setFormType={setFormType} isLoading={signInMutation.isLoading} />}
-        {formType === 'signUp' && <SignUpInputs isLoading={signUpMutation.isLoading} />}
-        {formType === 'forgot' && <ForgotInputs isLoading={forgotPasswordMutation.isLoading} />}
-        {formType === 'reset' && <ResetInputs isLoading={resetPasswordMutation.isLoading} />}
-
-        {formType !== 'forgot' && formType !== 'reset' && (
-          <>
-            <Divider style={{ borderColor: '#101319', marginBottom: '8px' }}>
-              {formType === 'signIn' ? t('or sign in using') : t('or sign up using')}{' '}
-            </Divider>
-            <div className="social-auth-options">
-              <img src="/google-brand.png" />
-              <img src="/github-brand.png" />
-              <img src="/facebook-brand.png" />
-            </div>
-          </>
-        )}
-
-        <div className="text-center">
-          {formType === 'signIn' ? t("don't have an account?") + ' ' : t('already have an account?') + ' '}
-          <strong onClick={() => setFormType(formType === 'signIn' ? 'signUp' : 'signIn')}>
-            {formType === 'signIn' ? t('sign up') : t('sign in')}
-          </strong>
-        </div>
-      </Form>
-    </div>
-  );
+  return content;
 };
 
 export default AuthPage;

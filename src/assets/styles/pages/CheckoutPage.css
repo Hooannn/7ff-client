@@ -42,6 +42,7 @@
   flex-direction: column;
 }
 
+.checkout-page-close-modal-btn,
 .shipping-form .submit-btn {
   height: unset !important;
   padding: 18px 30px;
@@ -52,8 +53,9 @@
   box-shadow: none;
 }
 
+.checkout-page-close-modal-btn:hover,
 .shipping-form .submit-btn:hover {
-  background-color: #3c3c3c;
+  background-color: #3c3c3c !important;
 }
 
 .shipping-form-wrapper .shipping-form__footer {
