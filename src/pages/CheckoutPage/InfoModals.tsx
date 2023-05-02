@@ -3,13 +3,11 @@ import { getI18n, useTranslation } from 'react-i18next';
 import { Button, Divider, Modal } from 'antd';
 
 interface InfoModalProps {
-  type: modalTypes;
   shouldOpen: boolean;
   onClose: () => void;
 }
-interface IProps {
-  shouldOpen: boolean;
-  onClose: () => void;
+interface InfoModalPropsWithType extends InfoModalProps {
+  type: modalTypes;
 }
 type modalTypes = 'returnPolicy' | 'termsOfDelivery' | 'termsOfUse' | 'informationSecurity' | 'contactInfo';
 
@@ -226,7 +224,7 @@ const CONTENT = {
   },
 };
 
-const InfoModal: FC<InfoModalProps> = ({ type, shouldOpen, onClose }) => {
+const InfoModal: FC<InfoModalPropsWithType> = ({ type, shouldOpen, onClose }) => {
   const { t } = useTranslation();
   const locale = getI18n().resolvedLanguage as 'vi' | 'en';
 
@@ -257,13 +255,17 @@ const InfoModal: FC<InfoModalProps> = ({ type, shouldOpen, onClose }) => {
   );
 };
 
-const ReturnPolicyModal: FC<IProps> = ({ shouldOpen, onClose }) => <InfoModal type="returnPolicy" shouldOpen={shouldOpen} onClose={onClose} />;
-const TermsOfDeliveryModal: FC<IProps> = ({ shouldOpen, onClose }) => <InfoModal type="termsOfDelivery" shouldOpen={shouldOpen} onClose={onClose} />;
-const TermsOfUseModal: FC<IProps> = ({ shouldOpen, onClose }) => <InfoModal type="termsOfUse" shouldOpen={shouldOpen} onClose={onClose} />;
-const InformationSecurityModal: FC<IProps> = ({ shouldOpen, onClose }) => (
+const ReturnPolicyModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => (
+  <InfoModal type="returnPolicy" shouldOpen={shouldOpen} onClose={onClose} />
+);
+const TermsOfDeliveryModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => (
+  <InfoModal type="termsOfDelivery" shouldOpen={shouldOpen} onClose={onClose} />
+);
+const TermsOfUseModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => <InfoModal type="termsOfUse" shouldOpen={shouldOpen} onClose={onClose} />;
+const InformationSecurityModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => (
   <InfoModal type="informationSecurity" shouldOpen={shouldOpen} onClose={onClose} />
 );
-const ContactInfoModal: FC<IProps> = ({ shouldOpen, onClose }) => <InfoModal type="contactInfo" shouldOpen={shouldOpen} onClose={onClose} />;
+const ContactInfoModal: FC<InfoModalProps> = ({ shouldOpen, onClose }) => <InfoModal type="contactInfo" shouldOpen={shouldOpen} onClose={onClose} />;
 
 const FooterModals: FC = () => {
   const { t } = useTranslation();
