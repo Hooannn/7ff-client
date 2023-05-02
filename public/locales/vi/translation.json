@@ -376,5 +376,17 @@
   "number of guests": "Số lượng khách",
   "booking time": "Thời gian đặt",
   "mark as done": "Đánh dấu là đã hoàn thành",
-  "mark as undone": "Đánh dấu là đang xử lý"
+  "mark as undone": "Đánh dấu là đang xử lý",
+    "my table reservations": "Đơn đặt bàn của tôi",
+  "start reserving": "Bắt đầu đặt bàn",
+  "let's start a new": "Cùng tạo đơn đặt",
+  "table reservation!": "Bàn mới nào!",
+  "reservation time": "Thời gian đặt bàn",
+  "oldest reservations": "Đơn đặt bàn cũ nhất",
+  "latest reservations": "Đơn đặt bàn mới nhất",
+  "reservation status": "Trạng thái đơn đặt bàn",
+  "reservation ID": "Mã đơn đặt bàn",
+  "request making time": "Thời gian tạo đơn",
+  "you have no reservation with status": "Bạn không có đơn đặt bàn nào có trạng thái",
+  "close": "Đóng"
 }

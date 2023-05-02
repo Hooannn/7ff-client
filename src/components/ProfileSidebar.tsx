@@ -13,6 +13,7 @@ import '../assets/styles/components/ProfileSidebar.css';
 const TABS = [
   { label: 'account details', to: '/profile/edit' },
   { label: 'my orders', to: '/profile/orders' },
+  { label: 'my table reservations', to: '/profile/reservations' },
   { label: 'change avatar', to: '/profile/change-avatar' },
   { label: 'change password', to: '/profile/change-password' },
 ];
