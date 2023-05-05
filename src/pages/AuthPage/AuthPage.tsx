@@ -3,6 +3,7 @@ import { Navigate, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useGoogleLogin } from '@react-oauth/google';
 import { Form, Input, Button, Typography, Divider, Space, Tooltip, Avatar } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import useAuth from '../../services/auth';
@@ -202,7 +203,7 @@ const ResetInputs: FC<FormProps> = ({ isLoading }) => {
 const AuthPage: FC = () => {
   const [form] = Form.useForm();
   const [formType, setFormType] = useState<FormType>('signIn');
-  const { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation } = useAuth();
+  const { signInMutation, forgotPasswordMutation, googleAuthMutation, signUpMutation, resetPasswordMutation } = useAuth();
   const [query, setQuery] = useSearchParams();
   const isLogged = useSelector((state: RootState) => state.auth.isLogged);
 
@@ -248,6 +249,12 @@ const AuthPage: FC = () => {
     }
   }, [query]);
 
+  const handleGoogleAuth = useGoogleLogin({
+    onSuccess: async res => {
+      googleAuthMutation.mutate(res.access_token);
+    },
+  });
+
   let content = null;
   if (isLogged) {
     toast(t('you have already logged in'), toastConfig('error'));
@@ -277,11 +284,10 @@ const AuthPage: FC = () => {
               <Divider style={{ borderColor: '#101319', marginBottom: '8px' }}>
                 {formType === 'signIn' ? t('or sign in using') : t('or sign up using')}{' '}
               </Divider>
-              <div className="social-auth-options">
+              <Button shape="round" size="large" block onClick={() => handleGoogleAuth()} style={buttonStyle} className="google-auth-btn">
                 <img src="/google-brand.png" />
-                <img src="/github-brand.png" />
-                <img src="/facebook-brand.png" />
-              </div>
+                {formType === 'signIn' ? t('sign in with Google') : t('sign up with Google')}
+              </Button>
             </>
           )}
 
