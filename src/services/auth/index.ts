@@ -20,6 +20,7 @@ interface SignUpResponse {
   password: string;
 }
 export default () => {
+  const isDev = import.meta.env.VITE_NODE_ENV !== 'production';
   const { t } = useTranslation();
   const axios = useAxiosIns();
   const dispatch = useDispatch();
@@ -33,9 +34,18 @@ export default () => {
       const { accessToken, refreshToken, user } = res.data.data;
       cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
       cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
-      dispatch(setLogged(true));
-      dispatch(setUser(user));
       navigate(redirectPath as string);
+      if (isDev) {
+        console.log('set');
+        dispatch(setLogged(true));
+        dispatch(setUser(user));
+      } else {
+        setTimeout(() => {
+          console.log('set');
+          dispatch(setLogged(true));
+          dispatch(setUser(user));
+        }, 1000);
+      }
     },
   });
 
@@ -58,9 +68,11 @@ export default () => {
       const { accessToken, refreshToken, user } = res.data.data;
       cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
       cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
-      dispatch(setLogged(true));
-      dispatch(setUser(user));
       navigate(redirectPath as string);
+      setTimeout(() => {
+        dispatch(setLogged(true));
+        dispatch(setUser(user));
+      }, 1000);
     },
   });
 
