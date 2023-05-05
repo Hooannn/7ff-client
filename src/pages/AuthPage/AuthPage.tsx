@@ -205,7 +205,10 @@ const AuthPage: FC = () => {
   const [formType, setFormType] = useState<FormType>('signIn');
   const { signInMutation, forgotPasswordMutation, googleAuthMutation, signUpMutation, resetPasswordMutation } = useAuth();
   const [query, setQuery] = useSearchParams();
-  const isLogged = useSelector((state: RootState) => state.auth.isLogged);
+  const isLogged = useSelector(
+    (state: RootState) => state.auth.isLogged,
+    () => true,
+  );
 
   const { t } = useTranslation();
   const i18n = getI18n();
