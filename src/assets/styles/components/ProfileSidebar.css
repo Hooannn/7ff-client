@@ -36,6 +36,12 @@
   font-size: 1.75rem;
   font-weight: 700;
   text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .profile-sidebar .profile-tabs {

@@ -49,8 +49,23 @@ export default () => {
     },
   });
 
+  const googleAuthMutation = useMutation({
+    mutationFn: (googleAccessToken: string) => axios.post('/auth/google-auth', { googleAccessToken }),
+    onError: onError,
+    onSuccess: res => {
+      const redirectPath = cookies.get('redirect_path') || '/';
+      toast(t(res.data.message), toastConfig('success'));
+      const { accessToken, refreshToken, user } = res.data.data;
+      cookies.set('access_token', accessToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
+      cookies.set('refresh_token', refreshToken, { path: '/', expires: new Date(dayjs(Date.now()).add(30, 'day').toISOString()) });
+      dispatch(setLogged(true));
+      dispatch(setUser(user));
+      navigate(redirectPath as string);
+    },
+  });
+
   const forgotPasswordMutation = useMutation({
-    mutationFn: ({ email }: { email: string }) => axios.post('/auth/forgot-password', { email }),
+    mutationFn: ({ email }: { email: string }) => axios.post<IResponseData<SignInResponse>>('/auth/forgot-password', { email }),
     onError: onError,
     onSuccess: res => {
       toast(t(res.data.message), toastConfig('success'));
@@ -73,5 +88,5 @@ export default () => {
     },
   });
 
-  return { signInMutation, forgotPasswordMutation, signUpMutation, resetPasswordMutation, deactivateAccountMutation };
+  return { signInMutation, forgotPasswordMutation, signUpMutation, googleAuthMutation, resetPasswordMutation, deactivateAccountMutation };
 };

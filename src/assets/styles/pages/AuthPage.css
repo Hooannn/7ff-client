@@ -36,8 +36,7 @@
 }
 
 .auth-form .forgot-password {
-  color: #3a5873;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   display: inline-block;
   transition: all 0.2s linear;
@@ -47,17 +46,33 @@
   text-decoration: underline;
 }
 
-.social-auth-options {
-  margin-bottom: 8px;
+.google-auth-btn {
+  position: relative;
+  height: unset !important;
+  margin-block: 14px 8px !important;
+  border-color: #000 !important;
+  background: #000;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
+  color: #fff;
 }
 
-.social-auth-options > img {
+.google-auth-btn:hover {
+  color: #fff !important;
+}
+
+.google-auth-btn > img {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 24px;
   height: 24px;
+  padding: 9px;
+  background: #fff;
+  border-radius: 100px;
   object-fit: cover;
 }
