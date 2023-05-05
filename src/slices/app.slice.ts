@@ -7,10 +7,12 @@ export interface ICartItem {
 }
 export interface AppState {
   cartItems: ICartItem[];
+  orderNote: string;
 }
 
 const initialState: AppState = {
   cartItems: [],
+  orderNote: '',
 };
 
 export const fetchCartItems = createAsyncThunk('users/fetchCartItems', async (axios: Axios, { rejectWithValue }) => {
@@ -58,7 +60,11 @@ export const resetCartItems = createAsyncThunk('users/resetCartItems', async (ax
 export const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {},
+  reducers: {
+    setOrderNote: (state, { payload }: { payload: string }) => {
+      state.orderNote = payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
       state.cartItems = action.payload.data;
@@ -66,6 +72,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const {} = appSlice.actions;
+export const { setOrderNote } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -116,7 +116,6 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                     <QuantityInput
                       loading={removeCartItemMutation.isLoading || addCartItemMutation.isLoading}
-                      tag="cartDrawer"
                       initValue={item.quantity}
                       quantity={item.quantity}
                       onChange={newValue => {

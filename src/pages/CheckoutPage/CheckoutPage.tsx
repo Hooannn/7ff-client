@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal, Col, Row } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -16,6 +16,7 @@ import { RootState } from '../../@core/store';
 import { IDetailedItem, IVoucher } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
 import FooterModals from './InfoModals';
+import { setOrderNote } from '../../slices/app.slice';
 
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
@@ -27,8 +28,9 @@ const CheckoutPage: FC = () => {
   const { verifyVoucherMutation } = useVouchers({ enabledFetchVouchers: false });
   const { checkoutMutation } = useCheckout();
   useTitle(`${t('checkout')} - 7FF`);
-
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const orderNote = useSelector((state: RootState) => state.app.orderNote);
   const cartItems = useSelector((state: RootState) => state.app.cartItems);
 
   useEffect(() => {
@@ -67,9 +69,11 @@ const CheckoutPage: FC = () => {
           voucher: voucher?._id,
           customerId: user._id,
           items,
+          note: orderNote,
           isDelivery,
           ...values,
         });
+        dispatch(setOrderNote(''));
         navigate(`/sales/thanks/${data.data._id}`);
       },
       okButtonProps: {

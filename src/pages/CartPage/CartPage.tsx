@@ -12,6 +12,7 @@ import useCartItems from '../../services/cart';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/CartPage.css';
 import QuantityInput from '../../components/shared/QuantityInput';
+import { setOrderNote } from '../../slices/app.slice';
 
 const CartPage: FC = () => {
   const { t } = useTranslation();
@@ -19,6 +20,8 @@ const CartPage: FC = () => {
   const navigate = useNavigate();
   const { removeCartItemMutation, addCartItemMutation } = useCartItems({ enabledFetchCartItems: false });
 
+  const orderNote = useSelector((state: RootState) => state.app.orderNote);
+  const dispatch = useDispatch();
   useTitle(`${t('cart')} - 7FF`);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -103,7 +106,6 @@ const CartPage: FC = () => {
                                   <QuantityInput
                                     loading={removeCartItemMutation.isLoading || addCartItemMutation.isLoading}
                                     quantity={value}
-                                    tag="cartPage"
                                     initValue={value}
                                     onChange={newValue => {
                                       const quantity = newValue - value;
@@ -156,7 +158,13 @@ const CartPage: FC = () => {
                         <span>{`${totalPrice.toLocaleString('en-US')} VND`}</span>
                       </div>
                       <p style={{ margin: '8px 0 0', color: 'rgba(26, 26, 26, 0.7)' }}>{t('VAT included, shipping fee not covered')}.</p>
-                      <Input.TextArea placeholder={t('order notes...').toString()} autoSize={{ minRows: 4 }} className="order-notes" />
+                      <Input.TextArea
+                        value={orderNote}
+                        onChange={e => dispatch(setOrderNote(e.target.value))}
+                        placeholder={t('order notes...').toString()}
+                        autoSize={{ minRows: 4 }}
+                        className="order-notes"
+                      />
                       <Button type="primary" shape="round" block className="checkout-btn" onClick={() => navigate('/sales/checkout')}>
                         <LockOutlined />
                         {t('checkout')}
