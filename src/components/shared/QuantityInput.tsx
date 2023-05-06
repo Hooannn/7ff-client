@@ -7,7 +7,6 @@ interface QuantityInputProps {
   quantity: number;
   loading: boolean;
   initValue: number;
-  tag: string;
 }
 export default function QuantityInput(props: QuantityInputProps) {
   const [initQuantity, setQuantity] = useState<number>(props.quantity);
