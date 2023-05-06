@@ -20,15 +20,21 @@ export default function QuantityInput(props: QuantityInputProps) {
     props.onChange(debouncedQuantity as number);
   }, [debouncedQuantity]);
 
-  const onDecrease = () => setQuantity(prev => (prev - 1 < 0 ? 0 : prev - 1));
-  const onIncrease = () => setQuantity(prev => prev + 1);
+  const onDecrease = () => {
+    if (props.initValue === 0) return;
+    setQuantity(prev => (prev - 1 < 0 ? 0 : prev - 1));
+  };
+  const onIncrease = () => {
+    if (props.initValue === 0) return;
+    setQuantity(prev => prev + 1);
+  };
   return (
     <Space.Compact className="item-quantity">
-      <Button disabled={props.loading} type="text" onClick={onDecrease}>
+      <Button disabled={props.loading || props.initValue === 0} type="text" onClick={onDecrease}>
         -
       </Button>
       <span>{initQuantity}</span>
-      <Button disabled={props.loading} type="text" onClick={onIncrease}>
+      <Button disabled={props.loading || props.initValue === 0} type="text" onClick={onIncrease}>
         +
       </Button>
     </Space.Compact>

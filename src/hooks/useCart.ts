@@ -30,7 +30,11 @@ const useCart = () => {
           shippingFee: newTotalPrice >= MINIMUM_VALUE_FOR_FREE_SHIPPING ? 0 : DEFAULT_SHIPPING_FEE,
         };
       } else {
-        return acc;
+        return {
+          detailedItems: [...acc.detailedItems, { product: item.product, quantity: 0 }],
+          totalPrice: acc.totalPrice,
+          shippingFee: acc.shippingFee,
+        };
       }
     }, INITIAL_CART_VALUES);
   }, [cartItems]);

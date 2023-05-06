@@ -73,7 +73,10 @@ const ProfileSidebar: FC = () => {
   return (
     <div className="profile-sidebar">
       <img src="/logo.png" className="app-logo" onClick={() => navigate('/')} />
-      <h2 className="welcome-user">{`${t('welcome')}, ${user.lastName} ${user.firstName}`}</h2>
+      <h2 className="welcome-user">{t('welcome')} !</h2>
+      <h3 className="welcome-user">
+        {user.lastName} {user.firstName}
+      </h3>
       <span className="sign-out-btn" onClick={onSignOutBtnClick}>
         {t('sign out')}
       </span>

@@ -93,6 +93,9 @@ const CheckoutPage: FC = () => {
   if (cartItems.length <= 0) {
     toast(t('your cart is currently empty, you cannot access checkout page'), toastConfig('error'));
     content = <Navigate to="/cart" />;
+  } else if (detailedItems.every((item: IDetailedItem) => item.product.isAvailable === false)) {
+    toast(t('items in your cart are all currently unavailable, you cannot access checkout page'), toastConfig('info'));
+    content = <Navigate to="/cart" />;
   } else {
     content = (
       <ConfigProvider
@@ -192,20 +195,22 @@ const CheckoutPage: FC = () => {
               </div>
 
               <div className="cart-items">
-                {detailedItems.map((item: IDetailedItem) => (
-                  <div key={item.product._id} className="checkout-cart-item">
-                    <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
-                      <div className="item-image">
-                        <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : ''} />
+                {detailedItems
+                  .filter((item: IDetailedItem) => item.product.isAvailable)
+                  .map((item: IDetailedItem) => (
+                    <div key={item.product._id} className="checkout-cart-item">
+                      <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
+                        <div className="item-image">
+                          <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : ''} />
+                        </div>
+                      </Badge>
+                      <div className="item-name">
+                        <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.product.name[locale]}</h4>
+                        <span>{`${(item.product.price * 1).toLocaleString('en-US')} /1`}</span>
                       </div>
-                    </Badge>
-                    <div className="item-name">
-                      <h4 style={{ margin: '0 0 8px', fontWeight: 700 }}>{item.product.name[locale]}</h4>
-                      <span>{`${(item.product.price * 1).toLocaleString('en-US')} /1`}</span>
+                      <div className="item-price">{`₫${(item.product.price * item.quantity).toLocaleString('en-US')}`}</div>
                     </div>
-                    <div className="item-price">{`₫${(item.product.price * item.quantity).toLocaleString('en-US')}`}</div>
-                  </div>
-                ))}
+                  ))}
                 <Divider style={{ borderColor: 'rgba(26, 26, 26, 0.12)' }} />
                 <Form onFinish={onApplyVoucher} requiredMark={false} name="basic" autoComplete="off">
                   <Row gutter={12} align="middle">

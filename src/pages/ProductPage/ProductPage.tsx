@@ -102,7 +102,10 @@ const ProductPage: FC = () => {
                         productYearlyTotalSoldUnits && productYearlyTotalSoldUnits > 1 ? t('units are') : t('unit is')
                       } ${t('sold this year')}`}</span>
                     </div>
-                    <Rate disabled defaultValue={Math.ceil((product?.rating as any) / 0.5) * 0.5} allowHalf className="product-rating" />
+                    <Space size={10}>
+                      <Rate disabled defaultValue={Math.ceil((product?.rating as any) / 0.5) * 0.5} allowHalf className="product-rating" />
+                      <p style={{ margin: '9px 0 0', fontSize: '1.1rem', fontWeight: 500 }}>({product?.rating?.toFixed(1)})</p>
+                    </Space>
                     <p className="product-description">{product?.description[locale]}</p>
                     <div className="product-price">{`₫ ${product?.price.toLocaleString('en-US')}`}</div>
                     <div className="product-rating"></div>

@@ -2,17 +2,17 @@ import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
-import { Button, ConfigProvider, Input, Progress, Table, Image, Space, Tooltip, Avatar } from 'antd';
+import { Button, ConfigProvider, Input, Progress, Table, Image, Tooltip, Avatar } from 'antd';
 import { LockOutlined, DeleteOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
 import useCart from '../../hooks/useCart';
+import useCartItems from '../../services/cart';
+import QuantityInput from '../../components/shared/QuantityInput';
 import { IDetailedItem } from '../../types';
 import { RootState } from '../../@core/store';
-import useCartItems from '../../services/cart';
+import { setOrderNote } from '../../slices/app.slice';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/CartPage.css';
-import QuantityInput from '../../components/shared/QuantityInput';
-import { setOrderNote } from '../../slices/app.slice';
 
 const CartPage: FC = () => {
   const { t } = useTranslation();
@@ -73,7 +73,7 @@ const CartPage: FC = () => {
                             width: 150,
                             render: (value: IDetailedItem['product']) => {
                               return (
-                                <div className="item-image">
+                                <div className={`item-image ${value.isAvailable ? '' : 'unavailable'}`}>
                                   <Image src={value.featuredImages?.length ? value.featuredImages[0] : ''} />
                                 </div>
                               );
@@ -83,7 +83,12 @@ const CartPage: FC = () => {
                             title: t("product's name"),
                             dataIndex: 'product',
                             render: (value: IDetailedItem['product']) => {
-                              return <strong>{value.name[locale]}</strong>;
+                              return (
+                                <>
+                                  <strong>{value.name[locale]}</strong>
+                                  {!value.isAvailable && <p style={{ marginBlock: 2, fontSize: 13 }}>{t('this product is currently unavailable')}</p>}
+                                </>
+                              );
                             },
                           },
                           {
@@ -165,7 +170,15 @@ const CartPage: FC = () => {
                         autoSize={{ minRows: 4 }}
                         className="order-notes"
                       />
-                      <Button type="primary" shape="round" block className="checkout-btn" onClick={() => navigate('/sales/checkout')}>
+                      <Button
+                        type="primary"
+                        shape="round"
+                        block
+                        disabled={detailedItems.every((item: IDetailedItem) => item.product.isAvailable === false)}
+                        className="checkout-btn"
+                        onClick={() => navigate('/sales/checkout')}
+                      >
+                        {' '}
                         <LockOutlined />
                         {t('checkout')}
                       </Button>

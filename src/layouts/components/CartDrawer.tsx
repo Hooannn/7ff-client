@@ -105,12 +105,18 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
 
             <div className="cart-items">
               {detailedItems.map((item: IDetailedItem) => (
-                <div key={item.product._id} className="cart-item">
-                  <div className="item-image">{item.product.featuredImages?.length && <Image src={item.product.featuredImages[0]} />}</div>
+                <div key={item.product._id} className={`cart-item ${item.quantity === 0 ? 'unavailable' : ''}`}>
+                  {item.product.featuredImages?.length && (
+                    <div className="item-image">
+                      <Image src={item.product.featuredImages[0]} />
+                    </div>
+                  )}
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <h4 className="item-name">{item.product.name[locale]}</h4>
                     <p className="item-price">
-                      {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product.price * item.quantity)}
+                      {item.quantity
+                        ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product.price * item.quantity)
+                        : t('this product is currently unavailable')}
                     </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>

@@ -8,9 +8,15 @@ import '../assets/styles/components/BookingTable.css';
 import localeUS from 'antd/es/date-picker/locale/en_US';
 import localeVN from 'antd/es/date-picker/locale/vi_VN';
 
+const MAP_SOURCE = {
+  en: 'https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d9454.533353733323!2d106.57493901545695!3d10.876135776077003!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDUyJzI5LjgiTiAxMDbCsDM0JzI2LjQiRQ!5e0!3m2!1sen!2s!4v1683384373834!5m2!1sen!2s',
+  vi: 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3918.1663439049316!2d106.57142507346776!3d10.874949657371902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDUyJzI5LjgiTiAxMDbCsDM0JzI2LjQiRQ!5e0!3m2!1svi!2s!4v1681998690477!5m2!1svi!2s',
+};
+
 const BookingTable: FC = () => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
+  const locale = getI18n().resolvedLanguage as 'vi' | 'en';
   const language = getI18n().resolvedLanguage;
   const { bookReservationMutation } = useReservations({ enabledFetchReservations: false });
   const numberOfGuestOptions = (min: number, max: number) => {
@@ -40,7 +46,7 @@ const BookingTable: FC = () => {
           <Result
             style={{ width: '368px' }}
             status="success"
-            title={res.data.message}
+            title={t(res.data.message)}
             subTitle={t('thanks {{name}} booking {{time}}', {
               name: res.data?.data?.underName,
               time: dayjs(new Date(parseInt(res.data?.data?.bookingTime as string))).format('HH:mm DD-MM-YYYY'),
@@ -138,13 +144,13 @@ const BookingTable: FC = () => {
           <div className="map-container">
             <div style={{ height: '100%', background: '#FFBE33' }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3918.1663439049316!2d106.57142507346776!3d10.874949657371902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDUyJzI5LjgiTiAxMDbCsDM0JzI2LjQiRQ!5e0!3m2!1svi!2s!4v1681998690477!5m2!1svi!2s"
+                src={MAP_SOURCE[locale]}
                 width="100%"
                 height="100%"
                 style={{ border: '0' }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+              />
             </div>
           </div>
         </div>

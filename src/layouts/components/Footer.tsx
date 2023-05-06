@@ -19,8 +19,12 @@ const FOOTER_CONTENT = {
     vi: 'Nếu bạn muốn biết thông tin về các chương trình khuyến mãi và các món ăn sắp được bán trong thời gian tới, hãy theo dõi chúng mình nha!',
   },
   contact: {
-    email: 'sevenfastfood@gmail.com',
+    email: 'sevenfastfoodservice@gmail.com',
     phone: '(+84) 913.283.742',
+    addressUrl: 'https://goo.gl/maps/6RKi8R13P296uq2z7',
+    facebookUrl: 'https://www.facebook.com/bichdung.nguyen.311',
+    instagramUrl: 'https://www.instagram.com/ygohappy123',
+    youtubeUrl: 'https://www.youtube.com/channel/UCnptFzQJtuSQNMmE5ljel_Q',
   },
 };
 
@@ -40,7 +44,7 @@ const Footer: FC = () => {
             <span
               className="text address"
               style={{ width: 250 }}
-              onClick={() => window.open('https://goo.gl/maps/6RKi8R13P296uq2z7', '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open(FOOTER_CONTENT.contact.addressUrl, '_blank', 'noopener,noreferrer')}
             >
               {FOOTER_CONTENT.address[locale]}
             </span>
@@ -49,9 +53,21 @@ const Footer: FC = () => {
             <h4 className="heading">7FF - {year}</h4>
             <span className="text">{FOOTER_CONTENT.socialInvitation[locale]}</span>
             <div className="social-links">
-              <FacebookOutlined className="social-link" style={{ fontSize: '1.5rem' }} />
-              <InstagramOutlined className="social-link" style={{ fontSize: '1.5rem' }} />
-              <YoutubeOutlined className="social-link" style={{ fontSize: '1.5rem' }} />
+              <FacebookOutlined
+                className="social-link"
+                style={{ fontSize: '1.5rem' }}
+                onClick={() => window.open(FOOTER_CONTENT.contact.facebookUrl, '_blank', 'noopener,noreferrer')}
+              />
+              <InstagramOutlined
+                className="social-link"
+                style={{ fontSize: '1.5rem' }}
+                onClick={() => window.open(FOOTER_CONTENT.contact.instagramUrl, '_blank', 'noopener,noreferrer')}
+              />
+              <YoutubeOutlined
+                className="social-link"
+                style={{ fontSize: '1.5rem' }}
+                onClick={() => window.open(FOOTER_CONTENT.contact.youtubeUrl, '_blank', 'noopener,noreferrer')}
+              />
             </div>
           </div>
           <div className="footer-col contact-us">
