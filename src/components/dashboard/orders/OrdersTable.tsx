@@ -108,13 +108,13 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         <Space direction="vertical" size="middle">
           {items.map((item, idx) => (
             <Row key={idx + 'order::product::row'} gutter={8} align="middle">
-              <Col>{item.product.featuredImages?.length && <Image width={50} src={item.product.featuredImages[0]} />}</Col>
+              <Col>{item.product?.featuredImages?.length && <Image width={50} src={item.product?.featuredImages[0]} />}</Col>
               <Col>
                 <div>
-                  {t('name')}: {item.product.name[locale]}
+                  {t('name')}: {item.product?.name[locale]}
                 </div>
                 <div>
-                  {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product.price)}
+                  {t('unit price')}: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product?.price ?? 0)}
                 </div>
                 <div>
                   {t('quantity')}: {item.quantity}
@@ -182,7 +182,20 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       title: t('is delivery'),
       dataIndex: 'isDelivery',
       key: 'isDelivery',
-      render: value => <span>{value ? t('yes') : t('no')}</span>,
+      render: (value, record) => {
+        return value ? (
+          <>
+            <p style={{ margin: 0 }}>
+              {t('phone number')}: {record.deliveryPhone}
+            </p>
+            <p style={{ margin: 0 }}>
+              {t('address')}: {record.deliveryAddress}
+            </p>
+          </>
+        ) : (
+          <span>{t('no')}</span>
+        );
+      },
     },
     {
       title: t('status'),
@@ -198,7 +211,6 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         </span>
       ),
     },
-
     {
       title: t('action'),
       key: 'action',

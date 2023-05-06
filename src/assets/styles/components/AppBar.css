@@ -236,7 +236,13 @@
 }
 
 .cart-item .item-image {
-  width: 96px;
+  width: 80px;
+  border-radius: 4px;
+  overflow: clip;
+}
+
+.cart-item.unavailable .item-image {
+  filter: grayscale(0.6);
 }
 
 .cart-item .item-image .ant-image .ant-image-mask {

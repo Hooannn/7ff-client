@@ -61,6 +61,10 @@
   align-items: center;
 }
 
+.cart-items .item-image.unavailable {
+  filter: grayscale(0.6);
+}
+
 .cart-page .cart-items .item-image .ant-image .ant-image-mask {
   color: transparent;
   background-color: transparent;
@@ -119,7 +123,7 @@
   gap: 4px;
 }
 
-.order-summary .checkout-btn:hover {
+.order-summary .checkout-btn:not([disabled]):hover {
   background-color: #3c3c3c;
 }
 

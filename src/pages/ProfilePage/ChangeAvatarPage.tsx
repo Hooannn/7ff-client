@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Avatar, Button, Space, Upload } from 'antd';
-import { DeleteOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import useTitle from '../../hooks/useTitle';
 import useFiles from '../../services/files';
 import useUsers from '../../services/users';
@@ -56,6 +56,7 @@ const ChangeAvatarPage: FC = () => {
               showUploadList={false}
               customRequest={handleUpload}
             >
+              <Button type="primary" shape="circle" size="large" icon={<EditOutlined />} className="upload-icon" />
               {avatar && !uploadMutation.isLoading ? (
                 <Avatar src={avatar} size={100} />
               ) : (

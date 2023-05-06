@@ -1,14 +1,14 @@
 import dayjs from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { Button, Empty, Select, Skeleton, Table } from 'antd';
+import { Button, Divider, Empty, Modal, Row, Select, Skeleton, Image, Table } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import type { OrderStatus } from '../../types';
+import type { IContent, OrderStatus } from '../../types';
 import { IOrder, IResponseData } from '../../types';
 import { RootState } from '../../@core/store';
 import { containerStyle } from '../../assets/styles/globalStyle';
@@ -25,7 +25,7 @@ const MyOrdersPage: FC = () => {
     queryFn: () => axios.get<IResponseData<IOrder[]>>(`/my-orders/${user._id}?sort=${sortOption}`),
     enabled: true,
     refetchIntervalInBackground: true,
-    refetchInterval: 10000,
+    refetchInterval: 5 * 60 * 1000,
     select: res => res.data,
   });
   const orders = fetchOrdersQuery.data?.data ?? [];
@@ -35,6 +35,9 @@ const MyOrdersPage: FC = () => {
   }, []);
   const ORDER_STATUSES = ['Processing', 'Delivering', 'Done', 'Cancelled'];
   const MATCHING_ITEMS = orders.filter((order: IOrder) => order.status === activeStatus || activeStatus === '');
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [activeOrderId, setActiveOrderId] = useState<string>('');
 
   return (
     <div className="profile-page">
@@ -144,8 +147,16 @@ const MyOrdersPage: FC = () => {
                       },
                       {
                         title: t('details'),
-                        render: () => (
-                          <Button type="primary" shape="round" style={{ fontWeight: 500 }}>
+                        render: (_, record) => (
+                          <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => {
+                              setActiveOrderId(record._id);
+                              setOpenModal(true);
+                            }}
+                            style={{ fontWeight: 500 }}
+                          >
                             {t('view')}
                           </Button>
                         ),
@@ -157,9 +168,129 @@ const MyOrdersPage: FC = () => {
               </div>
             )}
           </div>
+
+          {openModal && (
+            <OrderDetailModal
+              orderId={activeOrderId}
+              onClose={() => {
+                setOpenModal(false);
+              }}
+            />
+          )}
         </div>
       </section>
     </div>
+  );
+};
+
+interface IModalProps {
+  orderId: string;
+  onClose: () => void;
+}
+
+const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
+  const axios = useAxiosIns();
+  const { t } = useTranslation();
+  const locale = getI18n().resolvedLanguage as 'en' | 'vi';
+
+  const getOrderDetailQuery = useQuery(['order-details'], {
+    queryFn: () => axios.get(`/orders/${orderId}`),
+    refetchOnWindowFocus: false,
+    select: res => res.data,
+  });
+  const orderDetails = getOrderDetailQuery.data?.data;
+
+  return (
+    <Modal
+      title={t('order details')}
+      open
+      onCancel={onClose}
+      width={650}
+      footer={[
+        <Button key="close" type="primary" onClick={onClose} style={{ fontWeight: 500 }} className="order-details-rating-btn">
+          {t('review')}
+        </Button>,
+        <Button key="close" type="primary" onClick={onClose} disabled={!orderDetails} style={{ fontWeight: 500 }}>
+          {t('close')}
+        </Button>,
+      ]}
+    >
+      {getOrderDetailQuery.isLoading ? (
+        <Skeleton />
+      ) : orderDetails ? (
+        <div className="order-details">
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <Table
+            dataSource={orderDetails.items}
+            pagination={false}
+            rowKey={record => record.product._id}
+            columns={[
+              {
+                title: t("product's name"),
+                dataIndex: 'product',
+                width: 240,
+                render: value => <span>{value.name[locale]}</span>,
+              },
+              {
+                title: t('quantity'),
+                dataIndex: 'quantity',
+                align: 'center',
+                render: value => <span>{`0${value}`.slice(-2)}</span>,
+              },
+              {
+                title: t('current price'),
+                dataIndex: 'product',
+                align: 'center',
+                render: value => <span>{value.price}</span>,
+              },
+              {
+                title: `${t('availability')}?`,
+                dataIndex: 'product',
+                align: 'center',
+                render: value => <span>{value.isAvailable ? t('yes') : t('no')}</span>,
+              },
+            ]}
+          />
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('order date')}:</span>
+            <span>{dayjs(orderDetails.createdAt).format('DD/MM/YYYY HH:mm')}</span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('last time status updated')}:</span>
+            <span>{dayjs(orderDetails.updatedAt).format('DD/MM/YYYY HH:mm')}</span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('total price (shipping included)')}:</span>
+            <span className="bold-text">
+              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(orderDetails.totalPrice)}
+            </span>
+          </Row>
+          {orderDetails.isDelivery && (
+            <>
+              <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+              <Row justify="space-between" align="middle">
+                <span className="bold-text">{t('delivery phone number')}:</span>
+                <span>{orderDetails.deliveryPhone}</span>
+              </Row>
+              <Row justify="space-between" align="middle">
+                <span className="bold-text">{t('delivery address')}:</span>
+                <span>{orderDetails.deliveryAddress}</span>
+              </Row>
+            </>
+          )}
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+        </div>
+      ) : (
+        <div>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <p style={{ marginBlock: 50, color: 'rgba(0, 0, 0, 0.25)', textAlign: 'center', fontWeight: 500, fontStyle: 'italic' }}>
+            {t('cannot find information for the order with ID')}: {orderId}
+          </p>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+        </div>
+      )}
+    </Modal>
   );
 };
 

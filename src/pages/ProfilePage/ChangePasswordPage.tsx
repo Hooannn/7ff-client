@@ -19,6 +19,7 @@ const ChangePasswordPage: FC = () => {
 
   const onFinish = (values: any) => {
     updatePasswordMutation.mutate({ currentPassword: values.currentPassword, newPassword: values.newPassword });
+    console.log(updatePasswordMutation.isSuccess, updatePasswordMutation.isError);
     form.resetFields();
   };
 
@@ -43,7 +44,7 @@ const ChangePasswordPage: FC = () => {
               <Form.Item
                 name="confirmPassword"
                 rules={[
-                  { required: true, message: t('please enter your password').toString() },
+                  { required: true, message: t('please enter your new password').toString() },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue('newPassword') === value) {

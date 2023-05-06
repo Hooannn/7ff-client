@@ -11,6 +11,7 @@ export default ({ enabledFetchCartItems }: { enabledFetchCartItems: boolean }) =
     queryFn: () => dispatch(fetchCartItems(axios) as any),
     enabled: enabledFetchCartItems,
     refetchOnWindowFocus: false,
+    refetchInterval: 10000,
   });
 
   const addCartItemMutation = useMutation({

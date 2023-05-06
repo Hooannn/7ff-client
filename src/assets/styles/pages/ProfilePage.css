@@ -49,9 +49,17 @@
 }
 
 .update-avatar-wrapper .ant-upload-select {
+  position: relative;
   width: 202px !important;
   height: 202px !important;
   margin: 0 !important;
+}
+
+.update-avatar-wrapper .avatar-uploader .upload-icon {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 20;
 }
 
 .update-avatar-wrapper .ant-avatar-image {
@@ -168,4 +176,28 @@
 
 .my-orders .order-list .table-order-status.Cancelled {
   color: #dc3545;
+}
+
+.order-details {
+  display: flex;
+  font-size: 1rem;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-details .bold-text {
+  font-weight: 500;
+}
+
+.order-details .order-detail-item {
+  display: flex;
+  gap: 20px;
+}
+
+.order-details-rating-btn {
+  background-color: #1a1a1a;
+}
+
+.order-details-rating-btn:hover {
+  background-color: #3c3c3c !important;
 }

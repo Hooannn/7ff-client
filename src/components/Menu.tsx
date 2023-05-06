@@ -39,7 +39,7 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
     select: res => res.data,
   });
   const navigate = useNavigate();
-  const categories = fetchCategoriesQuery.data?.data;
+  const categories = fetchCategoriesQuery.data?.data ?? [];
   const products = fetchProductsQuery.data?.data;
   const [categoryQuery, setCategoryQuery] = useSearchParams();
 
@@ -68,7 +68,7 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
         <h2 className="heading">{t('our menu')}</h2>
         <ul className="filters-menu">
           {fetchCategoriesQuery.isLoading && <Skeleton.Button active size="large" shape="round" block />}
-          {!fetchCategoriesQuery.isLoading && categories?.length && (
+          {!fetchCategoriesQuery.isLoading && categories.length > 0 && (
             <li
               className={`filters-item ${!categoryQuery.get('category') || categoryQuery.get('category') === 'all' ? 'active' : ''}`}
               onClick={() => {
