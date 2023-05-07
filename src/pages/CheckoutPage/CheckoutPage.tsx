@@ -121,7 +121,6 @@ const CheckoutPage: FC = () => {
                 <div className="shipping-form">
                   <Form
                     layout="vertical"
-                    validateTrigger="onSubmit"
                     onFinish={onFinish}
                     ref={formRef}
                     style={{

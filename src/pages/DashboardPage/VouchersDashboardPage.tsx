@@ -5,12 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
 import AddVoucherModal from '../../components/dashboard/vouchers/AddVoucherModal';
 import VouchersTable from '../../components/dashboard/vouchers/VouchersTable';
-import { IVoucher } from '../../types';
+import { IResponseData, IVoucher } from '../../types';
 import useVouchers from '../../services/vouchers';
 import { exportToCSV } from '../../utils/export-csv';
 import UpdateVoucherModal from '../../components/dashboard/vouchers/UpdateVoucherModal';
 import SortAndFilter from '../../components/dashboard/vouchers/SortAndFilter';
 import useTitle from '../../hooks/useTitle';
+import dayjs from 'dayjs';
+import { useMutation } from 'react-query';
+import useAxiosIns from '../../hooks/useAxiosIns';
 export default function UsersDashboardPage() {
   const {
     fetchVouchersQuery,
@@ -32,6 +35,7 @@ export default function UsersDashboardPage() {
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState<IVoucher | null>(null);
   const { t } = useTranslation();
+  const axios = useAxiosIns();
   useTitle(`${t('vouchers')} - 7FF`);
 
   const onAddVoucher = (values: IVoucher) => {
@@ -44,7 +48,23 @@ export default function UsersDashboardPage() {
     deleteVoucherMutation.mutate(voucherId);
   };
 
-  const onExportToCSV = () => exportToCSV(vouchers, `7FF_Vouchers_${Date.now()}`);
+  const fetchAllVouchersMutation = useMutation({
+    mutationFn: () => axios.get<IResponseData<IVoucher[]>>(`/vouchers`),
+  });
+
+  const onExportToCSV = async () => {
+    const { data } = await fetchAllVouchersMutation.mutateAsync();
+    const vouchers = data?.data.map(rawVoucher => ({
+      [t('id').toString()]: rawVoucher._id,
+      [t('created at')]: dayjs(rawVoucher.createdAt).format('DD/MM/YYYY'),
+      [t('code')]: rawVoucher.code,
+      [t('discount type')]: t(rawVoucher.discountType),
+      [t('discount amount')]: rawVoucher.discountAmount,
+      [t('total usage limit')]: rawVoucher.totalUsageLimit,
+      [t('expired date')]: dayjs(rawVoucher.expiredDate).format('DD/MM/YYYY'),
+    }));
+    exportToCSV(vouchers, `7FF_Vouchers_${Date.now()}`);
+  };
 
   return (
     <Row>
@@ -84,6 +104,7 @@ export default function UsersDashboardPage() {
                   type="text"
                   shape="round"
                   style={buttonStyle}
+                  loading={fetchAllVouchersMutation.isLoading}
                   onClick={() => onExportToCSV()}
                 >
                   <strong>{t('export csv')}</strong>

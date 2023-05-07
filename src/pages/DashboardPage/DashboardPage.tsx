@@ -73,18 +73,6 @@ const DashboardPage: FC = () => {
                   ))}
                 </Row>
               </Col>
-              <Col span={5}>
-                <Button
-                  block
-                  icon={<DownloadOutlined style={{ marginRight: '4px' }} />}
-                  type="text"
-                  shape="round"
-                  style={buttonStyle}
-                  onClick={() => onExportToCSV()}
-                >
-                  <strong>{t('create report')}</strong>
-                </Button>
-              </Col>
             </Row>
           </Col>
         </Row>
@@ -104,7 +92,7 @@ const DashboardPage: FC = () => {
         </Row>
       </Col>
 
-      <Col span={24} style={{ padding: '24px 0' }}>
+      <Col span={24} style={{ padding: '12px 0' }}>
         <Row gutter={12}>
           <Col lg={24} xl={8}>
             <PopularProducts

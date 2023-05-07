@@ -40,6 +40,7 @@ export interface IProduct {
   monthlyViewCount?: IViewCount;
   yearlyViewCount?: IViewCount;
   featuredImages?: string[];
+  createdAt?: string;
 }
 
 export interface IDetailedItem {
@@ -52,5 +53,7 @@ export interface IVoucher {
   code: string;
   discountType: 'percent' | 'amount';
   discountAmount: number;
+  totalUsageLimit: number;
   expiredDate?: string;
+  createdAt?: string;
 }

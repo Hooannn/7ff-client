@@ -72,7 +72,7 @@ const BookingTable: FC = () => {
         <h2 className="heading">{t('booking a table')}</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 30 }}>
           <div className="booking-form-container">
-            <Form form={form} layout="vertical" validateTrigger="onSubmit" onFinish={onFinish}>
+            <Form form={form} layout="vertical" onFinish={onFinish}>
               <Form.Item
                 name="name"
                 rules={[

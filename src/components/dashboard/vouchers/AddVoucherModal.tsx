@@ -58,7 +58,7 @@ export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmi
 
   return (
     <>
-      <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+      <Form layout="vertical" onFinish={onFinish} form={form}>
         <Form.Item
           name="code"
           rules={[

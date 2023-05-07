@@ -86,7 +86,7 @@ export const UpdateCategoryForm = ({
 
   return (
     <>
-      <Form requiredMark={false} layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+      <Form requiredMark={false} layout="vertical" onFinish={onFinish} form={form}>
         <Form.Item
           label={t('name vi')}
           name="name.vi"

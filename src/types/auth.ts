@@ -16,6 +16,7 @@ export interface IUser {
     quantity: number;
   }[];
   role: IRole;
+  createdAt?: string;
 }
 
 type IRole = 'User' | 'Admin' | 'SuperAdmin';

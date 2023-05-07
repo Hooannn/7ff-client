@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
-import { ICategory } from '../../types';
+import { ICategory, IResponseData } from '../../types';
 import useCategories from '../../services/categories';
 import { exportToCSV } from '../../utils/export-csv';
 import SortAndFilter from '../../components/dashboard/categories/SortAndFilter';
@@ -11,6 +11,9 @@ import useTitle from '../../hooks/useTitle';
 import CategoriesTable from '../../components/dashboard/categories/CategoriesTable';
 import UpdateCategoryModal from '../../components/dashboard/categories/UpdateCategoryModal';
 import AddCategoryModal from '../../components/dashboard/categories/AddCategoryModal';
+import { useMutation } from 'react-query';
+import useAxiosIns from '../../hooks/useAxiosIns';
+import dayjs from '../../libs/dayjs';
 export default function UsersDashboardPage() {
   const {
     fetchCategoriesQuery,
@@ -28,6 +31,7 @@ export default function UsersDashboardPage() {
     itemPerPage,
     setItemPerPage,
   } = useCategories({ enabledFetchCategories: true });
+  const axios = useAxiosIns();
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
@@ -46,7 +50,22 @@ export default function UsersDashboardPage() {
     deleteCategoryMutation.mutate(categoryId);
   };
 
-  const onExportToCSV = () => exportToCSV(categories, `7FF_Categories_${Date.now()}`);
+  const fetchAllCategoriesMutation = useMutation({
+    mutationFn: () => axios.get<IResponseData<ICategory[]>>(`/categories`),
+  });
+
+  const onExportToCSV = async () => {
+    const { data } = await fetchAllCategoriesMutation.mutateAsync();
+    const categories = data?.data.map(rawCategory => ({
+      [t('id').toString()]: rawCategory._id,
+      [t('created at')]: dayjs(rawCategory.createdAt).format('DD/MM/YYYY'),
+      [t('name') + ' VI']: rawCategory.name?.vi,
+      [t('name') + ' EN']: rawCategory.name?.en,
+      [t('description') + ' VI']: rawCategory.name?.vi,
+      [t('description') + ' EN']: rawCategory.name?.en,
+    }));
+    exportToCSV(categories, `7FF_Categories_${Date.now()}`);
+  };
 
   return (
     <Row>
@@ -85,6 +104,7 @@ export default function UsersDashboardPage() {
                   icon={<DownloadOutlined style={{ marginRight: '4px' }} />}
                   type="text"
                   shape="round"
+                  loading={fetchAllCategoriesMutation.isLoading}
                   style={buttonStyle}
                   onClick={() => onExportToCSV()}
                 >

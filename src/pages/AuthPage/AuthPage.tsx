@@ -34,7 +34,13 @@ const SignInInputs: FC<FormProps> = ({ setFormType, isLoading }) => {
       >
         <Input size="large" prefix={<MailOutlined className="site-form-item-icon" />} spellCheck={false} placeholder="Email..." style={inputStyle} />
       </Form.Item>
-      <Form.Item name="password" rules={[{ required: true, message: t('please enter your password').toString() }]}>
+      <Form.Item
+        name="password"
+        rules={[
+          { required: true, message: t('please enter your password').toString() },
+          { max: 25, min: 6, message: t('your password must be between 6 and 25 in length').toString() },
+        ]}
+      >
         <Input.Password
           size="large"
           prefix={<LockOutlined className="site-form-item-icon" />}
@@ -90,7 +96,13 @@ const SignUpInputs: FC<FormProps> = ({ isLoading }) => {
         <Input size="large" prefix={<MailOutlined className="site-form-item-icon" />} spellCheck={false} placeholder="Email..." style={inputStyle} />
       </Form.Item>
       <Space size="small">
-        <Form.Item name="password" rules={[{ required: true, message: t('please enter your password').toString() }]}>
+        <Form.Item
+          name="password"
+          rules={[
+            { required: true, message: t('please enter your password').toString() },
+            { max: 25, min: 6, message: t('your password must be between 6 and 25 in length').toString() },
+          ]}
+        >
           <Input.Password
             size="large"
             prefix={<LockOutlined className="site-form-item-icon" />}
@@ -162,7 +174,13 @@ const ResetInputs: FC<FormProps> = ({ isLoading }) => {
       <Typography.Title level={3} className="text-center" style={{ marginBottom: '24px' }}>
         {t('reset password')}
       </Typography.Title>
-      <Form.Item name="password" rules={[{ required: true, message: t('please enter your password').toString() }]}>
+      <Form.Item
+        name="password"
+        rules={[
+          { required: true, message: t('please enter your password').toString() },
+          { max: 25, min: 6, message: t('your password must be between 6 and 25 in length').toString() },
+        ]}
+      >
         <Input.Password
           size="large"
           prefix={<LockOutlined className="site-form-item-icon" />}
@@ -276,7 +294,7 @@ const AuthPage: FC = () => {
           </Tooltip>
         </div>
 
-        <Form layout="vertical" className="auth-form" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+        <Form layout="vertical" className="auth-form" onFinish={onFinish} form={form} autoComplete="off">
           {formType === 'signIn' && <SignInInputs setFormType={setFormType} isLoading={signInMutation.isLoading} />}
           {formType === 'signUp' && <SignUpInputs isLoading={signUpMutation.isLoading} />}
           {formType === 'forgot' && <ForgotInputs isLoading={forgotPasswordMutation.isLoading} />}

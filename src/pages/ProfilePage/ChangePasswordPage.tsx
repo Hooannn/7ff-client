@@ -30,7 +30,7 @@ const ChangePasswordPage: FC = () => {
           <ProfileSidebar />
 
           <div className="update-account-form">
-            <Form form={form} layout="vertical" validateTrigger="onSubmit" onFinish={onFinish}>
+            <Form form={form} layout="vertical" onFinish={onFinish}>
               <h3 className="form-heading">{t('change password')}</h3>
 
               <Form.Item name="currentPassword" rules={[{ required: true, message: t('please enter your current password').toString() }]}>

@@ -13,6 +13,7 @@ export interface IReservation {
     [key: string]: number | string;
   };
   status?: ReservationStatus;
+  createdAt?: string;
 }
 
 export type ReservationStatus = 'Processing' | 'Done';

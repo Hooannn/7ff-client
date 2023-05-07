@@ -11,10 +11,11 @@ import useTitle from '../../hooks/useTitle';
 import ProductsTable from '../../components/dashboard/products/ProductsTable';
 import UpdateProductModal from '../../components/dashboard/products/UpdateProductModal';
 import AddProductModal from '../../components/dashboard/products/AddProductModal';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import useDebounce from '../../hooks/useDebounce';
 import '../../assets/styles/pages/ProductsDashboardPage.css';
+import dayjs from 'dayjs';
 
 export default function ProductsDashboardPage() {
   const {
@@ -65,7 +66,25 @@ export default function ProductsDashboardPage() {
     deleteProductMutation.mutate(productId);
   };
 
-  const onExportToCSV = () => exportToCSV(products, `7FF_Products_${Date.now()}`);
+  const fetchAllProductsMutation = useMutation({
+    mutationFn: () => axios.get<IResponseData<IProduct[]>>(`/products`),
+  });
+
+  const onExportToCSV = async () => {
+    const { data } = await fetchAllProductsMutation.mutateAsync();
+    const products = data?.data.map(rawProduct => ({
+      [t('id').toString()]: rawProduct._id,
+      [t('created at')]: dayjs(rawProduct.createdAt).format('DD/MM/YYYY'),
+      [t('unit price')]: rawProduct.price,
+      [t('name') + ' VI']: rawProduct.name.vi,
+      [t('name') + ' EN']: rawProduct.name.vi,
+      [t('description') + ' VI']: rawProduct.description.vi,
+      [t('description') + ' EN']: rawProduct.description.en,
+      [t('category')]: (rawProduct.category as any).name[locale],
+      [t('is available')]: rawProduct.isAvailable,
+    }));
+    exportToCSV(products, `7FF_Products_${Date.now()}`);
+  };
 
   useEffect(() => {
     if (!debouncedSearchCategory || !(debouncedSearchCategory as string).trim()) {
@@ -131,6 +150,7 @@ export default function ProductsDashboardPage() {
                   type="text"
                   shape="round"
                   style={buttonStyle}
+                  loading={fetchAllProductsMutation.isLoading}
                   onClick={() => onExportToCSV()}
                 >
                   <strong>{t('export csv')}</strong>

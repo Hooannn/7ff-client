@@ -407,5 +407,10 @@
   "reservation ID": "Mã đơn đặt bàn",
   "request making time": "Thời gian tạo đơn",
   "you have no reservation with status": "Bạn không có đơn đặt bàn nào có trạng thái",
-  "close": "Đóng"
+  "close": "Đóng",
+  "your password must be between 6 and 25 in length": "Mật khẩu của bạn phải có độ dài trong khoảng 6 đến 25 ký tự",
+  "you must be logged in to do this operation": "Bạn phải đăng nhập để thực hiện thao tác này",
+  "daily data": "Dữ liệu theo ngày",
+  "weekly data": "Dữ liệu theo tuần",
+  "yearly data": "Dữ liệu theo năm"
 }

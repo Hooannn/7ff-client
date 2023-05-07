@@ -407,5 +407,10 @@
   "reservation ID": "Reservation ID",
   "request making time": "Request making time",
   "you have no reservation with status": "You have no reservation with status",
-  "close": "Close"
+  "close": "Close",
+  "your password must be between 6 and 25 in length": "Your password must be between 6 and 25 in length",
+  "you must be logged in to do this operation": "You must be logged in to do this operation",
+  "daily data": "Daily data",
+  "weekly data": "Weekly data",
+  "yearly data": "Yearly data"
 }
