@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { Button, Empty, Select, Skeleton, Table } from 'antd';
+import { Button, Divider, Empty, Modal, Row, Select, Skeleton, Table } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import ProfileSidebar from '../../components/ProfileSidebar';
@@ -34,6 +34,9 @@ const MyReservationsPage: FC = () => {
   }, []);
   const RESERVATION_STATUSES = ['Processing', 'Done'];
   const MATCHING_ITEMS = reservations.filter((reservation: IReservation) => reservation.status === activeStatus || activeStatus === '');
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [activeReservationId, setActiveReservationId] = useState<string>('');
 
   return (
     <div className="profile-page">
@@ -128,7 +131,7 @@ const MyReservationsPage: FC = () => {
                         dataIndex: 'attrs',
                         align: 'center',
                         width: 90,
-                        render: value => <span>{value?.guests}</span>,
+                        render: value => <span>{`0${value?.guests}`.slice(-2)}</span>,
                       },
                       {
                         title: t('status'),
@@ -139,8 +142,16 @@ const MyReservationsPage: FC = () => {
                       },
                       {
                         title: t('details'),
-                        render: () => (
-                          <Button type="primary" shape="round" style={{ fontWeight: 500 }}>
+                        render: (_, record: IReservation) => (
+                          <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => {
+                              setActiveReservationId(record?._id ? record._id : '');
+                              setOpenModal(true);
+                            }}
+                            style={{ fontWeight: 500 }}
+                          >
                             {t('view')}
                           </Button>
                         ),
@@ -152,9 +163,103 @@ const MyReservationsPage: FC = () => {
               </div>
             )}
           </div>
+
+          {openModal && (
+            <OrderDetailModal
+              reservationId={activeReservationId}
+              onClose={() => {
+                setOpenModal(false);
+              }}
+            />
+          )}
         </div>
       </section>
     </div>
+  );
+};
+
+interface IModalProps {
+  reservationId: string;
+  onClose: () => void;
+}
+
+const OrderDetailModal: FC<IModalProps> = ({ reservationId, onClose }) => {
+  const axios = useAxiosIns();
+  const { t } = useTranslation();
+
+  const getReservationDetailQuery = useQuery(['reservation-details'], {
+    queryFn: () => axios.get(`/reservation/${reservationId}`),
+    refetchOnWindowFocus: false,
+    select: res => res.data,
+  });
+  const reservationDetails = getReservationDetailQuery.data?.data;
+
+  return (
+    <Modal
+      title={t('reservation details')}
+      open
+      onCancel={onClose}
+      width={650}
+      centered
+      footer={[
+        <Button key="close" type="primary" onClick={onClose} disabled={!reservationDetails} style={{ fontWeight: 500 }}>
+          {t('close')}
+        </Button>,
+      ]}
+    >
+      {getReservationDetailQuery.isLoading ? (
+        <Skeleton />
+      ) : reservationDetails ? (
+        <div className="order-details">
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t("customer's name")}:</span>
+            <span>{reservationDetails.underName}</span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('phone number')}:</span>
+            <span>{reservationDetails.contacts.phone}</span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">Email:</span>
+            <span>{reservationDetails.contacts.email}</span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('reservation ID')}:</span>
+            <span>{reservationDetails._id}</span>
+          </Row>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('reservation created date')}:</span>
+            <span>{dayjs(reservationDetails.createdAt).format('DD/MM/YYYY HH:mm')}</span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('last time status updated')}:</span>
+            <span>{dayjs(reservationDetails.updatedAt).format('DD/MM/YYYY HH:mm')}</span>
+          </Row>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('number of guests')}:</span>
+            <span className="bold-text" style={{ textTransform: 'lowercase' }}>
+              {`0${reservationDetails.attrs.guests}`.slice(-2)} {reservationDetails.attrs.guests > 1 ? t('guests') : t('guest')}
+            </span>
+          </Row>
+          <Row justify="space-between" align="middle">
+            <span className="bold-text">{t('booking time')}:</span>
+            <span className="bold-text">{dayjs(reservationDetails.bookingTime).format('DD/MM/YYYY HH:mm')}</span>
+          </Row>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+        </div>
+      ) : (
+        <div>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <p style={{ marginBlock: 50, color: 'rgba(0, 0, 0, 0.25)', textAlign: 'center', fontWeight: 500, fontStyle: 'italic' }}>
+            {t('cannot find information for the reservation with ID')}: {reservationId}
+          </p>
+          <Divider style={{ margin: '12px 0', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+        </div>
+      )}
+    </Modal>
   );
 };
 

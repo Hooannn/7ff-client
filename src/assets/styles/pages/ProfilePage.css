@@ -198,6 +198,6 @@
   background-color: #1a1a1a;
 }
 
-.order-details-rating-btn:hover {
+.order-details-rating-btn:not([disabled]):hover {
   background-color: #3c3c3c !important;
 }

@@ -18,9 +18,7 @@ const ChangePasswordPage: FC = () => {
   }, []);
 
   const onFinish = (values: any) => {
-    updatePasswordMutation.mutate({ currentPassword: values.currentPassword, newPassword: values.newPassword });
-    console.log(updatePasswordMutation.isSuccess, updatePasswordMutation.isError);
-    form.resetFields();
+    updatePasswordMutation.mutateAsync({ currentPassword: values.currentPassword, newPassword: values.newPassword }).then(res => form.resetFields());
   };
 
   return (

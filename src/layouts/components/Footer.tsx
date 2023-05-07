@@ -72,7 +72,7 @@ const Footer: FC = () => {
           </div>
           <div className="footer-col contact-us">
             <h4 className="heading">{t('contact us')}</h4>
-            <div className="contact-box">
+            <div className="contact-box" onClick={() => window.open(FOOTER_CONTENT.contact.facebookUrl, '_blank', 'noopener,noreferrer')}>
               {t('recruitment')}
               <UsergroupAddOutlined />
             </div>
