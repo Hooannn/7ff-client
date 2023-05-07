@@ -44,7 +44,7 @@ const ProfilePage: FC = () => {
           <ProfileSidebar />
 
           <div className="update-account-form">
-            <Form layout="vertical" validateTrigger="onSubmit" onFinish={onFinish} ref={formRef}>
+            <Form layout="vertical" onFinish={onFinish} ref={formRef}>
               <h3 className="form-heading">{t('account details')}</h3>
               <Form.Item
                 name="firstName"

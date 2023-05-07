@@ -105,17 +105,17 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
 
             <div className="cart-items">
               {detailedItems.map((item: IDetailedItem) => (
-                <div key={item.product._id} className={`cart-item ${item.quantity === 0 ? 'unavailable' : ''}`}>
-                  {item.product.featuredImages?.length && (
+                <div key={item.product?._id} className={`cart-item ${item.quantity === 0 ? 'unavailable' : ''}`}>
+                  {item.product?.featuredImages?.length && (
                     <div className="item-image">
-                      <Image src={item.product.featuredImages[0]} />
+                      <Image src={item.product?.featuredImages[0]} />
                     </div>
                   )}
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <h4 className="item-name">{item.product.name[locale]}</h4>
+                    <h4 className="item-name">{item.product?.name[locale]}</h4>
                     <p className="item-price">
                       {item.quantity
-                        ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product.price * item.quantity)
+                        ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.product?.price * item.quantity)
                         : t('this product is currently unavailable')}
                     </p>
                   </div>
@@ -129,11 +129,11 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                         if (quantity === 0) return;
                         else if (quantity < 0)
                           return removeCartItemMutation.mutate({
-                            productId: item.product._id as string,
+                            productId: item.product?._id as string,
                             quantity: Math.abs(quantity),
                           });
                         return addCartItemMutation.mutate({
-                          productId: item.product._id as string,
+                          productId: item.product?._id as string,
                           quantity: Math.abs(quantity),
                         });
                       }}
@@ -145,7 +145,7 @@ const CartDrawer: FC<IProps> = ({ isCartOpen, setIsCartOpen }) => {
                         shape="circle"
                         loading={removeCartItemMutation.isLoading}
                         icon={<DeleteOutlined />}
-                        onClick={() => removeCartItemMutation.mutate({ productId: item.product._id as string, quantity: 100000 })}
+                        onClick={() => removeCartItemMutation.mutate({ productId: item.product?._id as string, quantity: 100000 })}
                       />
                     </Tooltip>
                   </div>

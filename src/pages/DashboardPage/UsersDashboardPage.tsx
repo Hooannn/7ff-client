@@ -5,12 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { buttonStyle, secondaryButtonStyle } from '../../assets/styles/globalStyle';
 import AddUserModal from '../../components/dashboard/users/AddUserModal';
 import UsersTable from '../../components/dashboard/users/UsersTable';
-import { IUser } from '../../types';
+import { IResponseData, IUser } from '../../types';
 import useUsers from '../../services/users';
 import { exportToCSV } from '../../utils/export-csv';
 import UpdateUserModal from '../../components/dashboard/users/UpdateUserModal';
 import SortAndFilter from '../../components/dashboard/users/SortAndFilter';
 import useTitle from '../../hooks/useTitle';
+import dayjs, { locale } from 'dayjs';
+import { useMutation } from 'react-query';
+import useAxiosIns from '../../hooks/useAxiosIns';
 export default function UsersDashboardPage() {
   // TODO: Search, filter, pagination
   const {
@@ -29,6 +32,8 @@ export default function UsersDashboardPage() {
     itemPerPage,
     setItemPerPage,
   } = useUsers({ enabledFetchUsers: true });
+
+  const axios = useAxiosIns();
   const [shouldAddModalOpen, setAddModelOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
@@ -45,7 +50,24 @@ export default function UsersDashboardPage() {
     deleteUserMutation.mutate(userId);
   };
 
-  const onExportToCSV = () => exportToCSV(users, `7FF_Users_${Date.now()}`);
+  const fetchAllUsersMutation = useMutation({
+    mutationFn: () => axios.get<IResponseData<IUser[]>>(`/users`),
+  });
+
+  const onExportToCSV = async () => {
+    const { data } = await fetchAllUsersMutation.mutateAsync();
+    const users = data?.data.map(rawUser => ({
+      [t('id').toString()]: rawUser._id,
+      [t('created at')]: dayjs(rawUser.createdAt).format('DD/MM/YYYY'),
+      Email: rawUser.email,
+      [t('role')]: rawUser.role,
+      [t('phone number')]: rawUser.phoneNumber,
+      [t('first name')]: rawUser.firstName,
+      [t('last name')]: rawUser.lastName,
+      [t('address')]: rawUser.address,
+    }));
+    exportToCSV(users, `7FF_Users_${Date.now()}`);
+  };
 
   return (
     <Row>
@@ -84,6 +106,7 @@ export default function UsersDashboardPage() {
                   icon={<DownloadOutlined style={{ marginRight: '4px' }} />}
                   type="text"
                   shape="round"
+                  loading={fetchAllUsersMutation.isLoading}
                   style={buttonStyle}
                   onClick={() => onExportToCSV()}
                 >

@@ -63,7 +63,7 @@ export const UpdateOrderForm = ({ form, onSubmit, order }: { form: FormInstance;
 
   return (
     <>
-      <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+      <Form layout="vertical" onFinish={onFinish} form={form}>
         <Form.Item label={t('order status')} name="status">
           <Select size="large" style={{ width: '100%' }}>
             <Select.Option value="Processing">{t('processing')}</Select.Option>

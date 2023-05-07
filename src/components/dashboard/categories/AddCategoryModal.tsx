@@ -66,7 +66,7 @@ export const AddCategoryForm = ({ form, onSubmit }: { form: FormInstance; onSubm
 
   return (
     <>
-      <Form requiredMark={false} layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+      <Form requiredMark={false} layout="vertical" onFinish={onFinish} form={form}>
         <Form.Item
           name="name.vi"
           label={t('name vi')}

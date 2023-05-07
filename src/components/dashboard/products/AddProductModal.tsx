@@ -179,7 +179,7 @@ export const AddProductForm = ({
       </Col>
 
       <Col span={12}>
-        <Form requiredMark={false} layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+        <Form requiredMark={false} layout="vertical" onFinish={onFinish} form={form}>
           <Form.Item
             label={t('name vi')}
             name="name.vi"

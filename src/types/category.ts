@@ -3,6 +3,7 @@ export interface ICategory {
   name: IContent;
   description: IContent;
   icon?: string;
+  createdAt?: string;
 }
 export interface IContent {
   vi: string;

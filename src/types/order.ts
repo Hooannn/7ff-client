@@ -14,6 +14,7 @@ export interface IOrder {
   deliveryAddress?: string;
   deliveryPhone?: string;
   status: OrderStatus;
+  createdAt?: string;
 }
 
 export type OrderStatus = 'Processing' | 'Delivering' | 'Done' | 'Cancelled';

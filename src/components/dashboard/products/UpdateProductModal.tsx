@@ -195,7 +195,7 @@ export const UpdateProductForm = ({
       </Col>
 
       <Col span={12}>
-        <Form style={{ marginTop: '28px' }} requiredMark={false} layout="vertical" onFinish={onFinish} validateTrigger="onSubmit" form={form}>
+        <Form style={{ marginTop: '28px' }} requiredMark={false} layout="vertical" onFinish={onFinish} form={form}>
           <Form.Item
             label={t('name vi')}
             name="name.vi"
