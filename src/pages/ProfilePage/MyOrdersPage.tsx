@@ -2,14 +2,17 @@ import dayjs from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getI18n, useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { Button, Divider, Empty, Modal, Row, Select, Skeleton, Image, Table } from 'antd';
+import { toast } from 'react-toastify';
+import { Button, Divider, Empty, Modal, Row, Select, Skeleton, Table, Rate, ConfigProvider } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import useAxiosIns from '../../hooks/useAxiosIns';
+import toastConfig from '../../configs/toast';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import type { IContent, OrderStatus } from '../../types';
+import type { OrderStatus } from '../../types';
 import { IOrder, IResponseData } from '../../types';
+import { onError } from '../../utils/error-handlers';
 import { RootState } from '../../@core/store';
 import { containerStyle } from '../../assets/styles/globalStyle';
 import '../../assets/styles/pages/ProfilePage.css';
@@ -200,6 +203,39 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
   });
   const orderDetails = getOrderDetailQuery.data?.data;
 
+  let ratingValue = 3;
+  const rateOrderMutation = useMutation({
+    mutationFn: (value: number) => axios.put(`/rating/${orderId}`, { value: value }),
+    onError: onError,
+    onSuccess: res => {
+      toast(t(res.data.message), toastConfig('success'));
+    },
+    onSettled: () => {
+      getOrderDetailQuery.refetch();
+    },
+  });
+
+  const handleRatingProducts = () => {
+    Modal.confirm({
+      title: t('rate our products'),
+      content: (
+        <div style={{ width: 302 }}>
+          <Divider style={{ margin: '0 0 6px', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+          <Rate defaultValue={3} onChange={val => (ratingValue = val)} />
+          <Divider style={{ margin: '10px 0 6px', borderWidth: 2, borderColor: 'rgba(26, 26, 26, 0.12)' }} />
+        </div>
+      ),
+      icon: null,
+      okText: t('confirm'),
+      cancelText: t('cancel'),
+      width: 350,
+      onOk: () => {
+        rateOrderMutation.mutate(ratingValue);
+      },
+      centered: true,
+    });
+  };
+
   return (
     <Modal
       title={t('order details')}
@@ -207,7 +243,14 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
       onCancel={onClose}
       width={650}
       footer={[
-        <Button key="close" type="primary" onClick={onClose} style={{ fontWeight: 500 }} className="order-details-rating-btn">
+        <Button
+          key="rate"
+          type="primary"
+          onClick={handleRatingProducts}
+          disabled={orderDetails?.rating || orderDetails?.status !== 'Done'}
+          style={{ fontWeight: 500 }}
+          className="order-details-rating-btn"
+        >
           {t('review')}
         </Button>,
         <Button key="close" type="primary" onClick={onClose} disabled={!orderDetails} style={{ fontWeight: 500 }}>
@@ -260,6 +303,12 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
             <span className="bold-text">{t('last time status updated')}:</span>
             <span>{dayjs(orderDetails.updatedAt).format('DD/MM/YYYY HH:mm')}</span>
           </Row>
+          {orderDetails?.rating && (
+            <Row justify="space-between" align="middle">
+              <span className="bold-text">{t('order rating')}:</span>
+              <span className="bold-text">{orderDetails.rating.toFixed(1)} &#x2605;</span>
+            </Row>
+          )}
           <Row justify="space-between" align="middle">
             <span className="bold-text">{t('total price (shipping included)')}:</span>
             <span className="bold-text">

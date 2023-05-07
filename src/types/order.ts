@@ -13,6 +13,7 @@ export interface IOrder {
   isDelivery: boolean;
   deliveryAddress?: string;
   deliveryPhone?: string;
+  rating?: number;
   status: OrderStatus;
 }
 
