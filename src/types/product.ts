@@ -35,6 +35,7 @@ export interface IProduct {
   category: ICategory | string;
   isAvailable: boolean;
   rating: number;
+  ratingCount?: number;
   dailyViewCount?: IViewCount;
   weeklyViewCount?: IViewCount;
   monthlyViewCount?: IViewCount;
