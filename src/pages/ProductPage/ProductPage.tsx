@@ -110,7 +110,10 @@ const ProductPage: FC = () => {
                     </div>
                     <Space size={10}>
                       <Rate disabled defaultValue={Math.ceil((product?.rating as any) / 0.5) * 0.5} allowHalf className="product-rating" />
-                      <p style={{ margin: '9px 0 0', fontSize: '1.1rem', fontWeight: 500 }}>({product?.rating?.toFixed(1)})</p>
+                      <p style={{ margin: '9px 0 0', fontSize: '1.1rem', fontWeight: 500, textTransform: 'lowercase' }}>
+                        ({product?.rating?.toFixed(2)} - {product?.ratingCount}{' '}
+                        {Number(product?.ratingCount) > 1 ? t('reviews time') : t('review time')})
+                      </p>
                     </Space>
                     <p className="product-description">{product?.description[locale]}</p>
                     <div className="product-price">{`₫ ${product?.price.toLocaleString('en-US')}`}</div>
