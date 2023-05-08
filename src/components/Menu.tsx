@@ -106,7 +106,11 @@ const Menu: FC<IProps> = ({ isMenuPage }) => {
             <div key={product._id} className="menu-card-wrapper">
               <div className="menu-card">
                 <div className="image-wrapper">
-                  <img src={(product as any).featuredImages[0]} className="image" onClick={() => navigate(`/product/${product._id}`)} />
+                  <img
+                    src={product.featuredImages?.length ? (product as any).featuredImages[0] : 'alt-feature-img.png'}
+                    className="image"
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  />
                 </div>
                 <div className="description">
                   <h5 className="name" onClick={() => navigate(`/product/${product._id}`)}>
