@@ -105,6 +105,12 @@
   transition: all 0.1 0.5s;
 }
 
+.promotion-card .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .promotion-card .description {
   font-family: 'Dancing Script', cursive;
   color: #fff;
@@ -112,7 +118,8 @@
 
 .promotion-card .description .title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  text-transform: capitalize;
 }
 
 .promotion-card .description .sale-off-tag {
@@ -121,13 +128,13 @@
 }
 
 .promotion-card .description .sale-off-tag span {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
 }
 
 .promotion-card .order-btn {
   height: unset !important;
   padding: 9px 30px !important;
-  margin-top: 10px;
+  margin-top: 20px;
   text-transform: capitalize;
   display: flex;
   align-items: center;

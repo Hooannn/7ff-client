@@ -237,12 +237,18 @@
 
 .cart-item .item-image {
   width: 80px;
-  border-radius: 4px;
-  overflow: clip;
+  height: 80px;
+  display: flex;
+  justify-content: center;
 }
 
 .cart-item.unavailable .item-image {
   filter: grayscale(0.6);
+}
+
+.cart-item .item-image img {
+  border-radius: 4px;
+  object-fit: contain;
 }
 
 .cart-item .item-image .ant-image .ant-image-mask {

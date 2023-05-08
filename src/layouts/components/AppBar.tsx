@@ -216,7 +216,11 @@ const AppBar: FC<IProps> = ({ isDashboard }) => {
                         }}
                         className="search-result-item"
                       >
-                        <Avatar src={product.featuredImages && product.featuredImages[0]} size={44} style={{ flexShrink: 0 }} />
+                        <Avatar
+                          src={product.featuredImages?.length ? product.featuredImages[0] : 'alt-feature-img.png'}
+                          size={44}
+                          style={{ flexShrink: 0 }}
+                        />
                         <div className="search-result-item-desc">
                           <div className="search-result-item-name">{product.name[locale]}</div>
                           <div className="search-result-item-price">

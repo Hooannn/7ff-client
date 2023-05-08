@@ -266,13 +266,13 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
           <Table
             dataSource={orderDetails.items}
             pagination={false}
-            rowKey={record => record.product._id}
+            rowKey={record => record._id}
             columns={[
               {
                 title: t("product's name"),
                 dataIndex: 'product',
                 width: 240,
-                render: value => <span>{value.name[locale]}</span>,
+                render: value => <span>{value?.name[locale] ?? t('this product is deleted')}</span>,
               },
               {
                 title: t('quantity'),
@@ -284,13 +284,13 @@ const OrderDetailModal: FC<IModalProps> = ({ orderId, onClose }) => {
                 title: t('current price'),
                 dataIndex: 'product',
                 align: 'center',
-                render: value => <span>{value.price}</span>,
+                render: value => <span>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value?.price ?? 0)}</span>,
               },
               {
                 title: `${t('availability')}?`,
                 dataIndex: 'product',
                 align: 'center',
-                render: value => <span>{value.isAvailable ? t('yes') : t('no')}</span>,
+                render: value => <span>{value?.isAvailable ? t('yes') : t('no')}</span>,
               },
             ]}
           />
