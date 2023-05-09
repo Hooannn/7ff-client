@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal, Col, Row } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { CarryOutOutlined, DoubleLeftOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
 import toastConfig from '../../configs/toast';
@@ -178,8 +178,8 @@ const CheckoutPage: FC = () => {
                       </>
                     )}
                     <Space align="center" style={{ width: '100%', marginTop: 'auto', justifyContent: 'space-between' }}>
-                      <div onClick={() => navigate('/cart')} style={{ fontSize: '1rem', cursor: 'pointer' }}>
-                        {`< ${t('back to cart')}`}
+                      <div onClick={() => navigate('/cart')} style={{ fontSize: '1rem', fontWeight: 500, cursor: 'pointer' }}>
+                        <CarryOutOutlined /> {`${t('add note or change quantity')}`}
                       </div>
                       <Form.Item style={{ marginBottom: 0 }}>
                         <Button loading={checkoutMutation.isLoading} size="large" type="primary" htmlType="submit" className="submit-btn">
@@ -200,7 +200,9 @@ const CheckoutPage: FC = () => {
                     <div key={item.product._id} className="checkout-cart-item">
                       <Badge count={item.quantity} color="rgba(115, 115, 115, 0.9)">
                         <div className="item-image">
-                          <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : ''} />
+                          <div className="img-wrapper">
+                            <Image src={item.product.featuredImages?.length ? item.product.featuredImages[0] : '../alt-feature-img.png'} />
+                          </div>
                         </div>
                       </Badge>
                       <div className="item-name">

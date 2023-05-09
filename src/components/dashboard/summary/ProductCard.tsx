@@ -1,9 +1,9 @@
-import { Avatar, Card, Carousel, Col, Empty, Image, Row } from 'antd';
-import { IProduct } from '../../../types';
-import { getI18n, useTranslation } from 'react-i18next';
-import '../../../assets/styles/pages/ProfilePage.css';
 import { useMemo, useState } from 'react';
+import { getI18n, useTranslation } from 'react-i18next';
+import { Avatar, Card, Col, Row } from 'antd';
 import { EyeOutlined, DollarOutlined, DropboxOutlined } from '@ant-design/icons';
+import { IProduct } from '../../../types';
+import '../../../assets/styles/pages/ProfilePage.css';
 
 interface IProductCardProps {
   product: IProduct;
@@ -81,13 +81,18 @@ export default function ProductCard({ product }: IProductCardProps) {
         boxShadow: '0px 0px 16px rgba(17,17,26,0.1)',
       }}
     >
-      {product.featuredImages?.length && (
-        <Avatar
-          style={{ border: '5px solid white', position: 'absolute', top: '-55px', left: '50%', transform: 'translateX(-50%)' }}
-          size={110}
-          src={product.featuredImages[0]}
-        ></Avatar>
-      )}
+      <Avatar
+        style={{
+          position: 'absolute',
+          top: '-55px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          border: '5px solid white',
+          backgroundColor: '#f5f5f5',
+        }}
+        size={110}
+        src={product.featuredImages?.length === 2 ? product.featuredImages[0] : '../alt-feature-img.png'}
+      />
 
       <Row justify="center">
         <Col>
@@ -99,7 +104,7 @@ export default function ProductCard({ product }: IProductCardProps) {
             <div style={{ fontSize: '14px', color: '#222831', fontWeight: 600 }}>{(product.category as any)?.name[locale]}</div>
           </div>
 
-          <div>
+          <div className="product-card-desc">
             {t('description')}: {product.description[locale]}
           </div>
           <div style={{ margin: '12px 0' }} className="my-orders">

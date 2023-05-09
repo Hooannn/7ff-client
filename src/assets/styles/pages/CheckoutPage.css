@@ -85,13 +85,25 @@
 .checkout-cart-item .item-image {
   width: 64px;
   height: 64px;
-  padding: 4px;
+  padding: 3px;
   border: 1px solid #d9d9d9;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #fff;
+}
+
+.checkout-cart-item .item-image .img-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+}
+
+.checkout-cart-item .item-image img {
+  min-height: 58px;
+  object-fit: cover;
 }
 
 .checkout-cart-item .item-image .ant-image .ant-image-mask {
