@@ -35,7 +35,13 @@ const ChangePasswordPage: FC = () => {
                 <Input.Password size="large" placeholder={t('current password...').toString()} style={inputStyle} />
               </Form.Item>
 
-              <Form.Item name="newPassword" rules={[{ required: true, message: t('please enter your new password').toString() }]}>
+              <Form.Item
+                name="newPassword"
+                rules={[
+                  { required: true, message: t('please enter your new password').toString() },
+                  { max: 25, min: 6, message: t('your password must be between 6 and 25 in length').toString() },
+                ]}
+              >
                 <Input.Password size="large" placeholder={t('new password...').toString()} style={inputStyle} />
               </Form.Item>
 

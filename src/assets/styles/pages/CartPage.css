@@ -61,8 +61,13 @@
   align-items: center;
 }
 
-.cart-items .item-image.unavailable {
+.cart-page .cart-items .item-image.unavailable {
   filter: grayscale(0.6);
+}
+
+.cart-page .cart-items .item-image img {
+  max-height: 88px;
+  object-fit: contain;
 }
 
 .cart-page .cart-items .item-image .ant-image .ant-image-mask {

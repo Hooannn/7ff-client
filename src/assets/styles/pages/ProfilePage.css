@@ -201,3 +201,13 @@
 .order-details-rating-btn:not([disabled]):hover {
   background-color: #3c3c3c !important;
 }
+
+.product-card-desc {
+  height: 70px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
