@@ -37,6 +37,7 @@ export default function ReservationsDashboardPage() {
       return date === selectedDay;
     });
   }, [selectedDay, reservations]);
+
   return (
     <Row>
       <Col span={24}>
@@ -69,7 +70,7 @@ export default function ReservationsDashboardPage() {
               <Col key={bookingDay.date}>
                 <Badge count={bookingDay.count}>
                   <Button
-                    onClick={() => setSelectedDay(bookingDay.date)}
+                    onClick={() => setSelectedDay(prev => (prev !== bookingDay.date ? bookingDay.date : null))}
                     type={selectedDay === bookingDay.date ? 'primary' : 'default'}
                     style={{ height: '80px', width: '80px', borderRadius: '12px' }}
                   >

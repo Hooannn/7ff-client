@@ -31,15 +31,15 @@ const BANNER_CAROUSEL_CONTENT = [
   },
   {
     title: {
-      en: 'This month best seller',
-      vi: 'Best seller tháng này',
+      en: "7ff's signature dish",
+      vi: 'Món ăn đặc trưng của 7ff',
     },
     description: {
-      en: 'Rolled rice paper\nSuper delicious rice paper rolls with quail eggs, with a standard flavor outside the store will surely make you fall in love with the perfect blend of sweet and sour taste.',
-      vi: 'Bánh tráng cuốn\nBánh tráng cuốn trứng cút siêu ngon, với hương vị chuẩn ngoài hàng chắc chắn sẽ khiến bạn thích mê với hương vị chua ngọt hòa quyện hoàn hảo.',
+      en: 'Kem que cầu vòng\nKem cầu vòng được làm hoàn toàn từ trái cây tự nhiên, gồm các vị: dâu, cam vàng, kiwi, hoa đậu biếc và việt quốc.',
+      vi: 'Rainbow popsicle\nRaibow popsicle made from natural fruits: strawberry, orange, kiwi, butterfly pea flower and blueberry.',
     },
     buttonTitle: 'see details',
-    btnNavigation: '/product/64400cbe683d6780bbf7a5e0',
+    btnNavigation: '/product/6458fb3f12088981acc6f36a',
   },
 ];
 
@@ -68,39 +68,6 @@ const Banner: FC = () => {
               </div>
             </div>
           ))}
-          {/* <div className="carousel-item-wrapper">
-            <div className="carousel-item">
-              <h1 className="header">Nhà Hàng 7 Fast Food</h1>
-              <span className="description">
-                Với 7 tiêu chí đã đề ra, sự bảo đảm cho từng đơn đặt hàng cho khách, các đầu bếp và nhân viên thông qua tuyển chọn kỹ lưỡng, cùng với
-                sự đa dạng của các món ăn 7FF hứa hẹn sẽ mang đến cho quý khách những sự lựa chọn tốt nhất.
-              </span>
-              <Button type="primary" shape="round" size="large" className="order-btn" onClick={() => navigate('/about')}>
-                {t('learn more about us')}
-              </Button>
-            </div>
-          </div>
-          <div className="carousel-item-wrapper">
-            <div className="carousel-item">
-              <h1 className="header">This Month Best Seller</h1>
-              <span className="description">Chúng tôi chuyên kinh doanh ...</span>
-              <Button type="primary" shape="round" size="large" className="order-btn" onClick={() => navigate('/menu')}>
-                {t('see the menu')}
-              </Button>
-            </div>
-          </div>
-          <div className="carousel-item-wrapper">
-            <div className="carousel-item">
-              <h1 className="header">Summer Promotion Event</h1>
-              <span className="description">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In consectetur ab veniam. Architecto impedit eligendi eius sit nam
-                necessitatibus placeat eum soluta distinctio tempore laborum neque amet maxime, autem nemo!
-              </span>
-              <Button type="primary" shape="round" size="large" className="order-btn">
-                {t('order now')}
-              </Button>
-            </div>
-          </div> */}
         </Carousel>
       </div>
     </section>
