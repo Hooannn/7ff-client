@@ -60,11 +60,11 @@ export default function StatisticCard(props: StatisticCardProps) {
         </Col>
         <Col>
           <Row align="middle">
-            <div style={{ fontSize: '32px' }}>
+            <div style={{ marginRight: 8, fontSize: '32px' }}>
               <strong>{props.unit}</strong>
             </div>
             <div style={{ fontSize: '32px' }}>
-              <strong>{count ? count : 0}</strong>
+              <strong>{count ? count.toLocaleString('en-US') : 0}</strong>
             </div>
             {props.value > 0 && props.previousValue > 0 && (
               <span style={{ marginLeft: '8px', color: isIncreasing ? '#59a959' : '#c52525' }}>

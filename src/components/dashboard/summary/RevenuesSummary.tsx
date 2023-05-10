@@ -6,7 +6,7 @@ export default function RevenuesSummary({ loading, value, previousValue }: Parti
   return (
     <StatisticCard
       loading={loading}
-      unit="$"
+      unit="Vnđ"
       value={value as number}
       previousValue={previousValue as number}
       label={t('revenues').toString()}
