@@ -228,7 +228,7 @@ export const UpdateProductForm = ({
               size="large"
               spellCheck={false}
               placeholder={t('description vi').toString()}
-              autoSize={{ minRows: 2 }}
+              autoSize={{ minRows: 2, maxRows: 3 }}
               style={inputStyle}
             />
           </Form.Item>
@@ -244,7 +244,7 @@ export const UpdateProductForm = ({
               size="large"
               spellCheck={false}
               placeholder={t('description en').toString()}
-              autoSize={{ minRows: 2 }}
+              autoSize={{ minRows: 2, maxRows: 3 }}
               style={inputStyle}
             />
           </Form.Item>
