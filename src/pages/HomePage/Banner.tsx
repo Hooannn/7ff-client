@@ -11,7 +11,7 @@ const BANNER_CAROUSEL_CONTENT = [
       vi: 'Nhà hàng 7 Fast Food',
     },
     description: {
-      en: 'With 7 criteria as our pointer, highly trained employees and a diverse menu to select from, here at 7FF we value each and every order placed in order to bring you the best dining experience.',
+      en: 'With 7 criteria as our pointer, highly trained employees and a diverse menu to select from, here at 7FF we value each and every order placed to bring you the best snacking experience.',
       vi: 'Với 7 tiêu chí đã đề ra, cùng với đội ngũ nhân viên thông qua tuyển chọn kỹ lưỡng và sự đa dạng trong các món ăn, 7FF luôn đặt tất cả tâm huyết vào từng đơn hàng để mang đến cho quý khách những trải nghiệm tuyệt vời nhất.',
     },
     buttonTitle: 'learn more about us',
@@ -35,8 +35,8 @@ const BANNER_CAROUSEL_CONTENT = [
       vi: 'Món ăn đặc trưng của 7ff',
     },
     description: {
-      en: 'Kem que cầu vòng\nKem cầu vòng được làm hoàn toàn từ trái cây tự nhiên, gồm các vị: dâu, cam vàng, kiwi, hoa đậu biếc và việt quốc.',
-      vi: 'Rainbow popsicle\nRaibow popsicle made from natural fruits: strawberry, orange, kiwi, butterfly pea flower and blueberry.',
+      en: 'Rainbow popsicle\nRaibow popsicle made from natural fruits: strawberry, orange, kiwi, butterfly pea flower and blueberry.',
+      vi: 'Kem que cầu vòng\nKem cầu vòng được làm hoàn toàn từ trái cây tự nhiên, gồm các vị: dâu, cam vàng, kiwi, hoa đậu biếc và việt quốc.',
     },
     buttonTitle: 'see details',
     btnNavigation: '/product/6458fb3f12088981acc6f36a',

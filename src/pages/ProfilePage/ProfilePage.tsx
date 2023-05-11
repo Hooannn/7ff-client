@@ -20,6 +20,8 @@ const ProfilePage: FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const user = useSelector((state: RootState) => state.auth.user);
   useEffect(() => {
     formRef.current?.setFieldsValue({
       firstName: user.firstName,
@@ -28,13 +30,13 @@ const ProfilePage: FC = () => {
       phoneNumber: user?.phoneNumber,
       address: user?.address,
     });
-  }, []);
+  }, [user]);
 
-  const user = useSelector((state: RootState) => state.auth.user);
   const formRef = useRef<FormInstance>(null);
   const onFinish = (values: any) => {
-    updateProfileMutation.mutate({ data: { ...user, ...values } });
-    dispatch(setUser({ ...user, ...values }));
+    const { email, ...otherValues } = values;
+    updateProfileMutation.mutate({ data: { ...user, ...otherValues } });
+    dispatch(setUser({ ...user, ...otherValues }));
   };
 
   return (
@@ -77,13 +79,13 @@ const ProfilePage: FC = () => {
               </Form.Item>
               <Form.Item
                 name="email"
-                rules={[
-                  { required: true, message: t('please enter your email').toString() },
-                  { whitespace: true, message: t('please enter your email').toString() },
-                  { type: 'email', message: t('invalid email address').toString() },
-                ]}
+                // rules={[
+                //   { required: true, message: t('please enter your email').toString() },
+                //   { whitespace: true, message: t('please enter your email').toString() },
+                //   { type: 'email', message: t('invalid email address').toString() },
+                // ]}
               >
-                <Input size="large" spellCheck={false} placeholder="Email..." style={inputStyle} />
+                <Input size="large" spellCheck={false} placeholder="Email..." style={inputStyle} disabled />
               </Form.Item>
               <Form.Item name="address">
                 <Input size="large" spellCheck={false} placeholder={t('address...').toString()} style={inputStyle} />

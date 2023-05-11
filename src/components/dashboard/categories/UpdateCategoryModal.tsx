@@ -115,7 +115,13 @@ export const UpdateCategoryForm = ({
             { whitespace: true, message: t('required').toString() },
           ]}
         >
-          <Input size="large" spellCheck={false} placeholder={t('description vi').toString()} style={inputStyle} />
+          <Input.TextArea
+            size="large"
+            spellCheck={false}
+            placeholder={t('description vi').toString()}
+            autoSize={{ minRows: 2, maxRows: 4 }}
+            style={inputStyle}
+          />
         </Form.Item>
         <Form.Item
           label={t('description en')}
@@ -125,7 +131,13 @@ export const UpdateCategoryForm = ({
             { whitespace: true, message: t('required').toString() },
           ]}
         >
-          <Input size="large" spellCheck={false} placeholder={t('description en').toString()} style={inputStyle} />
+          <Input.TextArea
+            size="large"
+            spellCheck={false}
+            placeholder={t('description en').toString()}
+            autoSize={{ minRows: 2, maxRows: 4 }}
+            style={inputStyle}
+          />
         </Form.Item>
       </Form>
     </>
