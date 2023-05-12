@@ -91,7 +91,7 @@ export default function ProductCard({ product }: IProductCardProps) {
           backgroundColor: '#f5f5f5',
         }}
         size={110}
-        src={product.featuredImages?.length === 2 ? product.featuredImages[0] : '../alt-feature-img.png'}
+        src={product.featuredImages?.length ? product.featuredImages[0] : '../alt-feature-img.png'}
       />
 
       <Row justify="center">
@@ -104,7 +104,7 @@ export default function ProductCard({ product }: IProductCardProps) {
             <div style={{ fontSize: '14px', color: '#222831', fontWeight: 600 }}>{(product.category as any)?.name[locale]}</div>
           </div>
 
-          <div className="product-card-desc">
+          <div className="product-card-desc" style={{ maxWidth: 407 }}>
             {t('description')}: {product.description[locale]}
           </div>
           <div style={{ margin: '12px 0' }} className="my-orders">
@@ -146,7 +146,7 @@ export default function ProductCard({ product }: IProductCardProps) {
                   <DropboxOutlined /> {t('total units')}
                 </div>
               </Col>
-              <Col style={{ fontSize: '18px', fontWeight: 500 }}>{totalUnits}</Col>
+              <Col style={{ fontSize: '18px', fontWeight: 500 }}>{totalUnits ?? 0}</Col>
             </Row>
           </div>
         </Col>
