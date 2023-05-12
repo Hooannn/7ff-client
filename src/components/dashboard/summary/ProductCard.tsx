@@ -110,7 +110,7 @@ export default function ProductCard({ product }: IProductCardProps) {
           <div style={{ margin: '12px 0' }} className="my-orders">
             <strong style={{ fontSize: '20px' }}>{t('overall')}</strong>
             <div className="order-filter" style={{ marginTop: '12px' }}>
-              <div className="status-options">
+              <div className="status-options" style={{ justifyContent: 'center' }}>
                 {segmentedOptions.map(option => (
                   <div
                     onClick={() => setType(option.value as any)}
@@ -130,7 +130,7 @@ export default function ProductCard({ product }: IProductCardProps) {
               </Col>
               <Col style={{ fontSize: '18px', fontWeight: 500 }}>{viewCount}</Col>
             </Row>
-            <Row align="middle" justify="space-between" style={{ padding: '12px 0 0' }}>
+            {/*<Row align="middle" justify="space-between" style={{ padding: '12px 0 0' }}>
               <Col style={{ fontSize: '18px', fontWeight: 500 }}>
                 <div>
                   <DollarOutlined /> {t('total sales')}
@@ -139,7 +139,7 @@ export default function ProductCard({ product }: IProductCardProps) {
               <Col style={{ fontSize: '18px', fontWeight: 500 }}>
                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalSales ?? 0)}
               </Col>
-            </Row>
+                </Row>*/}
             <Row align="middle" justify="space-between" style={{ padding: '12px 0 0' }}>
               <Col style={{ fontSize: '18px', fontWeight: 500 }}>
                 <div>
