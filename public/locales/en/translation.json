@@ -436,5 +436,6 @@
   "you must be logged in to do this operation": "You must be logged in to do this operation",
   "daily data": "Daily data",
   "weekly data": "Weekly data",
-  "yearly data": "Yearly data"
+  "yearly data": "Yearly data",
+  "INVALID_CHECKOUT_TIME": "Ordering time is from 10:00 to 21:00"
 }

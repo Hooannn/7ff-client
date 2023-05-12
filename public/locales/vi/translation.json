@@ -436,5 +436,6 @@
   "you must be logged in to do this operation": "Bạn phải đăng nhập để thực hiện thao tác này",
   "daily data": "Dữ liệu theo ngày",
   "weekly data": "Dữ liệu theo tuần",
-  "yearly data": "Dữ liệu theo năm"
+  "yearly data": "Dữ liệu theo năm",
+  "INVALID_CHECKOUT_TIME": "Giờ đặt hàng là từ 10:00 đến 21:00"
 }
