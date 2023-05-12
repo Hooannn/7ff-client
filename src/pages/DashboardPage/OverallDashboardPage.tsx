@@ -78,16 +78,16 @@ export default function OverallDashboardPage() {
       [t('id')]: rawProduct._id,
       [t('created at')]: dayjs(rawProduct.createdAt).format('DD/MM/YYYY'),
       [t('name')]: rawProduct.name[locale],
-      [t('daily data')]: `${t('views')}: ${rawProduct.dailyViewCount?.count}, ${t('total sales')}: ${getTotalSales(rawProduct, 'daily')}, ${t(
+      [t('daily data')]: `${t('views')}: ${rawProduct.dailyViewCount?.count}, ${t(
         'total units',
       )}: ${getTotalUnits(rawProduct, 'daily')}`,
-      [t('weekly data')]: `${t('views')}: ${rawProduct.weeklyViewCount?.count}, ${t('total sales')}: ${getTotalSales(rawProduct, 'weekly')}, ${t(
+      [t('weekly data')]: `${t('views')}: ${rawProduct.weeklyViewCount?.count}, ${t(
         'total units',
       )}: ${getTotalUnits(rawProduct, 'weekly')}`,
-      [t('monthly data')]: `${t('views')}: ${rawProduct.monthlyViewCount?.count}, ${t('total sales')}: ${getTotalSales(rawProduct, 'monthly')}, ${t(
+      [t('monthly data')]: `${t('views')}: ${rawProduct.monthlyViewCount?.count}, ${t(
         'total units',
       )}: ${getTotalUnits(rawProduct, 'monthly')}`,
-      [t('yearly data')]: `${t('views')}: ${rawProduct.yearlyViewCount?.count}, ${t('total sales')}: ${getTotalSales(rawProduct, 'yearly')}, ${t(
+      [t('yearly data')]: `${t('views')}: ${rawProduct.yearlyViewCount?.count}, ${t(
         'total units',
       )}: ${getTotalUnits(rawProduct, 'yearly')}`,
     }));
