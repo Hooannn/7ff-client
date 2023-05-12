@@ -7,8 +7,8 @@ import '../../assets/styles/components/Footer.css';
 
 const FOOTER_CONTENT = {
   openingHours: {
-    en: '10.00 Am - 10.00 Pm',
-    vi: '10:00 Sáng - 10:00 Tối',
+    en: '7.00 Am - 10.00 Pm',
+    vi: '7:00 Sáng - 10:00 Tối',
   },
   address: {
     en: 'Xuân Thới Sơn commune, Hóc Môn district, Hồ Chí Minh city',
@@ -20,8 +20,10 @@ const FOOTER_CONTENT = {
   },
   contact: {
     email: 'sevenfastfoodservice@gmail.com',
+    emailHref: 'sevenfastfoodservice@gmail.com',
     phone: '(+84) 913.283.742',
-    addressUrl: 'https://goo.gl/maps/6RKi8R13P296uq2z7',
+    phoneHref: '0913283742',
+    addressUrl: { en: 'https://goo.gl/maps/9yw2H8hHaALagiwQ6', vi: 'https://goo.gl/maps/6RKi8R13P296uq2z7' },
     facebookUrl: 'https://www.facebook.com/bichdung.nguyen.311',
     instagramUrl: 'https://www.instagram.com/ygohappy123',
     youtubeUrl: 'https://www.youtube.com/channel/UCnptFzQJtuSQNMmE5ljel_Q',
@@ -44,7 +46,7 @@ const Footer: FC = () => {
             <span
               className="text address"
               style={{ width: 250 }}
-              onClick={() => window.open(FOOTER_CONTENT.contact.addressUrl, '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open(FOOTER_CONTENT.contact.addressUrl[locale], '_blank', 'noopener,noreferrer')}
             >
               {FOOTER_CONTENT.address[locale]}
             </span>
@@ -77,12 +79,16 @@ const Footer: FC = () => {
               <UsergroupAddOutlined />
             </div>
             <div className="contact-box">
-              {FOOTER_CONTENT.contact.phone}
-              <PhoneOutlined />
+              <a href={`tel:${FOOTER_CONTENT.contact.phoneHref}`}>
+                {FOOTER_CONTENT.contact.phone}
+                <PhoneOutlined />
+              </a>
             </div>
             <div className="contact-box">
-              {FOOTER_CONTENT.contact.email}
-              <MailOutlined />
+              <a href={`mailto:${FOOTER_CONTENT.contact.emailHref}`}>
+                {FOOTER_CONTENT.contact.email}
+                <MailOutlined />
+              </a>
             </div>
           </div>
         </div>

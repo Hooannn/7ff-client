@@ -123,7 +123,7 @@ const BookingTable: FC = () => {
                   format="DD/MM/YYYY HH:mm"
                   disabledDate={current => current && current < dayjs().endOf('day')}
                   disabledTime={() => ({
-                    disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 23],
+                    disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 21, 22, 23],
                   })}
                 />
               </Form.Item>

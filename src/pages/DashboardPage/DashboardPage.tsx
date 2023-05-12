@@ -94,7 +94,8 @@ const DashboardPage: FC = () => {
 
       <Col span={24} style={{ padding: '12px 0' }}>
         <Row gutter={12}>
-          <Col lg={24} xl={8}>
+          {/* <Col lg={24} xl={8}> */}
+          <Col lg={24} xl={12}>
             <PopularProducts
               isLoading={getPopularProductsQuery.isLoading}
               data={highestViewCountProducts}
@@ -105,7 +106,7 @@ const DashboardPage: FC = () => {
               title={t('products with the highest view count').toString()}
             />
           </Col>
-          <Col lg={24} xl={8}>
+          {/* <Col lg={24} xl={8}>
             <PopularProducts
               isLoading={getPopularProductsQuery.isLoading}
               data={highestTotalSalesProducts}
@@ -115,8 +116,9 @@ const DashboardPage: FC = () => {
               extra="totalSales"
               title={t('products with the highest total sales').toString()}
             />
-          </Col>
-          <Col lg={24} xl={8}>
+          </Col> */}
+          {/* <Col lg={24} xl={8}> */}
+          <Col lg={24} xl={12}>
             <PopularProducts
               isLoading={getPopularProductsQuery.isLoading}
               data={highestTotalSoldUnitsProducts}
