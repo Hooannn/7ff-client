@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Form, Input, Button, Typography, Divider, Space, Tooltip, Avatar } from 'antd';
+import { Form, Input, Button, Typography, Divider, Space, Tooltip, Avatar, ConfigProvider } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import useAuth from '../../services/auth';
 import useTitle from '../../hooks/useTitle';
@@ -294,31 +294,36 @@ const AuthPage: FC = () => {
           </Tooltip>
         </div>
 
-        <Form layout="vertical" className="auth-form" onFinish={onFinish} form={form} autoComplete="off">
-          {formType === 'signIn' && <SignInInputs setFormType={setFormType} isLoading={signInMutation.isLoading} />}
-          {formType === 'signUp' && <SignUpInputs isLoading={signUpMutation.isLoading} />}
-          {formType === 'forgot' && <ForgotInputs isLoading={forgotPasswordMutation.isLoading} />}
-          {formType === 'reset' && <ResetInputs isLoading={resetPasswordMutation.isLoading} />}
+        <ConfigProvider
+          theme={{ token: { colorError: '#3700b3' } }}
+          children={
+            <Form layout="vertical" className="auth-form" onFinish={onFinish} form={form} autoComplete="off">
+              {formType === 'signIn' && <SignInInputs setFormType={setFormType} isLoading={signInMutation.isLoading} />}
+              {formType === 'signUp' && <SignUpInputs isLoading={signUpMutation.isLoading} />}
+              {formType === 'forgot' && <ForgotInputs isLoading={forgotPasswordMutation.isLoading} />}
+              {formType === 'reset' && <ResetInputs isLoading={resetPasswordMutation.isLoading} />}
 
-          {formType !== 'forgot' && formType !== 'reset' && (
-            <>
-              <Divider style={{ borderColor: '#101319', marginBottom: '8px' }}>
-                {formType === 'signIn' ? t('or sign in using') : t('or sign up using')}{' '}
-              </Divider>
-              <Button shape="round" size="large" block onClick={() => handleGoogleAuth()} style={buttonStyle} className="google-auth-btn">
-                <img src="/google-brand.png" />
-                {formType === 'signIn' ? t('sign in with Google') : t('sign up with Google')}
-              </Button>
-            </>
-          )}
+              {formType !== 'forgot' && formType !== 'reset' && (
+                <>
+                  <Divider style={{ borderColor: '#101319', marginBottom: '8px' }}>
+                    {formType === 'signIn' ? t('or sign in using') : t('or sign up using')}{' '}
+                  </Divider>
+                  <Button shape="round" size="large" block onClick={() => handleGoogleAuth()} style={buttonStyle} className="google-auth-btn">
+                    <img src="/google-brand.png" />
+                    {formType === 'signIn' ? t('sign in with Google') : t('sign up with Google')}
+                  </Button>
+                </>
+              )}
 
-          <div className="text-center">
-            {formType === 'signIn' ? t("don't have an account?") + ' ' : t('already have an account?') + ' '}
-            <strong onClick={() => setFormType(formType === 'signIn' ? 'signUp' : 'signIn')}>
-              {formType === 'signIn' ? t('sign up') : t('sign in')}
-            </strong>
-          </div>
-        </Form>
+              <div className="text-center">
+                {formType === 'signIn' ? t("don't have an account?") + ' ' : t('already have an account?') + ' '}
+                <strong onClick={() => setFormType(formType === 'signIn' ? 'signUp' : 'signIn')}>
+                  {formType === 'signIn' ? t('sign up') : t('sign in')}
+                </strong>
+              </div>
+            </Form>
+          }
+        />
       </div>
     );
   }

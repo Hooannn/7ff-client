@@ -51,7 +51,15 @@
   gap: 16px;
 }
 
+.footer-col .contact-box a {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .footer-col .contact-box:hover,
+.footer-col .contact-box:hover a,
 .footer-col .social-link:hover,
 .footer-col .text.address:hover {
   color: #ffbe33;

@@ -54,7 +54,7 @@
 }
 
 .checkout-page-close-modal-btn:hover,
-.shipping-form .submit-btn:hover {
+.shipping-form .submit-btn:not([disabled]):hover {
   background-color: #3c3c3c !important;
 }
 

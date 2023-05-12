@@ -72,8 +72,8 @@ const CONTENT = {
           vi: 'Sản phẩm áp dụng',
         },
         text: {
-          en: 'Districts/ wards with branches 7FF: all products of 7FF.\nOther districts/ wards: dried products, canned cakes, sets of ingredients for baking, making water.',
-          vi: 'Các quận/ huyện có chi nhánh 7FF: tất cả sản phẩm của 7FF.\nCác quận/ huyện khác: các loại sản phẩm sấy, các loại bánh đóng hộp, các bộ nguyên liệu làm bánh, làm nước.',
+          en: 'Districts with branches 7FF: all products of 7FF.\nOther districts: dried products, canned cakes, sets of ingredients for baking, making water.',
+          vi: 'Các quận có chi nhánh 7FF: tất cả sản phẩm của 7FF.\nCác quận khác: các loại sản phẩm sấy, các loại bánh đóng hộp, các bộ nguyên liệu làm bánh, làm nước.',
         },
       },
       {
@@ -82,8 +82,8 @@ const CONTENT = {
           vi: 'Đơn vị vận chuyển',
         },
         text: {
-          en: 'Districts/ wards with 7FF branches: delivery staff at 7FF branches.\nOther districts/ wards: via Vnpost or Viettelpost post office.',
-          vi: 'Các quận/ huyện có chi nhánh 7FF: nhân viên giao hàng tại các chi nhánh 7FF.\nCác quận/ huyện khác: thông qua bưu điện Vnpost hoặc Viettelpost.',
+          en: 'Districts with 7FF branches: delivery staff at 7FF branches.\nOther districts: via Vnpost or Viettelpost post office.',
+          vi: 'Các quận có chi nhánh 7FF: nhân viên giao hàng tại các chi nhánh 7FF.\nCác quận khác: thông qua bưu điện Vnpost hoặc Viettelpost.',
         },
       },
       {
@@ -196,8 +196,8 @@ const CONTENT = {
           vi: 'Nền tảng mạng xã hội',
         },
         text: {
-          en: 'Facebook: https://www.facebook.com/bichdung.nguyen.311\nTiktok: https://www.tiktok.com/@ha21052105\nInstagram: https://www.instagram.com/ygohappy123',
-          vi: 'Facebook: https://www.facebook.com/bichdung.nguyen.311\nTiktok: https://www.tiktok.com/@ha21052105\nInstagram: https://www.instagram.com/ygohappy123',
+          en: 'Facebook: https://www.facebook.com/bichdung.nguyen.311\nTiktok: https://www.tiktok.com/@ha21052105\nInstagram: https://www.instagram.com/ygohappy123\nYoutube: https://www.youtube.com/channel/UCnptFzQJtuSQNMmE5ljel_Q',
+          vi: 'Facebook: https://www.facebook.com/bichdung.nguyen.311\nTiktok: https://www.tiktok.com/@ha21052105\nInstagram: https://www.instagram.com/ygohappy123\nYoutube: https://www.youtube.com/channel/UCnptFzQJtuSQNMmE5ljel_Q',
         },
       },
       {

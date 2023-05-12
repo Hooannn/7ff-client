@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef, useMemo } from 'react';
+import { FC, useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
@@ -17,6 +17,12 @@ import { IDetailedItem, IVoucher } from '../../types';
 import '../../assets/styles/pages/CheckoutPage.css';
 import FooterModals from './InfoModals';
 import { setOrderNote } from '../../slices/app.slice';
+import dayjs from 'dayjs';
+
+interface IDeliveryOption {
+  disabled: boolean;
+  message: string;
+}
 
 const CheckoutPage: FC = () => {
   const { t } = useTranslation();
@@ -56,6 +62,7 @@ const CheckoutPage: FC = () => {
   };
 
   const onFinish = async (values: any) => {
+    if (takeFromStoreOption.disabled && deliveryOption.disabled) return;
     const items = cartItems.map((cartItem: any) => ({ product: cartItem.product._id, quantity: cartItem.quantity }));
     Modal.confirm({
       icon: null,
@@ -88,6 +95,60 @@ const CheckoutPage: FC = () => {
       },
     });
   };
+
+  const DEFAULT_OPTION = {
+    disabled: false,
+    message: '...',
+  };
+  const [takeFromStoreOption, setTakeFromStoreOption] = useState<IDeliveryOption>(DEFAULT_OPTION);
+  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption>(DEFAULT_OPTION);
+  const updateOption = useCallback(() => {
+    const currentTime = dayjs(new Date()).format('HH:mm');
+    if (currentTime < '07:00') {
+      setTakeFromStoreOption({
+        disabled: true,
+        message: 'our store starts receiving online orders from 7:00',
+      });
+      setDeliveryOption({
+        disabled: true,
+        message: 'our store starts receiving online orders from 7:00',
+      });
+    } else if (currentTime <= '21:00') {
+      setTakeFromStoreOption({
+        disabled: false,
+        message: 'please get your order within 1 hour, or we might cancel it',
+      });
+      setDeliveryOption({
+        disabled: false,
+        message: 'you will have to pay extra ₫20.000 if the total price is less than ₫300.000',
+      });
+    } else if (currentTime <= '21:30') {
+      setTakeFromStoreOption({
+        disabled: false,
+        message: 'our store wil be closed at 22:00, please get your order before that',
+      });
+      setDeliveryOption({
+        disabled: true,
+        message: 'delivery service is not available after 21:00',
+      });
+    } else {
+      setTakeFromStoreOption({
+        disabled: true,
+        message: 'sorry, we only receive online order from 7:00 to 21:30',
+      });
+      setDeliveryOption({
+        disabled: true,
+        message: 'delivery service is not available after 21:00',
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    updateOption();
+    const timerId = setInterval(updateOption, 60000);
+
+    return () => clearInterval(timerId);
+  }, []);
 
   let content = null;
   if (cartItems.length <= 0) {
@@ -147,8 +208,12 @@ const CheckoutPage: FC = () => {
                       size="large"
                     >
                       <Space direction="vertical">
-                        <Radio value={false}>{t('pick up at shop')}</Radio>
-                        <Radio value={true}>{t('delivery')}</Radio>
+                        <Radio value={false} disabled={takeFromStoreOption.disabled}>
+                          {t('pick up at shop')} <i style={{ marginLeft: 6 }}>({t(takeFromStoreOption.message, { nsSeparator: false })})</i>
+                        </Radio>
+                        <Radio value={true} disabled={deliveryOption.disabled}>
+                          {t('delivery')} <i style={{ marginLeft: 6 }}>({t(deliveryOption.message, { nsSeparator: false })})</i>
+                        </Radio>
                       </Space>
                     </Radio.Group>
 
@@ -182,8 +247,17 @@ const CheckoutPage: FC = () => {
                         <CarryOutOutlined /> {`${t('add note or change quantity')}`}
                       </div>
                       <Form.Item style={{ marginBottom: 0 }}>
-                        <Button loading={checkoutMutation.isLoading} size="large" type="primary" htmlType="submit" className="submit-btn">
-                          {t('checkout')}
+                        <Button
+                          loading={checkoutMutation.isLoading}
+                          disabled={takeFromStoreOption.disabled && deliveryOption.disabled}
+                          size="large"
+                          type="primary"
+                          htmlType="submit"
+                          className="submit-btn"
+                        >
+                          {takeFromStoreOption.disabled && deliveryOption.disabled
+                            ? t('available from 7:00 to 21:30', { nsSeparator: false })
+                            : t('checkout')}
                         </Button>
                       </Form.Item>
                     </Space>
