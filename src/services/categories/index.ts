@@ -86,6 +86,9 @@ export default ({ enabledFetchCategories }: { enabledFetchCategories?: boolean }
     keepPreviousData: true,
     onError: onError,
     enabled: enabledFetchCategories,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
+    refetchInterval: 10000,
     onSuccess: res => {
       if (!res) return;
       const categories = res.data.data;

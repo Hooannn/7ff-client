@@ -79,6 +79,9 @@ export default ({ enabledFetchVouchers }: { enabledFetchVouchers?: boolean }) =>
     keepPreviousData: true,
     onError: onError,
     enabled: enabledFetchVouchers,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
+    refetchInterval: 10000,
     onSuccess: res => {
       if (!res) return;
       const vouchers = res.data.data;

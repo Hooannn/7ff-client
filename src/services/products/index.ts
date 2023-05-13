@@ -92,6 +92,9 @@ export default ({ enabledFetchProducts }: { enabledFetchProducts?: boolean }) =>
     keepPreviousData: true,
     onError: onError,
     enabled: enabledFetchProducts,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
+    refetchInterval: 10000,
     onSuccess: res => {
       if (!res) return;
       const products = res.data.data;

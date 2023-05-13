@@ -76,6 +76,9 @@ export default ({ enabledFetchUsers }: { enabledFetchUsers?: boolean }) => {
     keepPreviousData: true,
     onError: onError,
     enabled: enabledFetchUsers,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
+    refetchInterval: 10000,
     onSuccess: res => {
       if (!res) return;
       const users = res.data.data;
