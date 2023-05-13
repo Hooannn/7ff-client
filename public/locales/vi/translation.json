@@ -437,5 +437,5 @@
   "daily data": "Dữ liệu theo ngày",
   "weekly data": "Dữ liệu theo tuần",
   "yearly data": "Dữ liệu theo năm",
-  "INVALID_CHECKOUT_TIME": "Giờ đặt hàng là từ 10:00 đến 21:00"
+  "INVALID_CHECKOUT_TIME": "Xin lỗi, bạn chỉ có thể đặt hàng online từ 7:00 đến 21:30, và dịch vụ giao hàng chỉ khả dụng trước 21:00"
 }
