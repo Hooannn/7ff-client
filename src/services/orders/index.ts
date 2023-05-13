@@ -77,6 +77,9 @@ export default ({ enabledFetchOrders }: { enabledFetchOrders?: boolean }) => {
     keepPreviousData: true,
     onError: onError,
     enabled: enabledFetchOrders,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
+    refetchInterval: 10000,
     onSuccess: res => {
       if (!res) return;
       const orders = res.data.data;
