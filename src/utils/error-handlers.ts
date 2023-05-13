@@ -4,5 +4,8 @@ import type { IResponseData } from '../types';
 import type { AxiosError } from 'axios';
 import { t } from 'i18next';
 export const onError = (error: Error) => {
-  toast(t((error as AxiosError<IResponseData<unknown>>).response?.data?.message as string).toString() || error.message, toastConfig('error'));
+  toast(
+    t((error as AxiosError<IResponseData<unknown>>).response?.data?.message as string, { nsSeparator: false }).toString() || error.message,
+    toastConfig('error'),
+  );
 };

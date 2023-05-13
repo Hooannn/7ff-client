@@ -437,5 +437,5 @@
   "daily data": "Daily data",
   "weekly data": "Weekly data",
   "yearly data": "Yearly data",
-  "INVALID_CHECKOUT_TIME": "Ordering time is from 10:00 to 21:00"
+  "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 21:30, and the delivery service is only available before 21:00"
 }
