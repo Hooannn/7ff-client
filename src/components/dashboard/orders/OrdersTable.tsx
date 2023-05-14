@@ -229,6 +229,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
     {
       title: t('action'),
       key: 'action',
+      align: 'center',
       render: (_, record) => {
         return (
           <>
