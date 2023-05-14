@@ -137,6 +137,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({
     {
       title: t('action'),
       key: 'action',
+      align: 'center',
       render: (_, record) => {
         return (
           <>
