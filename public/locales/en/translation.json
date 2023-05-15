@@ -145,7 +145,11 @@
   "avatar": "Avatar",
   "role": "Role",
   "new user": "New user",
-  "are you sure that you want to delete user with id": "are you sure that you want to delete user with id",
+  "are you sure that you want to delete user with id": "Are you sure that you want to delete user with id",
+  "are you sure that you want to delete order with id": "Are you sure that you want to delete order with id",
+  "are you sure that you want to delete product with id": "Are you sure that you want to delete product with id",
+  "are you sure that you want to delete category with id": "Are you sure that you want to delete category with id",
+  "are you sure that you want to delete voucher with id": "Are you sure that you want to delete voucher with id",
   "update user": "Update user",
   "export csv": "Export CSV",
   "search...": "Search...",
@@ -437,7 +441,7 @@
   "daily data": "Daily data",
   "weekly data": "Weekly data",
   "yearly data": "Yearly data",
-  "INVALID_CHECKOUT_TIME": "Ordering time is from 10:00 to 21:00",
   "CATEGORY_DUBLICATE_NAME": "Duplicate category name",
-  "CATEGORY_ALREADY_ATTACHED": "The list has been tagged with products"
+  "CATEGORY_ALREADY_ATTACHED": "The list has been tagged with products",
+  "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 21:30, and the delivery service is only available before 21:00"
 }

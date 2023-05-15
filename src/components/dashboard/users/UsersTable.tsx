@@ -178,6 +178,7 @@ const UsersTable: React.FC<UsersTableProps> = ({
     {
       title: t('action'),
       key: 'action',
+      align: 'center',
       render: (_, record) => {
         return (
           <>
