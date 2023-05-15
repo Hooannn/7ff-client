@@ -441,7 +441,10 @@
   "daily data": "Daily data",
   "weekly data": "Weekly data",
   "yearly data": "Yearly data",
-  "CATEGORY_DUBLICATE_NAME": "Duplicate category name",
-  "CATEGORY_ALREADY_ATTACHED": "The list has been tagged with products",
-  "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 21:30, and the delivery service is only available before 21:00"
+  "voucher deleted": "Voucher deleted",
+  "CATEGORY_DUPLICATE_NAME": "Duplicate category name",
+  "CATEGORY_ALREADY_ATTACHED": "The list has been tagged with products, make sure the category is not being used before deleting",
+  "INVALID_CHECKOUT_TIME": "Sorry, you can only submit online orders from 7:00 to 21:30, and the delivery service is only available before 21:00",
+  "INVALID_VOUCHER_AMOUNT": "This voucher has an invalid discount amount",
+  "VOUCHER_EXISTED": "This voucher is already existed"
 }
