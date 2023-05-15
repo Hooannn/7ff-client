@@ -160,9 +160,14 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       key: 'voucher',
       render: (voucher: IVoucher) => (
         <span>
-          {!voucher?._id && (
+          {!voucher?._id && voucher !== null && (
             <small>
               <em>{t('not updated yet')}</em>
+            </small>
+          )}
+          {!voucher?._id && voucher === null && (
+            <small>
+              <em>{t('voucher deleted')}</em>
             </small>
           )}
           {voucher?._id && (
