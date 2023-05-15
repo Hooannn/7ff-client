@@ -51,7 +51,7 @@ const CheckoutPage: FC = () => {
   const discount = useMemo(() => {
     if (!voucher?._id) return 0;
     else if (voucher?.discountType === 'percent') {
-      return totalPrice * voucher?.discountAmount;
+      return totalPrice * (voucher?.discountAmount / 100);
     } else return voucher?.discountAmount > totalPrice ? totalPrice : voucher?.discountAmount;
   }, [voucher]);
 
@@ -318,7 +318,8 @@ const CheckoutPage: FC = () => {
                         )}
                         {voucher?._id && (
                           <Button
-                            onClick={() => {
+                            onClick={e => {
+                              e.preventDefault();
                               setVoucher(null);
                             }}
                             loading={verifyVoucherMutation.isLoading}

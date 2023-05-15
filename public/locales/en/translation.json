@@ -437,5 +437,7 @@
   "daily data": "Daily data",
   "weekly data": "Weekly data",
   "yearly data": "Yearly data",
-  "INVALID_CHECKOUT_TIME": "Ordering time is from 10:00 to 21:00"
+  "INVALID_CHECKOUT_TIME": "Ordering time is from 10:00 to 21:00",
+  "CATEGORY_DUBLICATE_NAME": "Duplicate category name",
+  "CATEGORY_ALREADY_ATTACHED": "The list has been tagged with products"
 }

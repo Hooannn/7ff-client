@@ -437,5 +437,7 @@
   "daily data": "Dữ liệu theo ngày",
   "weekly data": "Dữ liệu theo tuần",
   "yearly data": "Dữ liệu theo năm",
-  "INVALID_CHECKOUT_TIME": "Giờ đặt hàng là từ 10:00 đến 21:00"
+  "INVALID_CHECKOUT_TIME": "Giờ đặt hàng là từ 10:00 đến 21:00",
+  "CATEGORY_DUBLICATE_NAME": "Tên danh mục bị trùng",
+  "CATEGORY_ALREADY_ATTACHED": "Danh mục đã được sử dụng, hãy chắc chắn danh mục không được sử dụng trước khi xóa"
 }
