@@ -1,8 +1,10 @@
 import { TagOutlined, PayCircleOutlined } from '@ant-design/icons';
 import { Modal, Row, Col, Button, Form, Input, FormInstance, Select, DatePicker } from 'antd';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import { buttonStyle, inputStyle, secondaryButtonStyle } from '../../../assets/styles/globalStyle';
 import { IVoucher } from '../../../types';
+import localeUS from 'antd/es/date-picker/locale/en_US';
+import localeVN from 'antd/es/date-picker/locale/vi_VN';
 interface AddVoucherModalProps {
   shouldOpen: boolean;
   onCancel: () => void;
@@ -51,9 +53,10 @@ export default function AddVoucherModal({ shouldOpen, onCancel, onSubmit, isLoad
 
 export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmit: (values: IVoucher) => void }) => {
   const { t } = useTranslation();
+  const locale = getI18n().resolvedLanguage as 'vi' | 'en';
 
   const onFinish = (values: any) => {
-    onSubmit({ ...values, expiredDate: values.expiredDate?.valueOf() || undefined });
+    onSubmit({ ...values, expiredDate: values.expiredDate?.endOf('day')?.valueOf() || null });
   };
 
   return (
@@ -82,7 +85,7 @@ export const AddVoucherForm = ({ form, onSubmit }: { form: FormInstance; onSubmi
           <Input size="large" type="number" spellCheck={false} placeholder={t('total usage limit').toString()} style={inputStyle} />
         </Form.Item>
         <Form.Item name="expiredDate" label={t('expired date')}>
-          <DatePicker style={{ width: '100%' }} size="large" />
+          <DatePicker format="DD/MM/YYYY" style={{ width: '100%' }} size="large" locale={locale === 'vi' ? localeVN : localeUS} />
         </Form.Item>
         <Form.Item name="discountType" label={t('discount type')} initialValue={'amount'}>
           <Select defaultValue={'amount'} size="large">
