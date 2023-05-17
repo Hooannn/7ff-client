@@ -104,6 +104,7 @@
 .checkout-cart-item .item-image img {
   min-height: 58px;
   object-fit: cover;
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .checkout-cart-item .item-image .ant-image .ant-image-mask {

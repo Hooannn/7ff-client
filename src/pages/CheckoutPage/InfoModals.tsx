@@ -247,7 +247,9 @@ const InfoModal: FC<InfoModalPropsWithType> = ({ type, shouldOpen, onClose }) =>
             {`0${i + 1}`.slice(-2)}. {prg.subTitle[locale]}
           </p>
           {prg.text[locale].split('\n').map((_prg, _i) => (
-            <p style={{ margin: '0 0 4px' }}>- {_prg}</p>
+            <p style={{ margin: '0 0 4px' }} key={_i}>
+              - {_prg}
+            </p>
           ))}
         </div>
       ))}
