@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Avatar, Button, Divider, Form, Input, Radio, Space, Tooltip, Image, Badge, ConfigProvider, Modal, Col, Row } from 'antd';
-import { CarryOutOutlined, DoubleLeftOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { CarryOutOutlined, HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import type { FormInstance } from 'antd/es/form';
 import toastConfig from '../../configs/toast';
@@ -242,9 +242,14 @@ const CheckoutPage: FC = () => {
                         </Form.Item>
                       </>
                     )}
-                    <Space align="center" style={{ width: '100%', marginTop: 'auto', justifyContent: 'space-between' }}>
-                      <div onClick={() => navigate('/cart')} style={{ fontSize: '1rem', fontWeight: 500, cursor: 'pointer' }}>
-                        <CarryOutOutlined /> {`${t('add note or change quantity')}`}
+                    <Row align="middle" justify="space-between" style={{ marginTop: 'auto' }}>
+                      <div style={{ fontSize: '1rem', fontWeight: 500, cursor: 'pointer' }}>
+                        <div onClick={() => navigate('/')}>
+                          <HomeOutlined /> {`${t('back to home')}`}
+                        </div>
+                        <div onClick={() => navigate('/cart')} style={{ marginTop: 4 }}>
+                          <CarryOutOutlined /> {`${t('add note or change quantity')}`}
+                        </div>
                       </div>
                       <Form.Item style={{ marginBottom: 0 }}>
                         <Button
@@ -260,7 +265,7 @@ const CheckoutPage: FC = () => {
                             : t('checkout')}
                         </Button>
                       </Form.Item>
-                    </Space>
+                    </Row>
                   </Form>
                 </div>
                 <Divider style={{ marginTop: 56, borderColor: 'rgba(26, 26, 26, 0.12)' }} />

@@ -354,7 +354,7 @@
   "RESET_PASSWORD_EXPIRED": "Phiên đặt lại mật khẩu của bạn đã được sử dụng hoặc hết hạn",
   "NO_PERMISSIONS": "Bạn không có quyền",
   "BAD_REQUEST": "Yêu cầu không hợp lệ",
-  "VOUCHER_NOT_FOUND": "Mã giảm giá không hợp lệ",
+  "VOUCHER_NOT_FOUND": "Mã giảm giá không hợp lệ hoặc bạn đã sử dụng rồi",
   "SIGN_UP_SUCCESSFULLY": "Đăng ký thành công",
   "SIGN_IN_SUCCESSFULLY": "Đăng nhập thành công",
   "FORGOT_PASSWORD_SUCCESSFULLY": "Chúng tôi đã gửi cho bạn một e-mail cùng với đường dẫn để cài lại mật khẩu. Hãy kiểm tra e-mail của bạn để biết thêm chi tiết",

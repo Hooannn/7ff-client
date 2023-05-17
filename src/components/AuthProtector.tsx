@@ -1,4 +1,3 @@
-import axios from '../libs/axios';
 import { PropsWithChildren, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +7,7 @@ import { IResponseData, IUser } from '../types';
 import { RootState } from '../@core/store';
 import Loading from './shared/Loading';
 import cookies from '../libs/cookies';
+import useAxiosIns from '../hooks/useAxiosIns';
 
 interface AuthProtectorProps extends PropsWithChildren {
   redirect: string;
@@ -19,6 +19,7 @@ export default function AuthProtector({ children, redirect, adminOnly }: AuthPro
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth as AuthState);
   const location = useLocation();
+  const axios = useAxiosIns();
 
   useEffect(() => {
     cookies.set('redirect_path', location.pathname);

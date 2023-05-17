@@ -354,7 +354,7 @@
   "RESET_PASSWORD_EXPIRED": "Your reset password session has expired",
   "NO_PERMISSIONS": "You do not have permission",
   "BAD_REQUEST": "Bad request",
-  "VOUCHER_NOT_FOUND": "This voucher is not available",
+  "VOUCHER_NOT_FOUND": "The voucher is invalid or you have already used it",
   "SIGN_UP_SUCCESSFULLY": "Signed up successfully",
   "SIGN_IN_SUCCESSFULLY": "Signed in successfully",
   "FORGOT_PASSWORD_SUCCESSFULLY": "We have sent you a email with your reset password link. Please check it out for more information",
