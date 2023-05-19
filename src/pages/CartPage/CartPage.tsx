@@ -178,7 +178,6 @@ const CartPage: FC = () => {
                         className="checkout-btn"
                         onClick={() => navigate('/sales/checkout')}
                       >
-                        {' '}
                         <LockOutlined />
                         {t('checkout')}
                       </Button>

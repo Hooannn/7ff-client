@@ -7,7 +7,7 @@ import { onError } from '../../utils/error-handlers';
 import { IResponseData, IUser } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, setLogged } from '../../slices/auth.slice';
+import { setUser, setLogged, signOut } from '../../slices/auth.slice';
 import useAxiosIns from '../../hooks/useAxiosIns';
 import { useTranslation } from 'react-i18next';
 interface SignInResponse {
@@ -85,6 +85,7 @@ export default () => {
     onError: onError,
     onSuccess: res => {
       toast(t(res.data.message), toastConfig('success'));
+      dispatch(signOut());
     },
   });
 
