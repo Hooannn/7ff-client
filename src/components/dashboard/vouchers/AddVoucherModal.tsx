@@ -23,6 +23,7 @@ export default function AddVoucherModal({ shouldOpen, onCancel, onSubmit, isLoad
   return (
     <Modal
       open={shouldOpen}
+      afterClose={() => form.resetFields()}
       destroyOnClose
       closable={false}
       title={<h3>{t('new voucher')}</h3>}

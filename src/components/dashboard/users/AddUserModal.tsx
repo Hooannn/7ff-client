@@ -24,6 +24,7 @@ export default function AddUserModal({ shouldOpen, onCancel, onSubmit, isLoading
   return (
     <Modal
       open={shouldOpen}
+      afterClose={() => form.resetFields()}
       destroyOnClose
       closable={false}
       title={<h3>{t('new user')}</h3>}

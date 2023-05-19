@@ -37,6 +37,7 @@ export default function AddProductModal({
   return (
     <Modal
       open={shouldOpen}
+      afterClose={() => form.resetFields()}
       destroyOnClose
       closable={false}
       title={<h3>{t('new product')}</h3>}
