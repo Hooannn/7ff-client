@@ -32,14 +32,14 @@ export default function UsersDashboardPage() {
     setItemPerPage,
   } = useCategories({ enabledFetchCategories: true });
   const axios = useAxiosIns();
-  const [shouldAddModalOpen, setAddModelOpen] = useState(false);
+  const [shouldAddModalOpen, setAddModalOpen] = useState(false);
   const [shouldUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
   const { t } = useTranslation();
   useTitle(`${t('categories')} - 7FF`);
 
   const onAddCategory = (values: ICategory) => {
-    addCategoryMutation.mutateAsync(values).finally(() => setAddModelOpen(false));
+    addCategoryMutation.mutateAsync(values).finally(() => setAddModalOpen(false));
   };
 
   const onUpdateCategory = (values: ICategory) => {
@@ -80,7 +80,7 @@ export default function UsersDashboardPage() {
         onSubmit={onAddCategory}
         isLoading={addCategoryMutation.isLoading}
         shouldOpen={shouldAddModalOpen}
-        onCancel={() => setAddModelOpen(false)}
+        onCancel={() => setAddModalOpen(false)}
       />
 
       <Col span={24}>
@@ -94,7 +94,7 @@ export default function UsersDashboardPage() {
                 <SortAndFilter onChange={buildQuery} onSearch={onFilterSearch} onReset={onResetFilterSearch} />
               </Col>
               <Col span={5}>
-                <Button block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModelOpen(true)}>
+                <Button block shape="round" style={{ ...secondaryButtonStyle }} onClick={() => setAddModalOpen(true)}>
                   <strong>+ {t('add')}</strong>
                 </Button>
               </Col>

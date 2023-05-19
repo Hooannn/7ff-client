@@ -21,6 +21,7 @@ export default function AddCategoryModal({ shouldOpen, onCancel, onSubmit, isLoa
     <Modal
       open={shouldOpen}
       destroyOnClose
+      afterClose={() => form.resetFields()}
       closable={false}
       title={<h3>{t('new category')}</h3>}
       onCancel={onInternalCancel}
